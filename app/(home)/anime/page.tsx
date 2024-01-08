@@ -1,6 +1,5 @@
 "use client";
 
-import AnimeCarousel from "@/components/shared/anime-carousel";
 import { Badge } from "@/components/ui/badge";
 import { useGetAllAnime } from "@/lib/query-api";
 import Image from "next/image";
@@ -16,8 +15,6 @@ const HomeSection = () => {
         <h1 className="text-2xl text-white">Home</h1>
         {/* <p className="text-white">watch list</p> */}
       </div>
-
-      <AnimeCarousel trendingAnimes={data?.trendingAnimes!} />
 
       <div className="text-white my-4 w-full">
         <div className="flex items-center justify-between">

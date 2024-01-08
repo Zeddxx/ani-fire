@@ -1,7 +1,6 @@
 'use client';
 
 import VideoPlayer from "@/components/shared/video-player";
-import { Separator } from "@/components/ui/separator";
 import { useGetAnimeEpisodeServer, useGetAnimeEpisodes } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
