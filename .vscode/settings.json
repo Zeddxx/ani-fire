@@ -1,0 +1,9 @@
+{
+    "git.repositoryScanIgnoredFolders": [
+        "node_modules",
+        "true"
+    ],
+    "files.exclude": {
+        "**/.git": false
+    }
+}
