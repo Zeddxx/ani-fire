@@ -15,6 +15,7 @@
     "axios": "^1.6.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "embla-carousel": "^8.0.0-rc19",
     "embla-carousel-autoplay": "^8.0.0-rc18",
     "embla-carousel-react": "^8.0.0-rc18",
     "lucide-react": "^0.304.0",
