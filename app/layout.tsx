@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(poppins.className, "bg-black antialiased text-white")}>
+      <body className={cn(poppins.className, "bg-black antialiased text-white dark")}>
         <QueryProvider>
           {children}
         </QueryProvider>

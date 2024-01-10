@@ -10,7 +10,7 @@ const HomeMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   return (
     <>
-      <header className="h-20 max-w-[1420px] mx-auto w-full xl:px-0 flex items-center px-4">
+      <header className="h-20 max-w-[1220px] mx-auto w-full xl:px-0 flex items-center px-4">
         <nav className="flex items-center justify-between">
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="flex gap-x-2 items-center">
             {isMenuOpen ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}

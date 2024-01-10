@@ -6,6 +6,7 @@ import { useGetAllAnime } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const Home = () => {
@@ -26,9 +27,9 @@ const Home = () => {
 
       <div className="flex w-full items-center gap-x-6">
         <div className="w-full">
-          <div className="w-full gap-x-5 h-auto my-8 flex">
+          <div className="w-full gap-5 h-auto my-8 flex sm:flex-row flex-col">
             <Input
-              className="rounded-full h-14 text-black text-lg pl-6 outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="rounded-full h-14 text-lg pl-6 outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -36,7 +37,7 @@ const Home = () => {
             />
             <Button
               asChild
-              className="h-14 text-white bg-[#FF003D] hover:bg-[#FF003D]/80 rounded-full w-14 shrink-0"
+              className="rounded-full h-14 w-full sm:w-14 shrink-0"
             >
               <a href={`/search?keyword=${query}`} className={cn(!query && "pointer-events-none opacity-70")}>
                 <SearchIcon className="h-6 w-6" />
@@ -50,7 +51,7 @@ const Home = () => {
                 ? "loading..."
                 : data?.trendingAnimes.map((anime) => (
                     <a
-                      href={`/search?keyword=${anime.name}`}
+                      href={`/search?keyword=${anime.name}&page=1`}
                       key={anime.id}
                       className="hover:text-[#FF003D] duration-150"
                     >
@@ -60,6 +61,12 @@ const Home = () => {
                   ))}
             </p>
           </div>
+
+      <Button asChild className="w-full rounded-none mt-3">
+        <Link href="/home">
+          Visit full site
+        </Link>
+      </Button>
         </div>
 
         <div className="relative hidden lg:block h-[30vw] max-h-72 max-w-[34rem] min-w-[26rem] w-[60vw]">
@@ -72,9 +79,10 @@ const Home = () => {
         </div>
       </div>
 
-      <button className="w-full my-4 p-4 h-16 bg-rose-600 rounded-br-full rounded-bl-full">
-        Visit full site
-      </button>
+      <div className="my-8">
+        <h2 className="text-2xl text-pretty text-primary-foreground font-semibold">AniFire: A site which is made just for educational purpose and have no intentions to get any revenew and others.</h2>
+        <p className="text-muted-foreground">This website is free of ads and made my a solo developer which have no intention to make this public if anyone get to know this website from any people please exit this site. This is made to showcase on my developer portfolio! ❤️</p>
+      </div>
     </div>
   );
 };

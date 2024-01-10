@@ -178,7 +178,7 @@ export type MostPopularAnimesProps = {
 export type SearchedAnimeProps = {
     animes: AnimesProps[],
     currentPage: number
-    hasNextPpage: boolean
+    hasNextPage: boolean
     mostPopularAnimes: MostPopularAnimesProps[]
     totalPages: number
 }

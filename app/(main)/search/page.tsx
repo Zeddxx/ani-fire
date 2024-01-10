@@ -1,23 +1,21 @@
 "use client";
 
+import AnimeCard from "@/components/shared/anime-card";
+import AnimePagination from "@/components/shared/pagination";
 import { Button } from "@/components/ui/button";
 import { useGetAllAnime, useGetSearchedAnime } from "@/lib/query-api";
 import { useSearchParams } from "next/navigation";
-import AnimeCard from "@/components/shared/anime-card";
 
 const SearchPage = () => {
   const params = useSearchParams();
   const query = params.get("keyword");
-  console.log(query);
+  const page = Number(params.get("page"));
 
-  const { data, isLoading, isError } = useGetSearchedAnime(query!, 1);
   const { data: genres, isLoading: isGenreLoading } = useGetAllAnime();
-
-  if (isLoading && isGenreLoading) return <p>Loading...</p>;
-
-  if (isError) return <p>Error</p>;
-
+  const { data, isLoading, isError } = useGetSearchedAnime(query!, page);
   console.log(data);
+
+  if (isGenreLoading) return <p>Loading...</p>;
 
   return (
     <>
@@ -28,9 +26,9 @@ const SearchPage = () => {
             <div className="flex flex-wrap gap-2">
               {genres?.genres.map((genre) => (
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
-                  className="bg-transparent"
+                  className="bg-transparent text-xs"
                   key={genre}
                 >
                   {genre}
@@ -52,11 +50,20 @@ const SearchPage = () => {
               <span className="italic text-[#FF003D]">{query}</span>
             </h2>
             {data?.animes.length! > 0 ? (
-              <div className="grid lg:grid-cols-5 sm:grid-cols-4 grid-cols-3 my-6 gap-4 w-full">
-                {data?.animes.map((anime) => (
-                  <AnimeCard anime={anime} key={anime.id} />
-                ))}
-              </div>
+              <>
+                <div className="grid lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
+                  {data?.animes.map((anime) => (
+                    <AnimeCard key={anime.id} anime={anime} />
+                  ))}
+                </div>
+                <AnimePagination
+                  totalPages={data?.totalPages!}
+                  currentPage={data?.currentPage!}
+                  hasNextPage={data?.hasNextPage!}
+                  query={query!}
+                  page={page}
+                />
+              </>
             ) : (
               <div className="w-full my-8 h-auto">
                 <h1 className="text-3xl text-center">

@@ -1,11 +1,14 @@
+'use client';
+
 import { Mic } from "lucide-react";
 import { FaPlay } from "react-icons/fa";
 import Image from "next/image";
 import { AnimesProps, TopUpcomingAnimes } from "@/types";
 
-const AnimeCard = ({ anime }: { anime: AnimesProps | TopUpcomingAnimes }) => {
+
+const AnimeCard = ({ anime } : { anime: AnimesProps | TopUpcomingAnimes} ) => {
   return (
-    <div key={anime.id} className="flex flex-col">
+      <div key={anime.id} className="flex flex-col">
       <a
         href={`/${anime.id}`}
         className="rounded-md w-full h-[30vw] max-h-80 lg:max-h-64 min-h-60 overflow-hidden relative"

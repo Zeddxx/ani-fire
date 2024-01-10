@@ -61,7 +61,7 @@ const AnimeInfo = ({ data, episode, description } : { data: AnimeInfoTypeProps, 
 
             {/* Description here! */}
 
-            <p className="text-muted text-sm">
+            <p className="text-slate-50 text-sm">
               {description?.length! > 300
                 ? isShowMore
                   ? description
@@ -76,7 +76,7 @@ const AnimeInfo = ({ data, episode, description } : { data: AnimeInfoTypeProps, 
             </p>
 
             <div className="my-3">
-              <p className="text-muted text-sm">
+              <p className="text-muted-foreground text-sm">
                 AniFire is a website to watch the animes for free and event
                 ads-free. My main motive was to make a full functionable website
                 to showcase in my portfolio i have no intentions to make any
