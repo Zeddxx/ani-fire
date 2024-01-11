@@ -46,7 +46,7 @@ const Home = () => {
           </div>
           <div className="flex w-full">
             <p>
-              <span className="font-medium mr-2">Top search:</span>
+              <span className="font-medium mr-2 text-primary-foreground">Top search:</span>
               {isLoading
                 ? "loading..."
                 : data?.trendingAnimes.map((anime) => (

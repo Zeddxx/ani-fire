@@ -19,7 +19,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className="h-full max-w-[1420px] mx-auto flex w-full gap-x-4 mt-8 xl:px-0 px-4">
+      <div className="h-full max-w-[1420px] pt-20 mx-auto flex w-full gap-x-4 mt-8 xl:px-0 px-4">
         <div className="flex-1 h-auto">
           <div className="w-full h-auto xl:py-10 p-6 bg-stone-800 rounded-xl">
             <h1 className="mb-6 text-xl">Genre</h1>

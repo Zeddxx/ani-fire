@@ -3,7 +3,6 @@
 import { useGetAnimeStreaming } from "@/lib/query-api";
 import { useEffect, useRef, useState } from "react";
 import { ReactPlayerProps } from "react-player";
-import screenfull from "screenfull";
 import ReactPlayer from "react-player";
 import { IoPlaySharp, IoPause } from "react-icons/io5";
 import BaseReactPlayer from "react-player/base";
@@ -11,8 +10,7 @@ import { AiFillBackward, AiFillForward } from "react-icons/ai";
 import { formatTime, cn } from "@/lib/utils";
 import { GoUnmute, GoMute } from "react-icons/go";
 
-import { Slider, makeStyles, withStyles } from "@mui/material";
-import { findDOMNode } from "react-dom";
+import { Slider } from "@mui/material";
 
 type VideoPlayerProps = {
   episodeId: string;
@@ -33,10 +31,14 @@ let count = 0;
 
 const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
   const { data } = useGetAnimeStreaming(episodeId, server, category);
+
+  // The control container
   const controlRef = useRef<HTMLDivElement>(null);
 
   const [fullscreenMode, setFullscreenMode] = useState<boolean>(false);
   const [isShowControls, setIsShowControls] = useState<boolean>(false);
+
+  // Playing props
   const [videoState, setVideoState] = useState<PlayingProps>({
     playing: false,
     muted: false,
@@ -57,11 +59,15 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     : "00:00";
 
   const subtitles = data?.subtitles || [];
+
+  // TODO: To give the option to select the server!
   const defaultUrl = data?.sources[0].url || data?.sources[0].url || "";
 
+  // Formating the time that video is giving
   const formatCurrentTime = formatTime(currentTime);
   const formatDuration = formatTime(duration);
 
+  // All controll functions here
   const handlePlay = () => {
     setVideoState({ ...videoState, playing: !videoState.playing });
   };

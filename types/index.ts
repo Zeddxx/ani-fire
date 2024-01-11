@@ -20,6 +20,8 @@ export type SpotLightAnimesProps = {
     rank: number
     id: string
     name: string
+    poster: string
+    otherInfo: string[]
 }
 
 export type MonthAnimeProps = {
@@ -63,7 +65,7 @@ export type TrendingAnimeProps = {
 export type HomeAnimeProps = {
     genres: string[]
     latestEpisodeAnimes: LatestAnimeProps[] 
-    spotLightAnimes: SpotLightAnimesProps[]
+    spotlightAnimes: SpotLightAnimesProps[]
     top10Animes: Top10AnimeProps[]
     topAiringAnimes: TopAiringAnimesProps[]
     topUpcomingAnimes: TopUpcomingAnimes[]

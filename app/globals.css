@@ -18,6 +18,17 @@ body::-webkit-scrollbar-thumb {
   background: #000000;
 }
 
+.veritcal-text {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  text-orientation: use-glyph-orientation;
+  text-align: left;
+}
+
+.user-drag {
+  -webkit-user-drag: none;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

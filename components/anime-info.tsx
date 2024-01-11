@@ -86,7 +86,7 @@ const AnimeInfo = ({ data, episode, description } : { data: AnimeInfoTypeProps, 
           </div>
         
         {/* More info's */}
-          <div className="lg:max-w-96 w-full rounded-xl flex-shrink-0 flex flex-col text-sm bg-white/30 py-4 px-2 backdrop-blur-md gap-4 justify-center lg:h-full">
+          <div className="lg:max-w-96 w-full flex-shrink-0 flex flex-col text-sm bg-white/10 p-6 backdrop-blur-md gap-4 justify-center lg:h-full">
               <p>
                 <span className="font-medium">Japanese:</span>{" "}{data?.anime.moreInfo.japanese}
               </p>

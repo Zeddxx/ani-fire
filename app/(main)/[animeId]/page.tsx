@@ -21,7 +21,7 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
   const description = data?.anime.info.description || "";
 
   return (
-    <section className="relative h-auto">
+    <section className="relative h-auto pt-20">
       <div className="absolute w-full h-full -z-10">
         <Image
           src={data?.anime.info.poster!}
