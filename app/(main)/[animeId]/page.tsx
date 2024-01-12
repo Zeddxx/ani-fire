@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AnimeInfo from "@/components/anime-info";
+import { Separator } from "@/components/ui/separator";
 
 const AnimePage = ({ params }: { params: { animeId: string } }) => {
   const { data, isLoading, isError } = useGetAnimeInfo(params.animeId);
@@ -16,7 +17,7 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
 
   if (isError) return <p>Error..</p>;
 
-  console.log({ data, episode });
+  console.log(data);
 
   const description = data?.anime.info.description || "";
 
@@ -33,53 +34,84 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
       {/* Anime general information */}
       <AnimeInfo data={data!} description={description} episode={episode!} />
 
-        <div className="flex max-w-[1420px] mx-auto w-full xl:px-0 px-4 gap-3 flex-wrap">
-            {data?.seasons.map((season) => (
-              <a href={`/${season.id}`} className={cn("relative px-2 h-[30vw] max-h-[4rem] min-h-[1rem] py-2 w-[30vw] max-w-[6rem] sm:max-w-[12rem] min-w-[8rem] overflow-hidden bg-dotted-pattern bg-contain flex items-center rounded-lg", season.isCurrent && "outline outline-rose-600 text-rose-100")} key={season.id}>
-                <Image src={season.poster} alt="season poster" fill className="h-full blur-md w-full -z-10 opacity-60 object-cover" />
-                <p className="text-xs font-medium h-auto w-full z-20 text-center leading-4">{season.name.length > 30 ? season.name.slice(0, 30) + "..." : season.name}</p>
-              </a>
-            ))}
-        </div>
-      <div className="max-w-[1420px] flex xl:flex-row flex-col gap-x-4 xl:px-0 px-4 mx-auto w-full my-10 h-auto">
+      <div className="flex max-w-screen-2xl mx-auto w-full xl:px-0 px-4 gap-3 flex-wrap">
+        {data?.seasons.map((season, index) => (
+          <a
+            href={`/${season.id}`}
+            className={cn(
+              "relative px-2 h-[30vw] max-h-[4rem] min-h-[1rem] py-2 w-[30vw] max-w-[6rem] sm:max-w-[12rem] min-w-[8rem] overflow-hidden bg-dotted-pattern bg-contain flex items-center rounded-lg",
+              season.isCurrent && "outline outline-rose-600 text-rose-100"
+            )}
+            key={season.id + index}
+          >
+            <Image
+              src={season.poster}
+              alt="season poster"
+              fill
+              className="h-full blur-md w-full -z-10 opacity-60 object-cover"
+            />
+            <p className="text-xs font-medium h-auto w-full z-20 text-center leading-4">
+              {season.name.length > 30
+                ? season.name.slice(0, 30) + "..."
+                : season.name}
+            </p>
+          </a>
+        ))}
+      </div>
+      <div className="max-w-screen-2xl flex xl:flex-row flex-col gap-x-4 px-4 mx-auto w-full my-10 h-auto">
         <div className="w-full h-auto">
           <h3 className="text-2xl font-semibold">Recommanded Animes</h3>
-          <div className="grid lg:grid-cols-5 sm:grid-cols-4 grid-cols-3 my-6 gap-4 w-full">
-            {data?.recommendedAnimes.map((anime) => (
-              <AnimeCard anime={anime} key={anime.id} />
+          <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
+            {data?.recommendedAnimes.map((anime, index) => (
+              <AnimeCard anime={anime} key={anime.id + index} />
             ))}
           </div>
         </div>
 
-        <div className="xl:max-w-xs w-full my-4">
-          <h4 className="text-2xl">Related Animes</h4>
-          <div className="w-full p-6 bg-stone-950 flex flex-col gap-6 rounded-2xl">
-            {data?.relatedAnimes.map((anime) => (
-              <div className="w-full h-auto" key={anime.id}>
+        <div className="xl:max-w-xs w-full">
+          <h4 className="text-2xl mb-5">Related Animes</h4>
+          <div className="w-full py-6 px-2 bg-stone-950 border border-muted flex flex-col">
+            {data?.relatedAnimes.map((anime, index) => (
+              <div className="w-full h-auto" key={anime.id + index}>
                 <div className="flex justify-between px-3">
                   <div className="flex gap-x-6">
-                    <div className="rounded-xl flex-shrink-0 overflow-hidden relative h-28 w-20">
-                    <Image
-                      src={anime.poster}
-                      alt="anime poster"
-                      fill
-                      className="h-full w-full object-cover"
-                    />
+                    <div className="rounded-md flex-shrink-0 overflow-hidden relative h-28 w-20">
+                      <Image
+                        src={anime.poster}
+                        alt="anime poster"
+                        fill
+                        className="h-full w-full object-cover"
+                      />
                     </div>
                     <div className="flex-shrink-0 flex-1 xl:text-sm text-wrap">
-                      <h5>{anime.name}</h5>
-                      <div className="flex rounded-xl h-5 mt-2 items-center overflow-hidden text-xs">
-                        <p className="bg-rose-600 text-xs px-2 py-1 font-bold">
+                      <a href={`/${anime.id}`} className="w-fit hover:text-primary">
+                      <h5 className="text-sm font-semibold leading-tight">
+                        {anime.name}
+                      </h5>
+                      </a>
+                      <div className="flex h-5 mt-2 items-center overflow-hidden text-xs">
+                        <p className="bg-rose-600 text-xs px-2 py-1 font-normal">
                           CC: {anime.episodes.sub || 0}
                         </p>
                         <p className="text-xs flex bg-black px-2 items-center gap-x-1">
                           <Mic className="h-4 w-4" />
                           {anime.episodes.dub || 0}
                         </p>
+
+                        <span className="h-1 w-1 flex rounded-full mr-2 bg-muted-foreground"></span>
+
+                        <p>{anime.type}</p>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                <Separator
+                  className={cn(
+                    "my-5",
+                    index === data.relatedAnimes.length - 1 && "hidden"
+                  )}
+                />
               </div>
             ))}
           </div>

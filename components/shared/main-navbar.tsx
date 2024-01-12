@@ -2,8 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { MenuIcon, SearchIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { IoIosArrowBack, IoIosArrowUp } from "react-icons/io";
 
 import { Button } from "../ui/button";
 import { MainNavbarItems } from "@/constants";
@@ -11,12 +11,39 @@ import Image from "next/image";
 import Link from "next/link";
 import { BiSolidLogInCircle } from "react-icons/bi";
 import { useSearchParams } from "next/navigation";
+import { Input } from "../ui/input";
+import { useScrollTop } from "@/hooks";
 
 const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
+  const [searchQuery, setSearchQuery] = useState("");
 
+  const searchRef = useRef<HTMLInputElement>(null);
   const params = useSearchParams();
+  const scrolled = useScrollTop()
+
+  const handleButton = () => {
+    return window.location.assign(`/search?keyword=${searchQuery}&page=1`)
+  }
+
+  const handleQuery = (e: KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === "Enter") {
+      console.log("enter");
+      return window.location.assign(`/search?keyword=${searchQuery}&page=1`)
+    }
+  }
+
+  const handleSearchOption = () => {
+    setIsSearchOpen(!isSearchOpen)
+    if(!isSearchOpen && searchRef) {
+      return searchRef?.current?.focus()
+    }
+  }
+
+  const handleTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -52,8 +79,8 @@ const MainNavbar = () => {
           ))}
         </ul>
       </aside>
-      <header className="h-20 xl:px-0 md:px-4 bg-gradient-to-t w-full absolute z-30 top-0 flex items-center duration-300 from-transparent via-black/50 to-black">
-        <nav className="flex justify-between items-center max-w-screen-2xl px-4 mx-auto w-full">
+      <header className="h-20 xl:px-0 md:px-4 bg-gradient-to-t w-full fixed z-30 top-0 flex items-center duration-300 from-transparent via-black/50 to-black">
+        <nav className="flex justify-between items-center max-w-screen-2xl z-20 px-4 mx-auto w-full">
           <div className="flex gap-x-4 items-center">
             <button
               onClick={() => setIsMenuOpen(true)}
@@ -69,7 +96,7 @@ const MainNavbar = () => {
           </div>
 
           <div className="flex items-center gap-x-3 sm:gap-x-6">
-            <Button onClick={() => setIsSearchOpen(!isSearchOpen)} size="icon" variant="outline">
+            <Button onClick={handleSearchOption} size="icon" variant="outline">
               <SearchIcon className="h-6 w-6" />
             </Button>
 
@@ -79,10 +106,20 @@ const MainNavbar = () => {
             </Button>
           </div>
         </nav>
+
+      <div className={cn("w-full gap-x-4 bg-black absolute z-10 top-0 flex items-end px-4 duration-300 overflow-hidden", isSearchOpen ? "md:h-60 h-52 py-6" : "h-0")}>
+        <div className="flex flex-collg:flex-row w-full gap-4">
+        <Input ref={searchRef} onKeyDown={(e) => handleQuery(e)} onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder="Attack on titan" />
+        <Button onClick={handleButton} disabled={!searchQuery} className="md:w-32 w-full">Search</Button>
+        </div>
+      </div>
       </header>
 
-      <div className={cn("w-full bg-black duration-300 delay-100 overflow-hidden", isSearchOpen ? "h-40" : "h-0")}></div>
-
+      {scrolled && (
+        <Button onClick={handleTop} className="h-12 grid place-items-center rounded-full w-12 fixed bottom-4 cursor-poiner z-20 right-4">
+          <IoIosArrowUp className="h-4 w-4" />
+        </Button>
+      )}
     </>
   );
 };

@@ -34,7 +34,7 @@ const HomePage = () => {
         onRequestChange={setActiveSlideIndex}
         itemsToShow={6}
         itemsToScroll={1}
-        swipeTreshold={300}
+        swipeTreshold={100}
         forwardBtnProps={{
           //here you can also pass className, or any other button element attributes
           className : "hidden md:block z-10 absolute right-0 bottom-0 h-[49%]",
@@ -57,7 +57,7 @@ const HomePage = () => {
             maxWidth: 1536
           },
           {
-            itemsToShow: 4,
+            itemsToShow: 2,
             itemsToScroll: 2,
             minWidth: 320,
             maxWidth: 512
@@ -71,8 +71,9 @@ const HomePage = () => {
             const animeRank = anime.rank ? anime.rank : "00";
             return(
               <div title={anime.name} className={cn("flex items-end w-auto relative pl-3", index === 0 && "pl-0")}  key={anime.id}>
+                <p className={cn("absolute top-0 z-10 bg-primary grid place-items-center w-8 h-8 md:hidden", index === 0 ? "left-0" : "left-3")}>{animeRank}</p>
                 <div className="select-none hidden md:block">
-                <p className={cn("veritcal-text truncate h-52 text-sm font-medium pr-6 pl-2", index === 0 && "pr-0")}>
+                <p className={cn("veritcal-text truncate h-52 text-sm font-medium pr-2 pl-2", index === 0 && "pr-0")}>
                   {anime.name}
                 </p>
                 <p className="text-end pr-3 text-xl mt-4 leading-none font-semibold">

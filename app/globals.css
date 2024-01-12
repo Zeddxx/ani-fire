@@ -6,6 +6,19 @@
   display: none;
 }
 
+.episode-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.episode-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  scroll-behavior: smooth;
+}
+
 .scroll-hidden {
   -ms-overflow-style: none;
   scrollbar-width: none;

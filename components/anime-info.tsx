@@ -3,13 +3,15 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { AnimeInfoTypeProps, GetAnimeEpisodes } from "@/types";
 import { useState } from "react";
+import { Badge } from "./ui/badge";
+import { Separator } from "./ui/separator";
 
 
 const AnimeInfo = ({ data, episode, description } : { data: AnimeInfoTypeProps, episode: GetAnimeEpisodes, description: string }) => {
   const [isShowMore, setIsShowMore] = useState<boolean>(false);
 
   return (
-    <div className="flex max-w-[1420px] mx-auto w-full h-auto px-4 py-10 relative">
+    <div className="flex max-w-screen-2xl mx-auto w-full h-auto px-4 py-10 relative">
         <div className="flex lg:flex-row flex-col items-center lg:items-start gap-x-4 h-auto w-full">
             <div className="relative h-80 mb-6 lg:mb-0 w-52 lg:min-w-64 overflow-hidden rounded-md before:absolute before:w-full before:bg-gradient-to-t before:from-stone-950 before:to-transparent before:h-32 before:bottom-0 before:left-0 before:z-20">
               <Image
@@ -86,7 +88,7 @@ const AnimeInfo = ({ data, episode, description } : { data: AnimeInfoTypeProps, 
           </div>
         
         {/* More info's */}
-          <div className="lg:max-w-96 w-full flex-shrink-0 flex flex-col text-sm bg-white/10 p-6 backdrop-blur-md gap-4 justify-center lg:h-full">
+          <div className="lg:max-w-96 w-full flex-shrink-0 flex flex-col text-sm border border-muted bg-black p-6 backdrop-blur-md gap-4 justify-center lg:h-max">
               <p>
                 <span className="font-medium">Japanese:</span>{" "}{data?.anime.moreInfo.japanese}
               </p>
@@ -105,6 +107,29 @@ const AnimeInfo = ({ data, episode, description } : { data: AnimeInfoTypeProps, 
               <p>
                 <span className="font-medium">Status:</span>{" "}{data?.anime.moreInfo.status}
               </p>
+
+              <Separator />
+
+              <div className="flex flex-wrap gap-3">
+               <span className="text-sm text-primary-foreground">Genre :</span> {data.anime.moreInfo.genres.map((genre) => (
+                 <Badge variant="secondary" key={genre} className="hover:text-primary font-light">
+                  {genre}
+                </Badge>
+                  ))}
+              </div>
+                  <Separator />
+
+                  <p>
+                    <span>Studio:{" "}</span>
+                    {data.anime.moreInfo.studios.split(",").join(", ")}
+                  </p>
+
+                  <p>
+                    <span>
+                      Producers: {" "}
+                    </span>
+                    {data.anime.moreInfo.producers}
+                  </p>
           </div>
         </div>
       </div>

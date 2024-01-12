@@ -1,11 +1,12 @@
 "use client";
 
+import Episodes from "@/components/shared/episodes";
 import VideoPlayer from "@/components/shared/video-player";
+import { Button } from "@/components/ui/button";
 import { useGetAnimeEpisodeServer, useGetAnimeEpisodes } from "@/lib/query-api";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { IoIosArrowForward } from "react-icons/io";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const WatchAnime = ({ params }: { params: { id: string } }) => {
   const para = useSearchParams();
@@ -14,23 +15,22 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
 
   const { data, isLoading, isError } = useGetAnimeEpisodeServer(query);
   const { data: episodes, isLoading: isEpisodeLoading } = useGetAnimeEpisodes(params.id);
-  const router = useRouter();
+  const [ currentServer, setCurrentServer] = useState("vidstreaming")
 
+  console.log(currentServer);
+
+  const [selectedServer, setSelectedServer] = useState<string | null>(data?.sub[0].serverName || null);
   if(isEpisodeLoading) return <p>Loading episodes...</p>
 
-  console.log({ episodes });
+  console.log({ data });
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error</p>;
 
-  // if(!episodeNumber) {
-  //   router.push(`/watch/${episodes?.episodes[0].episodeId}`)
-  //  }
-
   return (
     <section className="relative w-full pt-20 h-auto">
       {/* Background image */}
-      <div className="absolute w-full h-96 -z-10">
+      <div className="absolute w-full left-1/2 -translate-x-1/2 h-96 -z-10">
         <Image
           src="/assets/bg-image.jpg"
           alt="background image"
@@ -40,74 +40,60 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
       </div>
 
       {/* Flow Tree */}
-      <div className="lg:flex hidden my-4 max-w-[1420px] mx-auto gap-x-1 items-center xl:px-0 px-4">
+      <div className="lg:flex text-sm hidden my-4 max-w-screen-2xl mx-auto gap-x-1 items-center px-4">
         {/* TODO: make it working as link element */}
         <p className="hover:text-rose-600 text-primary-foreground">Home</p>
-        <IoIosArrowForward />
+        <span className="h-1 w-1 flex rounded-full bg-muted-foreground mx-2"></span>
         <p className="hover:text-rose-600 text-primary-foreground">TV</p>
-        <IoIosArrowForward />
+        <span className="h-1 w-1 flex rounded-full bg-muted-foreground mx-2"></span>
 
         {/* TODO: To fix the episode code here */}
         <p>{params.id.split("-").join(" ")}</p>
       </div>
 
       {/* main episodes no. and video player here! */}
-      <div className="max-w-[1420px] mx-auto w-full flex lg:flex-row flex-col gap-x-2 h-auto">
-        <aside className="max-w-[16rem] h-[30rem] overflow-y-scroll xl:block hidden w-full">
-          <div className="h-full w-full flex-wrap flex">
-            {/* TODO: make it dynamic or adding links to it */}
-
-            {episodes?.episodes.map((episode) => (
-              <p
-                className="py-4 truncate px-2 w-full text-sm bg-neutral-800"
-                key={episode.episodeId}
-              >
-                {episode.number}{" "}
-                <span className="max-w-20 ml-2">{episode.title}</span>
-              </p>
-            ))}
-          </div>
-        </aside>
+      <div className="max-w-screen-2xl px-4 mx-auto w-full flex xl:flex-row flex-col h-auto">
+          {isEpisodeLoading && !episodes ? (
+        <p>Loading...</p>
+            ) : (
+          <Episodes screen="PC" query={query} episodes={episodes?.episodes!} moreEpisodes={episodes?.totalEpisodes!} />
+          )}
 
         {/* Video player --> */}
-        <div className="w-full">
+        <div className="w-full h-full">
           {/* TODO: make loading a rectangle of height same as the video height */}
           {isLoading && !episodeNumber ? (
             <p>Loading...</p>
           ) : (
             <VideoPlayer
               episodeId={data?.episodeId!}
-              server={data?.sub[0].serverName!}
+              server={currentServer || ""}
               category={"sub"}
             />
           )}
+
+          {/* <select onChange={handleChange} className="text-black" value={selectedServer || ""} name="server" id="servername">
+            <option value="select server">
+              select
+            </option>
+            {data?.sub.map((server) => (
+              <option value={server.serverName} key={server.serverName}>
+                {server.serverName}
+              </option>
+            ))}
+          </select> */}
+
+          <div className="flex gap-4">
+            {data?.sub.map((server) => (
+              <Button onClick={() => setCurrentServer(server.serverName)} key={server.serverName}>
+                {server.serverName}
+              </Button>
+            ))}
+          </div>
         </div>
 
         {/* Episodes numbers for mobile 📱 */}
-        <p className="text-sm px-4 mt-6">No. of episodes:</p>
-        <div className="w-full my-3 xl:hidden flex flex-col h-96 px-2 overflow-y-scroll">
-          {episodes?.episodes.map((episode) => {
-            // if the current episode is equals to the episode we are watching the make it true!
-            const isCurrent = query === episode.episodeId;
-
-            // TODO: make it more stylish and optimise it
-            return (
-              <a
-                href={`/watch/${episode.episodeId}`}
-                className={cn(
-                  "py-4 group hover:bg-neutral-700 border-b text-sm px-2 flex gap-x-2 bg-neutral-800",
-                  isCurrent && "bg-neutral-800 text-rose-500"
-                )}
-                key={episode.episodeId}
-              >
-                <p className="">{episode.number}</p>
-                <p className="group-hover:text-rose-500 duration-200">
-                  {episode.title}
-                </p>
-              </a>
-            );
-          })}
-        </div>
+          <Episodes screen="Mobile" query={query} episodes={episodes?.episodes!} moreEpisodes={episodes?.totalEpisodes!} />
 
         {/* TODO: add a brief info of the anime */}
         <aside className="xl:block h-60 max-w-[18rem] w-full bg-gray-400"></aside>
