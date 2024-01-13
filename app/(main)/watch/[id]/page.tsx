@@ -1,28 +1,45 @@
 "use client";
 
+import AnimeInfo from "@/components/anime-info";
 import Episodes from "@/components/shared/episodes";
 import VideoPlayer from "@/components/shared/video-player";
 import { Button } from "@/components/ui/button";
-import { useGetAnimeEpisodeServer, useGetAnimeEpisodes } from "@/lib/query-api";
+import { Separator } from "@/components/ui/separator";
+import {
+  useGetAnimeEpisodeServer,
+  useGetAnimeEpisodes,
+  useGetAnimeInfo,
+} from "@/lib/query-api";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
 const WatchAnime = ({ params }: { params: { id: string } }) => {
   const para = useSearchParams();
   const episodeNumber = para.get("ep");
   const query = params.id + "?ep=" + para.get("ep");
+  const server = para.get("server");
 
   const { data, isLoading, isError } = useGetAnimeEpisodeServer(query);
-  const { data: episodes, isLoading: isEpisodeLoading } = useGetAnimeEpisodes(params.id);
-  const [ currentServer, setCurrentServer] = useState("vidstreaming")
+  const { data: episodes, isLoading: isEpisodeLoading } = useGetAnimeEpisodes(
+    params.id
+  );
+  const { data: animeInfo, isLoading: isInfoLoading } = useGetAnimeInfo(
+    params.id
+  );
+  console.log(animeInfo);
+  const description = animeInfo?.anime.info.description
 
-  console.log(currentServer);
+  const handleClick = (server: string) => {
+    return window.location.assign(
+      `/watch/one-piece-100?ep=2416&server=${server}`
+    );
+  };
 
-  const [selectedServer, setSelectedServer] = useState<string | null>(data?.sub[0].serverName || null);
-  if(isEpisodeLoading) return <p>Loading episodes...</p>
+  const isCurrentEpisode = episodes?.episodes.filter(
+    (episode) => episode.episodeId === query
+  );
 
-  console.log({ data });
+  if (isEpisodeLoading) return <p>Loading episodes...</p>;
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error</p>;
@@ -53,11 +70,16 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
 
       {/* main episodes no. and video player here! */}
       <div className="max-w-screen-2xl px-4 mx-auto w-full flex xl:flex-row flex-col h-auto">
-          {isEpisodeLoading && !episodes ? (
-        <p>Loading...</p>
-            ) : (
-          <Episodes screen="PC" query={query} episodes={episodes?.episodes!} moreEpisodes={episodes?.totalEpisodes!} />
-          )}
+        {isEpisodeLoading && !episodes ? (
+          <p>Loading...</p>
+        ) : (
+          <Episodes
+            screen="PC"
+            query={query}
+            episodes={episodes?.episodes!}
+            moreEpisodes={episodes?.totalEpisodes!}
+          />
+        )}
 
         {/* Video player --> */}
         <div className="w-full h-full">
@@ -67,36 +89,69 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
           ) : (
             <VideoPlayer
               episodeId={data?.episodeId!}
-              server={currentServer || ""}
+              server={!server ? "vidstreaming" : server}
               category={"sub"}
             />
           )}
-
-          {/* <select onChange={handleChange} className="text-black" value={selectedServer || ""} name="server" id="servername">
-            <option value="select server">
-              select
-            </option>
-            {data?.sub.map((server) => (
-              <option value={server.serverName} key={server.serverName}>
-                {server.serverName}
-              </option>
-            ))}
-          </select> */}
-
-          <div className="flex gap-4">
-            {data?.sub.map((server) => (
-              <Button onClick={() => setCurrentServer(server.serverName)} key={server.serverName}>
-                {server.serverName}
-              </Button>
-            ))}
+          <div className="flex lg:flex-row flex-col gap-x-4 py-3">
+            <div className="lg:w-1/2 w-full flex flex-col bg-primary p-3 items-center justify-center text-center">
+              <p className="text-sm text-black inline">
+                You are watching{" "}
+                <span className="font-semibold">
+                  Episode {!!isCurrentEpisode && isCurrentEpisode[0].number}
+                </span>{" "}
+                If current server doesnt work please try other servers beside.
+              </p>
+            </div>
+            <div className="lg:mt-0 mt-4">
+              <div className="flex items-center gap-x-4 mb-4">
+                <p className="text-sm">Sub: </p>
+                <div className="flex gap-4 flex-wrap">
+                  {data?.sub.map((server) => (
+                    <Button
+                      size="sm"
+                      onClick={() => handleClick(server.serverName)}
+                      key={server.serverName}
+                    >
+                      {server.serverName}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <Separator className="w-full" />
+              <div className="flex gap-x-4 mt-4 items-center">
+                <p className="text-sm">Dub:</p>
+                <div className="flex gap-4 flex-wrap">
+                  {data?.dub.map((server) => (
+                    <Button
+                      size="sm"
+                      onClick={() => handleClick(server.serverName)}
+                      key={server.serverName}
+                    >
+                      {server.serverName}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Episodes numbers for mobile 📱 */}
-          <Episodes screen="Mobile" query={query} episodes={episodes?.episodes!} moreEpisodes={episodes?.totalEpisodes!} />
+        <Episodes
+          screen="Mobile"
+          query={query}
+          episodes={episodes?.episodes!}
+          moreEpisodes={episodes?.totalEpisodes!}
+        />
 
         {/* TODO: add a brief info of the anime */}
-        <aside className="xl:block h-60 max-w-[18rem] w-full bg-gray-400"></aside>
+        <aside className="xl:block max-h-[30rem] h-auto xl:max-w-[23rem] w-full flex gap-x-4">
+          <div className=""></div>
+          <div className="">
+            <AnimeInfo page="Watching" description={description} data={animeInfo!} />
+          </div>
+        </aside>
       </div>
     </section>
   );

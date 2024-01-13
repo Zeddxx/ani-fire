@@ -37,6 +37,7 @@ const MainNavbar = () => {
   const handleSearchOption = () => {
     setIsSearchOpen(!isSearchOpen)
     if(!isSearchOpen && searchRef) {
+      setIsMenuOpen(false)
       return searchRef?.current?.focus()
     }
   }
@@ -51,7 +52,7 @@ const MainNavbar = () => {
 
   return (
     <>
-      {isMenuOpen && (
+      {isMenuOpen && !isSearchOpen && (
         <div onClick={() => setIsMenuOpen(false)} className="w-full h-full bg-black/40 backdrop-blur-xl fixed z-30"></div>
       )}
       <aside

@@ -27,8 +27,6 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     return undefined; // or a default value if you prefer
   });
 
-  console.log(setUrl);
-
   const playerRef = useRef<BaseReactPlayer<ReactPlayerProps>>(null);
 
   const subtitles = data?.subtitles || [];
@@ -42,16 +40,20 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
 
   return (
     <>
-      <div className="w-full bg-black h-auto relative video-container">
+      <div className="w-full flex justify-center bg-black h-auto relative video-container">
         {isLoading && !setUrl ? (
           <p>Loading video....</p>
         ) : (
           <ReactPlayer
             ref={playerRef}
-            url={setUrl}
+            url={setUrl || data?.sources[0].url}
             className="video-element text-primary"
+            minwidth={"100%"}
+            maxwidth={"820px"}
             width={"100%"}
-            height={393}
+            height={"100%"}
+            minheight={393}
+            maxheight={462}
             controls
             config={{
               file: {
@@ -64,14 +66,14 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
                   src: subtitle.url,
                   label: subtitle.lang,
                   srcLang: subtitle.lang,
-                  default: index === 1, // Set the first subtitle as default
+                  default: index === 1 // Set the first subtitle as default
                 })),
               },
             }}
           />
         )}
 
-        <select className="text-black" name="" onChange={handleChange} id="">
+        {/* <select className="text-black" name="" onChange={handleChange} id="">
           {data?.sources?.map((source, index) => (
             <option
               defaultValue={index === 0 ? source.url : ""}
@@ -81,7 +83,7 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
               server {index}
             </option>
           ))}
-        </select>
+        </select> */}
       </div>
     </>
   );

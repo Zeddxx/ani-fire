@@ -17,8 +17,6 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
 
   if (isError) return <p>Error..</p>;
 
-  console.log(data);
-
   const description = data?.anime.info.description || "";
 
   return (
@@ -32,7 +30,7 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
         />
       </div>
       {/* Anime general information */}
-      <AnimeInfo data={data!} description={description} episode={episode!} />
+      <AnimeInfo page="AnimePage" data={data!} description={description} episode={episode!} />
 
       <div className="flex max-w-screen-2xl mx-auto w-full xl:px-0 px-4 gap-3 flex-wrap">
         {data?.seasons.map((season, index) => (
