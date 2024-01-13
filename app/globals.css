@@ -15,6 +15,10 @@
   display: none;
 }
 
+.scroll-style::-webkit-scrollbar-track {
+  background: #000;
+}
+
 body {
   scroll-behavior: smooth;
 }

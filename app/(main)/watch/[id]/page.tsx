@@ -85,7 +85,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
         <div className="w-full h-full">
           {/* TODO: make loading a rectangle of height same as the video height */}
           {isLoading && !episodeNumber ? (
-            <p>Loading...</p>
+            <div className="h-64 w-full bg-black"></div>
           ) : (
             <VideoPlayer
               episodeId={data?.episodeId!}

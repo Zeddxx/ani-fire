@@ -39,11 +39,11 @@ const Episodes = ({
             "h-full w-full py-4 sm:py-1 px-4",
             moreEpisodes > 24
               ? "grid grid-cols-5 xl:h-auto h-60 sm:grid-cols-8 xl:grid-cols-4 gap-2"
-              : "flex flex-col"
+              : "flex flex-col max-h-56 overflow-y-auto"
           )}
         >
           {/* TODO: make it dynamic or adding links to it */}
-          {episodes?.map((episode) => {
+          {episodes?.map((episode, index) => {
             const isCurrent = query === episode.episodeId;
             const isMoreEpisodes = moreEpisodes > 24;
             const isEpisodeFiller = episode.isFiller;
@@ -70,8 +70,9 @@ const Episodes = ({
                 <a
                   href={`/watch/${episode.episodeId}`}
                   className={cn(
-                    "text-sm px-2 truncate w-full py-3 border-b-muted border-b",
-                    isCurrent && "border-l-4 text-primary border-l-primary"
+                    "text-sm px-2 flex-shrink-0 scroll-style truncate w-full py-3 border-b-muted border-b",
+                    isCurrent && "border-l-4 text-primary border-l-primary",
+                    index % 2 && "bg-muted"
                   )}
                   key={episode.episodeId}
                 >

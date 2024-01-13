@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { ReactPlayerProps } from "react-player";
 import ReactPlayer from "react-player";
 import BaseReactPlayer from "react-player/base";
+import { BiLoaderCircle } from "react-icons/bi";
 
 type VideoPlayerProps = {
   episodeId: string;
@@ -36,13 +37,14 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
   };
 
   // if (isError) return <p>Error loading video...</p>;
-  if(isLoading) return <p>Loading...</p>
 
   return (
     <>
       <div className="w-full flex justify-center bg-black h-auto relative video-container">
         {isLoading && !setUrl ? (
-          <p>Loading video....</p>
+          <div className="h-96 w-full bg-black grid place-items-center">
+            <BiLoaderCircle className="animate-spin h-12 w-12 text-white" />
+          </div>
         ) : (
           <ReactPlayer
             ref={playerRef}
