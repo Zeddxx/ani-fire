@@ -42,7 +42,7 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     <>
       <div className="w-full flex justify-center bg-black h-auto relative video-container">
         {isLoading && !setUrl ? (
-          <div className="h-96 w-full bg-black grid place-items-center">
+          <div className="sm:h-96 h-60 w-full bg-black grid place-items-center">
             <BiLoaderCircle className="animate-spin h-12 w-12 text-white" />
           </div>
         ) : (

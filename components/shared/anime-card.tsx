@@ -3,10 +3,14 @@
 import { Mic } from "lucide-react";
 import { FaPlay } from "react-icons/fa";
 import Image from "next/image";
-import { AnimesProps, TopUpcomingAnimes } from "@/types";
+import { AnimesProps, LatestAnimeProps, TopUpcomingAnimes } from "@/types";
 
 
-const AnimeCard = ({ anime } : { anime: AnimesProps | TopUpcomingAnimes} ) => {
+const AnimeCard = ({ anime } : { anime: AnimesProps | TopUpcomingAnimes | LatestAnimeProps } ) => {
+  const isNull = Number(anime.episodes.sub) === 0;
+
+  if(isNull) return null;
+
   return (
       <div key={anime.id} className="flex flex-col">
       <a

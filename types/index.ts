@@ -43,6 +43,7 @@ export type TopAiringAnimesProps = {
     jname: string
     name: string
     poster: string
+    otherInfo: string[]
 }
 
 export type TopUpcomingAnimes = {
@@ -66,7 +67,7 @@ export type HomeAnimeProps = {
     genres: string[]
     latestEpisodeAnimes: LatestAnimeProps[] 
     spotlightAnimes: SpotLightAnimesProps[]
-    top10Animes: Top10AnimeProps[]
+    top10Animes: Top10AnimeProps
     topAiringAnimes: TopAiringAnimesProps[]
     topUpcomingAnimes: TopUpcomingAnimes[]
     trendingAnimes: TrendingAnimeProps[]

@@ -92,7 +92,8 @@ const MainNavbar = () => {
             </button>
 
             <Link href="/">
-              <Image src="/assets/logo.svg" alt="logo" height={22} width={22} />
+              {/* <Image src="/assets/logo.svg" alt="logo" height={22} width={22} /> */}
+              <p className="font-extrabold text-primary">アニメ</p>
             </Link>
           </div>
 
