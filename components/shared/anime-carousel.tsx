@@ -60,7 +60,7 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
                     <Badge variant="secondary" className="rounded-none" key={info}>{info}</Badge>
                   ))}
                 </div>
-                <h1 className="leading-tight xl:text-5xl text-2xl md:text-3xl font-semibold text-secondary-foreground">{anime.name}</h1>
+                <h1 className="leading-normal xl:text-5xl text-2xl md:text-3xl font-semibold text-secondary-foreground">{anime.name}</h1>
                 <p className="w-[80%] xl:block hidden">{description.length > 300 ? description.slice(0,300) + "..." : description}</p>
                 <div className="flex gap-x-2 mt-4 ">
                   <a href={`/${anime.id}`} className={cn("flex", buttonVariants({ variant: "default", className: "rounded-none" }))}>

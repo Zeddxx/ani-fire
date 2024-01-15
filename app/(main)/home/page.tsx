@@ -18,7 +18,7 @@ const HomePage = () => {
 
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
-  if (isLoading) return <HomeLoading />;
+  if (isLoading && !data) return <HomeLoading />;
 
   if (isError) return "error";
 

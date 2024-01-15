@@ -64,7 +64,7 @@ const AnimePagination = ({
           <PaginationPrevious
             onClick={() => onClick("prev")}
             className={cn(pageNumber <= 1 && "opacity-50 pointer-events-none")}
-            href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : `/anime/${query}?page=${page}`}
+            href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : `/anime/${query}?page=${pageNumber}`}
           />
         </PaginationItem>
         {visiblePages().map((page) => (
@@ -94,7 +94,7 @@ const AnimePagination = ({
             className={cn(
               pageNumber === totalPages && "opacity-50 pointer-events-none"
             )}
-            href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : `/anime/${query}?page=${page}`}
+            href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : `/anime/${query}?page=${pageNumber}`}
           />
         </PaginationItem>
       </PaginationContent>

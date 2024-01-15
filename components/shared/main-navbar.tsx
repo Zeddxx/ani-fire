@@ -28,7 +28,6 @@ const MainNavbar = () => {
 
   const handleQuery = (e: KeyboardEvent<HTMLInputElement>) => {
     if(e.key === "Enter") {
-      console.log("enter");
       return window.location.assign(`/search?keyword=${searchQuery}&page=1`)
     }
   }
@@ -46,7 +45,21 @@ const MainNavbar = () => {
   }
 
   useEffect(() => {
+    if(isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    }else {
+      document.body.style.overflow = 'auto'
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+
+  }, [isMenuOpen])
+
+  useEffect(() => {
     setIsMenuOpen(false);
+
   }, [params])
 
   return (
@@ -71,15 +84,15 @@ const MainNavbar = () => {
 
         <ul className="my-4 flex-shrink-0">
           {MainNavbarItems.map((item) => (
-            <li className="py-4 hover:text-primary font-semibold truncate" key={item.name}>
-              <a href={item.href}>
+            <li className="py-4 font-semibold truncate" key={item.name}>
+              <a href={item.href} className="hover:text-primary" title={"Go To"+ " " + item.name}>
                 {item.name}
               </a>
             </li>
           ))}
         </ul>
       </aside>
-      <header className="h-20 xl:px-0 md:px-4 bg-gradient-to-t w-full fixed z-30 top-0 flex items-center duration-300 from-transparent via-black/50 to-black">
+      <header className="h-20 xl:px-0 px-4 bg-gradient-to-t w-full fixed z-30 top-0 flex items-center duration-300 from-transparent via-black/50 to-black">
         <nav className="flex justify-between items-center max-w-screen-2xl z-20 mx-auto w-full">
           <div className="flex gap-x-4 items-center">
             <button
@@ -96,20 +109,20 @@ const MainNavbar = () => {
             </Link>
           </div>
 
-          <div className="flex items-center gap-x-3 sm:gap-x-6">
+          <div className="flex items-center gap-x-3 sm:gap-x-3">
             <Button onClick={handleSearchOption} size="icon" variant="outline">
               <SearchIcon className="h-6 w-6" />
             </Button>
 
             <Button disabled className="sm:w-36 px-2 sm:py-1">
               <span className="hidden sm:block">Login</span>
-              <BiSolidLogInCircle className="w-5 h-5" />
+              <BiSolidLogInCircle className="w-5 h-5 ml-3" />
             </Button>
           </div>
         </nav>
 
-      <div className={cn("w-full gap-x-4 bg-black absolute z-10 top-0 flex items-end px-4 duration-300 overflow-hidden", isSearchOpen ? "md:h-60 h-52 py-6" : "h-0")}>
-        <div className="flex flex-collg:flex-row w-full gap-4">
+      <div className={cn("w-full gap-x-4 bg-black left-0 absolute z-10 top-0 flex items-end px-4 duration-300 overflow-hidden", isSearchOpen ? "md:h-60 h-52 py-6" : "h-0")}>
+        <div className="flex flex-col lg:flex-row w-full gap-4">
         <Input ref={searchRef} onKeyDown={(e) => handleQuery(e)} onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder="Attack on titan" />
         <Button onClick={handleButton} disabled={!searchQuery} className="md:w-32 w-full">Search</Button>
         </div>
