@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from "@tanstack/react-query"
-import { getAllAnime, getAllGenres, getAnimeEpisodeServer, getAnimeEpisodes, getAnimeInfoById, getSearchedAnime, getStreamEpisode } from "../function"
+import { getAllAnime, getAllGenres, getAnimeByCategory, getAnimeEpisodeServer, getAnimeEpisodes, getAnimeInfoById, getSearchedAnime, getStreamEpisode } from "../function"
 
 export const useGetAllAnime = () => {
     return useQuery({
@@ -54,5 +54,12 @@ export const useGetAllGenre = () => {
     return useQuery({
         queryKey: ['getAllGenres'],
         queryFn: getAllGenres,
+    })
+}
+
+export const useGetAnimeByCategory = (category: string, page: number) => {
+    return useQuery({
+        queryKey: ['getAnimeByCategory'],
+        queryFn: () => getAnimeByCategory(category, page)
     })
 }

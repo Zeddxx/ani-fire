@@ -1,7 +1,7 @@
 "use client";
 
 import AnimeCarousel from "@/components/shared/anime-carousel";
-import { useGetAllAnime } from "@/lib/query-api";
+import { useGetAllAnime, useGetAnimeByCategory } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useState } from "react";
@@ -14,6 +14,7 @@ import AnimeCard from "@/components/shared/anime-card";
 
 const HomePage = () => {
   const { data, isLoading, isError } = useGetAllAnime();
+
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   if (isLoading) return null;
@@ -140,7 +141,7 @@ const HomePage = () => {
           </ReactSimplyCarousel>
         </div>
       </div>
-      <div className="w-full grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 h-auto">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 h-auto">
         <AiringAnime anime={data!} />
       </div>
 

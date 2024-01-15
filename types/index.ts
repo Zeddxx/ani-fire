@@ -202,3 +202,13 @@ export type AnimeStreamingProp = {
     sources: Sources[]
     subtitles: SubtitlesProps[]
 }
+
+export type AnimeByCategoryTypes = {
+    animes: AnimesProps[]
+    category: string
+    currentPage: number
+    genres: string[]
+    hasNextPage: boolean
+    top10Animes: Top10AnimeProps
+    totalPages: number
+}

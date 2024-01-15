@@ -1,4 +1,5 @@
 import {
+  AnimeByCategoryTypes,
   AnimeInfoTypeProps,
   AnimeStreamingProp,
   GetAnimeEpisodes,
@@ -100,15 +101,56 @@ export async function getStreamEpisode(
 }
 
 export async function getSearchedAnime(query: string, pageNo: number) {
-  const res = await fetch(
-    `${primaryUrl}/anime/search?q=${query}&page=${pageNo}`
-  );
-  const data = await res.json();
-  return data as SearchedAnimeProps;
+  try {
+    const res = await fetch(
+      `${primaryUrl}/anime/search?q=${query}&page=${pageNo}`
+    );
+
+    if(res.status === 429) {
+      const res = await fetch(`${backupUrl}/anime/search?q=${query}&page=${pageNo}`)
+      const data = await res.json();
+      return data as SearchedAnimeProps;
+    }
+    const data = await res.json();
+    return data as SearchedAnimeProps;
+  } catch (error) {
+    console.log(error);
+    throw Error;
+  }
 }
 
 export async function getAllGenres() {
-  const res = await fetch(`${primaryUrl}/anime/genre`);
+  try {
+    const res = await fetch(`${primaryUrl}/anime/genre`);
+
+    if(res.status === 429){
+      const res = await fetch(`${backupUrl}/anime/genre`)
+      const data = await res.json();
+      return data;
+    }
   const data = await res.json();
   return data;
+  } catch (error) {
+    console.log(error);
+    throw Error;
+  }
+}
+
+
+export async function getAnimeByCategory(category: string, page: number){
+  try {
+    const res = await fetch(`${primaryUrl}/anime/${category}?page=${page}`)
+
+  if(res.status === 429){
+    const res = await fetch(`${backupUrl}/anime/${category}?page=${page}`)
+    const data = await res.json()
+    return data as AnimeByCategoryTypes;
+  }
+
+  const data = await res.json()
+  return data as AnimeByCategoryTypes;
+  } catch (error) {
+    console.log(error);
+    throw Error
+  }
 }
