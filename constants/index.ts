@@ -41,7 +41,7 @@ export const TopSearchItems = [
 
 export const MainNavbarItems = [
   { name: "Home", href: "/home" },
-  { name: "Subbed Anime", href: "/subbed-anime" },
-  { name: "Dubbed Anime", href: "/dubbed-anime" },
-  { name: "Most Popular", href: "/most-popular" },
+  { name: "Subbed Anime", href: "/anime/subbed-anime" },
+  { name: "Dubbed Anime", href: "/anime/dubbed-anime" },
+  { name: "Most Popular", href: "/anime/most-popular" },
 ];

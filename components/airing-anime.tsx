@@ -58,7 +58,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
 
           <div className="py-4">
             <a
-              href="/top-airing"
+              href="/anime/top-airing"
               className="hover:text-primary text-sm w-fit flex items-center gap-x-2 duration-200"
             >
               Show more
@@ -79,7 +79,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               className="flex gap-x-4 py-4 border-b-muted border-b"
               key={anime.id + index}
             >
-              <div className="h-24 w-16 relative">
+              <div className="h-24 w-16 flex-shrink-0 relative">
                 <Image
                   src={anime.poster}
                   alt="anime poster"
@@ -115,7 +115,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
 
           <div className="py-4">
             <a
-              href="/most-popular"
+              href="/anime/most-popular"
               className="hover:text-primary text-sm w-fit flex items-center gap-x-2 duration-200"
             >
               Show more
@@ -136,7 +136,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               className="flex gap-x-4 py-4 border-b-muted border-b"
               key={anime.id + index}
             >
-              <div className="h-24 w-16 relative">
+              <div className="h-24 w-16 flex-shrink-0 relative">
                 <Image
                   src={anime.poster}
                   alt="anime poster"
@@ -172,7 +172,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
 
           <div className="py-4">
             <a
-              href="/most-favorite"
+              href="/anime/most-favorite"
               className="hover:text-primary text-sm w-fit flex items-center gap-x-2 duration-200"
             >
               Show more
@@ -229,7 +229,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
 
           <div className="py-4">
             <a
-              href="/completed"
+              href="/anime/completed"
               className="hover:text-primary text-sm w-fit flex items-center gap-x-2 duration-200"
             >
               Show more

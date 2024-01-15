@@ -57,6 +57,7 @@ const SearchPage = () => {
                   ))}
                 </div>
                 <AnimePagination
+                  paginate="Search"
                   totalPages={data?.totalPages!}
                   currentPage={data?.currentPage!}
                   hasNextPage={data?.hasNextPage!}

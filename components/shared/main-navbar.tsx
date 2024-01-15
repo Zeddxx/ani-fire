@@ -7,7 +7,6 @@ import { IoIosArrowBack, IoIosArrowUp } from "react-icons/io";
 
 import { Button } from "../ui/button";
 import { MainNavbarItems } from "@/constants";
-import Image from "next/image";
 import Link from "next/link";
 import { BiSolidLogInCircle } from "react-icons/bi";
 import { useSearchParams } from "next/navigation";
@@ -73,15 +72,15 @@ const MainNavbar = () => {
         <ul className="my-4 flex-shrink-0">
           {MainNavbarItems.map((item) => (
             <li className="py-4 hover:text-primary font-semibold truncate" key={item.name}>
-              <Link href={item.href}>
+              <a href={item.href}>
                 {item.name}
-              </Link>
+              </a>
             </li>
           ))}
         </ul>
       </aside>
       <header className="h-20 xl:px-0 md:px-4 bg-gradient-to-t w-full fixed z-30 top-0 flex items-center duration-300 from-transparent via-black/50 to-black">
-        <nav className="flex justify-between items-center max-w-screen-2xl z-20 px-4 mx-auto w-full">
+        <nav className="flex justify-between items-center max-w-screen-2xl z-20 mx-auto w-full">
           <div className="flex gap-x-4 items-center">
             <button
               onClick={() => setIsMenuOpen(true)}

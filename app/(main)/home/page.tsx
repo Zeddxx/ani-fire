@@ -11,17 +11,16 @@ import { buttonVariants } from "@/components/ui/button";
 import AiringAnime from "@/components/airing-anime";
 import { MdArrowForwardIos } from "react-icons/md";
 import AnimeCard from "@/components/shared/anime-card";
+import HomeLoading from "@/components/loaders/home-loading";
 
 const HomePage = () => {
   const { data, isLoading, isError } = useGetAllAnime();
 
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
-  if (isLoading) return null;
+  if (isLoading) return <HomeLoading />;
 
   if (isError) return "error";
-
-  console.log(data);
 
   return (
     <div className="max-w-screen-2xl mx-auto w-full">
