@@ -12,6 +12,7 @@ import { BiSolidLogInCircle } from "react-icons/bi";
 import { useSearchParams } from "next/navigation";
 import { Input } from "../ui/input";
 import { useScrollTop } from "@/hooks";
+import Image from "next/image";
 
 const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -104,8 +105,8 @@ const MainNavbar = () => {
             </button>
 
             <Link href="/">
-              {/* <Image src="/assets/logo.svg" alt="logo" height={22} width={22} /> */}
-              <p className="font-extrabold text-primary">アニメ</p>
+              <Image src="/assets/nav.gif" alt="logo" height={56} width={56} />
+              {/* <p className="font-extrabold text-primary">アニメ</p> */}
             </Link>
           </div>
 

@@ -5,6 +5,7 @@ import Episodes from "@/components/shared/episodes";
 import VideoPlayer from "@/components/shared/video-player";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { IoPlayBackSharp, IoPlayForwardSharp } from "react-icons/io5";
 import {
   useGetAnimeEpisodeServer,
   useGetAnimeEpisodes,
@@ -23,11 +24,15 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
   const { data: episodes, isLoading: isEpisodeLoading } = useGetAnimeEpisodes(
     params.id
   );
+
+  console.log({ episodes })
+
+
   const { data: animeInfo, isLoading: isInfoLoading } = useGetAnimeInfo(
     params.id
   );
-  console.log(animeInfo);
-  const description = animeInfo?.anime.info.description
+
+  const description = animeInfo?.anime.info.description;
 
   const handleClick = (server: string) => {
     return window.location.assign(
@@ -38,6 +43,25 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
   const isCurrentEpisode = episodes?.episodes.filter(
     (episode) => episode.episodeId === query
   );
+
+  const currentEpisodeIndex = episodes?.episodes.findIndex(
+    (ep) => ep.episodeId === query
+  );
+
+  const isNextEpisode =
+    Number(currentEpisodeIndex) + 1 !== episodes?.totalEpisodes;
+  const isPrevEpisode = Number(currentEpisodeIndex) + 1 !== 1;
+
+  const nextEpisode = isNextEpisode && episodes?.episodes[Number(currentEpisodeIndex) + 1].episodeId;
+  const prevEpisode = isPrevEpisode && episodes?.episodes[Number(currentEpisodeIndex) - 1].episodeId;
+
+  const handlePrev = () => {
+    return window.location.assign(`/watch/${prevEpisode}`)
+  }
+
+  const handleNext = () => {
+    return window.location.assign(`/watch/${nextEpisode}`)
+  }
 
   if (isEpisodeLoading) return <p>Loading episodes...</p>;
 
@@ -93,6 +117,15 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
               category={"sub"}
             />
           )}
+
+          <div className="w-full gap-x-2 py-4 h-auto flex justify-end items-center">
+            <Button size="sm" variant="outline" className="text-xs" onClick={handlePrev} disabled={!isPrevEpisode}>
+              <IoPlayBackSharp className="h-4 w-4 mr-2" /> Prev
+            </Button>
+            <Button size="sm" variant="outline" className="text-xs" onClick={handleNext} disabled={!isNextEpisode}>
+              Next <IoPlayForwardSharp className="h-4 w-4 ml-2" />
+            </Button>
+          </div>
           <div className="flex lg:flex-row flex-col gap-x-4 py-3">
             <div className="lg:w-1/2 w-full flex flex-col bg-primary p-3 items-center justify-center text-center">
               <p className="text-sm text-black inline">
@@ -148,9 +181,17 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
         {/* TODO: add a brief info of the anime */}
         <aside className="xl:block max-h-[30rem] h-auto xl:max-w-[23rem] w-full flex gap-x-4">
           <div className=""></div>
-          <div className="">
-            <AnimeInfo page="Watching" description={description} data={animeInfo!} />
-          </div>
+          {isInfoLoading && !animeInfo ? (
+            <p>Loading Anime info.</p>
+          ) : (
+            <div className="">
+              <AnimeInfo
+                page="Watching"
+                description={description}
+                data={animeInfo!}
+              />
+            </div>
+          )}
         </aside>
       </div>
     </section>

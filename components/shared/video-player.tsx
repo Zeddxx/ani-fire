@@ -48,7 +48,7 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
         ) : (
           <ReactPlayer
             ref={playerRef}
-            url={setUrl || data?.sources[0].url}
+            url={setUrl || data?.sources[0].url || ""}
             className="video-element text-primary"
             minwidth={"100%"}
             maxwidth={"820px"}
