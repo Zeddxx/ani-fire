@@ -22,10 +22,10 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
   return (
     <section className="relative h-auto pt-20">
       <div className="absolute w-full h-full -z-10">
-        <Image
+        <img
           src={data?.anime.info.poster!}
           alt="anime poster"
-          fill
+          loading="lazy"
           className="h-full w-full opacity-20 blur-lg object-cover"
         />
       </div>
@@ -42,10 +42,10 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
             )}
             key={season.id + index}
           >
-            <Image
+            <img
               src={season.poster}
               alt="season poster"
-              fill
+              loading="lazy"
               className="h-full blur-md w-full -z-10 opacity-60 object-cover"
             />
             <p className="text-xs font-medium h-auto w-full z-20 text-center leading-4">
@@ -69,15 +69,15 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
         <div className="xl:max-w-xs w-full">
           <h4 className="text-2xl mb-5">Related Animes</h4>
           <div className="w-full py-6 px-2 bg-stone-950 border border-muted flex flex-col">
-            {data?.relatedAnimes.map((anime, index) => (
+            {data?.relatedAnimes.slice(0, 6).map((anime, index) => (
               <div className="w-full h-auto" key={anime.id + index}>
                 <div className="flex justify-between px-3">
                   <div className="flex gap-x-6">
                     <div className="rounded-md flex-shrink-0 overflow-hidden relative h-28 w-20">
-                      <Image
+                      <img
                         src={anime.poster}
                         alt="anime poster"
-                        fill
+                        loading="lazy"
                         className="h-full w-full object-cover"
                       />
                     </div>

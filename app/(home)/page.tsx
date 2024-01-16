@@ -80,7 +80,7 @@ const Home = () => {
 
       <div className="my-8">
         <h2 className="text-2xl text-pretty text-primary-foreground font-semibold">AniFire: A site which is made just for educational purpose and have no intentions to get any revenew and others.</h2>
-        <p className="text-muted-foreground">This website is free of ads and made my a solo developer which have no intention to make this public if anyone get to know this website from any people please exit this site. This is made to showcase on my developer portfolio! ❤️</p>
+        <p className="text-muted-foreground text-sm">This website is free of ads and made my a solo developer which have no intention to make this public if anyone get to know this website from any people please exit this site. This is made to showcase on my developer portfolio! ❤️</p>
       </div>
     </div>
   );
