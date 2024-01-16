@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <div className="w-full h-auto max-w-[1220px] my-4 mx-auto xl:px-0 px-4">
       <div className="flex gap-x-0 items-end">
-        <Image src="/assets/shigure-ui-dance.gif" alt="logo" width={80} height={72} />
+        <img src="/assets/shigure-ui-dance.gif" alt="logo" width={80} height={72} />
         <p className="text-6xl font-bold leading-none">
           Ani
           <span className="text-[#FF003D]">Fire</span>
@@ -70,10 +70,9 @@ const Home = () => {
         </div>
 
         <div className="relative hidden lg:block h-[30vw] max-h-72 max-w-[34rem] min-w-[26rem] w-[60vw]">
-          <Image
+          <img
             src="/assets/shigure-ui-dance.gif"
             alt="hinata shoyo"
-            fill
             className="h-full w-full object-contain"
           />
         </div>

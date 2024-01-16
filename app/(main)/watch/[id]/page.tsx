@@ -180,11 +180,10 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
 
         {/* TODO: add a brief info of the anime */}
         <aside className="xl:block max-h-[30rem] h-auto xl:max-w-[23rem] w-full flex gap-x-4">
-          <div className=""></div>
           {isInfoLoading && !animeInfo ? (
             <p>Loading Anime info.</p>
           ) : (
-            <div className="">
+            <div className="h-full my-6">
               <AnimeInfo
                 page="Watching"
                 description={description}
