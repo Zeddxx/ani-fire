@@ -1,5 +1,6 @@
 "use client";
 
+import SearchPageLoading from "@/components/loaders/search-page-loading";
 import AnimeCard from "@/components/shared/anime-card";
 import AnimePagination from "@/components/shared/pagination";
 import { Button } from "@/components/ui/button";
@@ -13,10 +14,14 @@ const SearchPage = () => {
 
   const { data: genres, isLoading: isGenreLoading } = useGetAllAnime();
   const { data, isLoading, isError } = useGetSearchedAnime(query!, page);
-  console.log(data);
 
-  if (isGenreLoading) return <p>Loading...</p>;
+  if (isGenreLoading && isLoading) return <SearchPageLoading />;
 
+  if(isError) return (
+    <p className="mt-24">
+      Something happened! 🥲
+    </p>
+  )
   return (
     <>
       <div className="h-full max-w-[1420px] pt-20 mx-auto flex w-full gap-x-4 mt-8 xl:px-0 px-4">

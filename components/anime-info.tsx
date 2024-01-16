@@ -145,7 +145,7 @@ const AnimeInfo = ({
 
             <p>
               <span>Studio: </span>
-              {data.anime.moreInfo.studios.split(",").join(", ")}
+              {data.anime.moreInfo.studios?.split(",").join(", ")}
             </p>
 
             <p>
