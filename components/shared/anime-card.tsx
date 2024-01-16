@@ -2,7 +2,6 @@
 
 import { Mic } from "lucide-react";
 import { FaPlay } from "react-icons/fa";
-import Image from "next/image";
 import { AnimesProps, LatestAnimeProps, TopUpcomingAnimes } from "@/types";
 
 
@@ -17,10 +16,10 @@ const AnimeCard = ({ anime } : { anime: AnimesProps | TopUpcomingAnimes | Latest
         href={`/${anime.id}`}
         className="rounded-md w-full h-[30vw] max-h-80 lg:max-h-64 min-h-60 overflow-hidden relative"
       >
-        <Image
+        <img
           src={anime.poster}
+          loading="lazy"
           alt={anime.name}
-          fill
           className="h-full peer duration-150 hover:blur-md w-full object-cover"
         />
         <div className="absolute pointer-events-none peer-hover:opacity-100 opacity-0 text-rose-600 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

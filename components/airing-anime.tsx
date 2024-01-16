@@ -23,10 +23,9 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               key={anime.id + index}
             >
               <div className="h-24 w-16 flex-shrink-0 relative">
-                <Image
+                <img
                   src={anime.poster}
                   alt="anime poster"
-                  fill
                   className="rounded-xl h-full w-full object-cover"
                 />
               </div>
@@ -80,10 +79,9 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               key={anime.id + index}
             >
               <div className="h-24 w-16 flex-shrink-0 relative">
-                <Image
+                <img
                   src={anime.poster}
                   alt="anime poster"
-                  fill
                   className="rounded-xl h-full w-full object-cover"
                 />
               </div>
@@ -137,10 +135,10 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               key={anime.id + index}
             >
               <div className="h-24 w-16 flex-shrink-0 relative">
-                <Image
+                <img
                   src={anime.poster}
                   alt="anime poster"
-                  fill
+                  loading="lazy"
                   className="rounded-xl h-full w-full object-cover"
                 />
               </div>
@@ -194,10 +192,10 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               key={anime.id + index}
             >
               <div className="h-24 w-16 flex-shrink-0 relative">
-                <Image
+                <img
                   src={anime.poster}
+                  loading="lazy"
                   alt="anime poster"
-                  fill
                   className="rounded-xl h-full w-full object-cover"
                 />
               </div>

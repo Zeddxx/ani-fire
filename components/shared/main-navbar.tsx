@@ -93,7 +93,7 @@ const MainNavbar = () => {
           ))}
         </ul>
       </aside>
-      <header className="h-20 xl:px-0 px-4 bg-gradient-to-t w-full fixed z-30 top-0 flex items-center duration-300 from-transparent via-black/50 to-black">
+      <header className="h-20 px-4 bg-gradient-to-t w-full fixed z-30 top-0 flex items-center duration-300 from-transparent via-black/50 to-black">
         <nav className="flex justify-between items-center max-w-screen-2xl z-20 mx-auto w-full">
           <div className="flex gap-x-4 items-center">
             <button
@@ -105,7 +105,7 @@ const MainNavbar = () => {
             </button>
 
             <Link href="/">
-              <Image src="/assets/nav.gif" alt="logo" height={56} width={56} />
+              <img src="/assets/nav.gif" alt="logo" loading="eager" height={56} width={56} />
               {/* <p className="font-extrabold text-primary">アニメ</p> */}
             </Link>
           </div>
