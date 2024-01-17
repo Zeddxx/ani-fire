@@ -13,6 +13,8 @@ import {
 } from "@/lib/query-api";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const WatchAnime = ({ params }: { params: { id: string } }) => {
   const para = useSearchParams();
@@ -25,14 +27,14 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
     params.id
   );
 
-  console.log({ episodes })
-
+  console.log({ episodes });
 
   const { data: animeInfo, isLoading: isInfoLoading } = useGetAnimeInfo(
     params.id
   );
 
   const description = animeInfo?.anime.info.description;
+  console.log(animeInfo);
 
   const handleClick = (server: string) => {
     return window.location.assign(
@@ -52,16 +54,20 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
     Number(currentEpisodeIndex) + 1 !== episodes?.totalEpisodes;
   const isPrevEpisode = Number(currentEpisodeIndex) + 1 !== 1;
 
-  const nextEpisode = isNextEpisode && episodes?.episodes[Number(currentEpisodeIndex) + 1].episodeId;
-  const prevEpisode = isPrevEpisode && episodes?.episodes[Number(currentEpisodeIndex) - 1].episodeId;
+  const nextEpisode =
+    isNextEpisode &&
+    episodes?.episodes[Number(currentEpisodeIndex) + 1].episodeId;
+  const prevEpisode =
+    isPrevEpisode &&
+    episodes?.episodes[Number(currentEpisodeIndex) - 1].episodeId;
 
   const handlePrev = () => {
-    return window.location.assign(`/watch/${prevEpisode}`)
-  }
+    return window.location.assign(`/watch/${prevEpisode}`);
+  };
 
   const handleNext = () => {
-    return window.location.assign(`/watch/${nextEpisode}`)
-  }
+    return window.location.assign(`/watch/${nextEpisode}`);
+  };
 
   if (isEpisodeLoading) return <p>Loading episodes...</p>;
 
@@ -72,24 +78,36 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
     <section className="relative w-full pt-20 h-auto">
       {/* Background image */}
       <div className="absolute w-full left-1/2 -translate-x-1/2 h-96 -z-10">
-        <Image
+        <img
           src="/assets/bg-image.jpg"
           alt="background image"
-          fill
+          loading="lazy"
           className="h-full w-full blur-2xl brightness-50 object-cover"
         />
       </div>
 
       {/* Flow Tree */}
-      <div className="lg:flex text-sm hidden my-4 max-w-screen-2xl mx-auto gap-x-1 items-center px-4">
+      <div className="flex text-sm my-4 max-w-screen-2xl mx-auto gap-x-1 items-center px-4">
         {/* TODO: make it working as link element */}
-        <p className="hover:text-rose-600 text-primary-foreground">Home</p>
+        <Link
+          href="/home"
+          title="Home"
+          className="hover:text-rose-600 text-primary-foreground"
+        >
+          Home
+        </Link>
         <span className="h-1 w-1 flex rounded-full bg-muted-foreground mx-2"></span>
-        <p className="hover:text-rose-600 text-primary-foreground">TV</p>
+        <a
+          href="/anime/tv"
+          title="TV"
+          className="hover:text-rose-600 text-primary-foreground"
+        >
+          TV
+        </a>
         <span className="h-1 w-1 flex rounded-full bg-muted-foreground mx-2"></span>
 
         {/* TODO: To fix the episode code here */}
-        <p>{params.id.split("-").join(" ")}</p>
+        <a href={`/${animeInfo?.anime.info.id}`}>{animeInfo?.anime.info.name}</a>
       </div>
 
       {/* main episodes no. and video player here! */}
@@ -119,10 +137,22 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
           )}
 
           <div className="w-full gap-x-2 py-4 h-auto flex justify-end items-center">
-            <Button size="sm" variant="outline" className="text-xs" onClick={handlePrev} disabled={!isPrevEpisode}>
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-xs"
+              onClick={handlePrev}
+              disabled={!isPrevEpisode}
+            >
               <IoPlayBackSharp className="h-4 w-4 mr-2" /> Prev
             </Button>
-            <Button size="sm" variant="outline" className="text-xs" onClick={handleNext} disabled={!isNextEpisode}>
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-xs"
+              onClick={handleNext}
+              disabled={!isNextEpisode}
+            >
               Next <IoPlayForwardSharp className="h-4 w-4 ml-2" />
             </Button>
           </div>
@@ -151,21 +181,25 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
                   ))}
                 </div>
               </div>
+
               <Separator className="w-full" />
-              <div className="flex gap-x-4 mt-4 items-center">
-                <p className="text-sm">Dub:</p>
-                <div className="flex gap-4 flex-wrap">
-                  {data?.dub.map((server) => (
-                    <Button
-                      size="sm"
-                      onClick={() => handleClick(server.serverName)}
-                      key={server.serverName}
-                    >
-                      {server.serverName}
-                    </Button>
-                  ))}
+
+              {!!data && data?.dub.length > 0 && (
+                <div className="flex gap-x-4 mt-4 items-center">
+                  <p className="text-sm">Dub:</p>
+                  <div className="flex gap-4 flex-wrap">
+                    {data?.dub.map((server) => (
+                      <Button
+                        size="sm"
+                        onClick={() => handleClick(server.serverName)}
+                        key={server.serverName}
+                      >
+                        {server.serverName}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -179,17 +213,15 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
         />
 
         {/* TODO: add a brief info of the anime */}
-        <aside className="xl:block max-h-[30rem] h-auto xl:max-w-[23rem] w-full flex gap-x-4">
+        <aside className="xl:block h-auto xl:max-w-[23rem] w-full flex gap-x-4">
           {isInfoLoading && !animeInfo ? (
             <p>Loading Anime info.</p>
           ) : (
-            <div className="h-full my-6">
-              <AnimeInfo
-                page="Watching"
-                description={description}
-                data={animeInfo!}
-              />
-            </div>
+            <AnimeInfo
+              page="Watching"
+              description={description}
+              data={animeInfo!}
+            />
           )}
         </aside>
       </div>

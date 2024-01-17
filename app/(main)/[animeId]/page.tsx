@@ -46,7 +46,7 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
               src={season.poster}
               alt="season poster"
               loading="lazy"
-              className="h-full blur-md w-full -z-10 opacity-60 object-cover"
+              className="h-full blur-md w-full absolute -z-10 opacity-60 object-cover"
             />
             <p className="text-xs font-medium h-auto w-full z-20 text-center leading-4">
               {season.name.length > 30

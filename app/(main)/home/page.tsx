@@ -1,7 +1,7 @@
 "use client";
 
 import AnimeCarousel from "@/components/shared/anime-carousel";
-import { useGetAllAnime, useGetAnimeByCategory } from "@/lib/query-api";
+import { useGetAllAnime } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useState } from "react";
@@ -74,15 +74,27 @@ const HomePage = () => {
             responsiveProps={[
               {
                 itemsToShow: 6,
-                itemsToScroll: 5,
+                itemsToScroll: 3,
                 minWidth: 768,
                 maxWidth: 1536,
+              },
+              {
+                itemsToShow: 1,
+                itemsToScroll: 1,
+                minWidth: 130,
+                maxWidth: 320,
               },
               {
                 itemsToShow: 2,
                 itemsToScroll: 2,
                 minWidth: 320,
                 maxWidth: 512,
+              },
+              {
+                itemsToShow: 3,
+                itemsToScroll: 2,
+                minWidth: 512,
+                maxWidth: 768,
               },
             ]}
             speed={400}

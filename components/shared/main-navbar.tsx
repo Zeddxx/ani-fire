@@ -104,7 +104,7 @@ const MainNavbar = () => {
               <span className="md:block hidden">Menu</span>
             </button>
 
-            <Link href="/">
+            <Link href="/home">
               <img src="/assets/nav.gif" alt="logo" loading="eager" height={56} width={56} />
               {/* <p className="font-extrabold text-primary">アニメ</p> */}
             </Link>
@@ -116,8 +116,7 @@ const MainNavbar = () => {
             </Button>
 
             <Button disabled className="sm:w-36 px-2 sm:py-1">
-              <span className="hidden sm:block">Login</span>
-              <BiSolidLogInCircle className="w-5 h-5 ml-3" />
+              Login
             </Button>
           </div>
         </nav>

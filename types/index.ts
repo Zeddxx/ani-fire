@@ -212,3 +212,13 @@ export type AnimeByCategoryTypes = {
     top10Animes: Top10AnimeProps
     totalPages: number
 }
+
+export type AnimeByGenreTypes = {
+    animes: AnimesProps[]
+    currentPage: number
+    genreName: string
+    genres: string[]
+    hasNextPage: boolean
+    topAiringAnimes: Top10AnimeProps
+    totalPages: number
+}

@@ -1,6 +1,5 @@
 import { FaPlay } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { AnimeInfoTypeProps, GetAnimeEpisodes } from "@/types";
 import { useState } from "react";
 import { Badge } from "./ui/badge";
@@ -21,13 +20,13 @@ const AnimeInfo = ({
   const [isShowMore, setIsShowMore] = useState<boolean>(false);
 
   return (
-    <div className="flex max-w-screen-2xl mx-auto w-full h-auto px-4 py-10 relative">
-      <div className={cn("h-auto w-full", page === "AnimePage" ? "flex lg:flex-row flex-col items-center lg:items-start gap-x-4" : "")}>
+    <div className="flex max-w-screen-2xl mx-auto w-full h-max px-4 py-10 relative">
+      <div className={cn("h-full w-full", page === "AnimePage" ? "flex lg:flex-row flex-col items-center lg:items-start gap-x-4" : "")}>
         <div className={cn("relative mb-6 lg:mb-0 overflow-hidden rounded-md before:absolute before:w-full before:bg-gradient-to-t before:from-stone-950 before:to-transparent before:h-32 before:bottom-0 before:left-0 before:z-20", page === "AnimePage" ? "h-80 w-52 lg:min-w-64" : "h-44 w-32")}>
-          <Image
+          <img
             src={data?.anime.info.poster}
             alt={"anime poster"}
-            fill
+            loading="lazy"
             className=" w-full h-full object-cover"
           />
         </div>

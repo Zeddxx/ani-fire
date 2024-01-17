@@ -17,7 +17,7 @@ type PaginationProps = {
   hasNextPage: boolean;
   currentPage: number;
   totalPages: number;
-  paginate: "Search" | "Category",
+  paginate: "Search" | "Category" | "Genre",
 };
 
 const AnimePagination = ({
@@ -29,7 +29,6 @@ const AnimePagination = ({
   totalPages,
 }: PaginationProps) => {
   const [pageNumber, setPageNumber] = useState<number>(page);
-  console.log({ page, query, hasNextPage, currentPage, totalPages });
 
   const onClick = (btnType: string) => {
     const pageValue = btnType === "next" ? pageNumber + 1 : pageNumber - 1;
@@ -64,37 +63,26 @@ const AnimePagination = ({
           <PaginationPrevious
             onClick={() => onClick("prev")}
             className={cn(pageNumber <= 1 && "opacity-50 pointer-events-none")}
-            href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : `/anime/${query}?page=${pageNumber}`}
+            href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : paginate === "Genre" ? `/genre/${query}?page=${pageNumber}` : `/anime/${query}?page=${pageNumber}`}
           />
         </PaginationItem>
         {visiblePages().map((page) => (
           <PaginationItem key={page}>
             <PaginationLink
               isActive={page === currentPage}
-              href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : `/anime/${query}?page=${page}`}
+              href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : paginate === "Genre" ? `/genre/${query}?page=${pageNumber}` : `/anime/${query}?page=${page}`}
             >
               {page}
             </PaginationLink>
           </PaginationItem>
         ))}
-        {/* {Array.from({ length: totalPages }).map((_, index) => {
-          const page = Number(index) + 1
-          const isActive = page === currentPage
-          return(
-            <PaginationItem key={index}>
-             <PaginationLink isActive={isActive} href={`/search?keyword=${query}&page=${page}`}>
-                {page}
-             </PaginationLink>
-            </PaginationItem>
-          )
-        })} */}
         <PaginationItem>
           <PaginationNext
             onClick={() => onClick("next")}
             className={cn(
               pageNumber === totalPages && "opacity-50 pointer-events-none"
             )}
-            href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : `/anime/${query}?page=${pageNumber}`}
+            href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : paginate === "Genre" ? `/genre/${query}?page=${pageNumber}` : `/anime/${query}?page=${pageNumber}`}
           />
         </PaginationItem>
       </PaginationContent>

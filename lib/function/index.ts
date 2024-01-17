@@ -1,5 +1,6 @@
 import {
   AnimeByCategoryTypes,
+  AnimeByGenreTypes,
   AnimeInfoTypeProps,
   AnimeStreamingProp,
   GetAnimeEpisodes,
@@ -151,6 +152,23 @@ export async function getAnimeByCategory(category: string, page: number){
   return data as AnimeByCategoryTypes;
   } catch (error) {
     console.log(error);
+    throw Error
+  }
+}
+
+export async function getAnimeByGenres(name: string, page: number) {
+  try {
+    const res = await fetch(`${primaryUrl}/anime/genre/${name}?page=${page}`)
+
+    if(res.status === 429) {
+      const res = await fetch(`${backupUrl}/anime/genre/${name}?page=${page}`)
+      const data = await res.json()
+      return data as AnimeByGenreTypes;
+    }
+
+    const data = await res.json()
+    return data as AnimeByGenreTypes;
+  } catch (error) {
     throw Error
   }
 }
