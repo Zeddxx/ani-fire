@@ -2,7 +2,6 @@
 
 import { useGetAnimeByCategory } from "@/lib/query-api";
 import { HomeAnimeProps } from "@/types";
-import Image from "next/image";
 import { FaClosedCaptioning } from "react-icons/fa";
 import { IoIosMic } from "react-icons/io";
 import { MdArrowForwardIos } from "react-icons/md";
@@ -10,7 +9,7 @@ import { MdArrowForwardIos } from "react-icons/md";
 const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
   const { data: completedAnime } = useGetAnimeByCategory("completed", 1);
   const { data: topAiring } = useGetAnimeByCategory("top-airing", 1)
-  console.log({ topAiring });
+
   return (
     <>
     {/* Top airing animes */}

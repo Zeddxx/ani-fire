@@ -3,7 +3,6 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SpotLightAnimesProps } from "@/types";
-import Image from "next/image";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -72,7 +71,7 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
               </div>
               </div>
               <div className="absolute before:absolute before:w-full before:h-full before:bg-gradient-to-r before:from-black before:via-transparent before:to-black before:z-10 w-full xl:w-3/4 h-full right-0">
-                <Image src={anime.poster} alt="anime posters" fill className="h-full w-full opacity-75 filter saturate-150 object-cover pointer-events-none" />
+                <img src={anime.poster} alt="anime posters" className="h-full w-full absolute opacity-75 filter saturate-150 object-cover pointer-events-none" />
               </div>
             </div>
           )

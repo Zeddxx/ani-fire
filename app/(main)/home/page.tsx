@@ -3,7 +3,6 @@
 import AnimeCarousel from "@/components/shared/anime-carousel";
 import { useGetAllAnime } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { useState } from "react";
 import ReactSimplyCarousel from "react-simply-carousel";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
@@ -138,12 +137,11 @@ const HomePage = () => {
                     href={`/${anime.id}`}
                     className="w-48 user-drag select-none flex-shrink-0 h-64 relative"
                   >
-                    <Image
+                    <img
                       src={anime.poster}
                       draggable="false"
                       alt="anime-name"
-                      fill
-                      className="object-cover pointer-events-none select-none h-full w-full"
+                      className="object-cover absolute pointer-events-none select-none h-full w-full"
                     />
                   </a>
                 </div>

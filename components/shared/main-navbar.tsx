@@ -8,11 +8,9 @@ import { IoIosArrowBack, IoIosArrowUp } from "react-icons/io";
 import { Button } from "../ui/button";
 import { MainNavbarItems } from "@/constants";
 import Link from "next/link";
-import { BiSolidLogInCircle } from "react-icons/bi";
 import { useSearchParams } from "next/navigation";
 import { Input } from "../ui/input";
 import { useScrollTop } from "@/hooks";
-import Image from "next/image";
 
 const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);

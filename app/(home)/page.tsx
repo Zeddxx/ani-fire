@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { useGetAllAnime } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 

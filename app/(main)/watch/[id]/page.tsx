@@ -11,10 +11,8 @@ import {
   useGetAnimeEpisodes,
   useGetAnimeInfo,
 } from "@/lib/query-api";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 const WatchAnime = ({ params }: { params: { id: string } }) => {
   const para = useSearchParams();

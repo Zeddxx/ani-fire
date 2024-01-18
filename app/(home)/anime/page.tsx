@@ -2,7 +2,6 @@
 
 import { Badge } from "@/components/ui/badge";
 import { useGetAllAnime } from "@/lib/query-api";
-import Image from "next/image";
 
 const HomeSection = () => {
   const { data, isLoading } = useGetAllAnime();
@@ -29,11 +28,10 @@ const HomeSection = () => {
             return(
               <a href={`/watch/${anime.id}`} className="w-40" key={anime.id}>
               <div className="w-full h-52 rounded-md overflow-hidden relative shrink-0">
-                <Image
+                <img
                   src={anime.poster}
                   alt={anime.id}
-                  fill
-                  className="h-full w-full object-cover"
+                  className="h-full absolute w-full object-cover"
                 />
               </div>
               <p className="truncate w-40 mt-1 text-white">{anime.name}</p>

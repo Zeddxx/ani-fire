@@ -2,7 +2,6 @@
 
 import AnimeCard from "@/components/shared/anime-card";
 import { useGetAnimeEpisodes, useGetAnimeInfo } from "@/lib/query-api";
-import Image from "next/image";
 
 import { Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
