@@ -172,3 +172,20 @@ export async function getAnimeByGenres(name: string, page: number) {
     throw Error
   }
 }
+
+export async function getAnimeSchedules(date: string) {
+  try {
+    const res = await fetch(`${primaryUrl}/anime/schedule?date=${date}`)
+
+    if(res.status === 429) {
+      const res = await fetch(`${backupUrl}/anime/schedule?date=${date}`)
+      const data = await res.json()
+      return data
+    }
+
+    const data = await res.json()
+    return data
+  } catch (error) {
+    throw Error;
+  }
+}
