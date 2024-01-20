@@ -2,28 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useGetAllAnime, useGetAnimeSchedule } from "@/lib/query-api";
+import { useGetAllAnime } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
 const Home = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-
-  const formattedDate = `${year}-${month}-${day}`;
-
-  const { data: schedule } = useGetAnimeSchedule(formattedDate)
-
   const { data, isLoading } = useGetAllAnime();
   const [query, setQuery] = useState<string>("");
 
   if (isLoading) return null;
-  console.log(schedule, formattedDate);
-
 
   return (
     <div className="w-full h-auto max-w-[1220px] my-4 mx-auto xl:px-0 px-4">

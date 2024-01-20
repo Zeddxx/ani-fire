@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetAnimeStreaming } from "@/lib/query-api";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReactPlayerProps } from "react-player";
 import ReactPlayer from "react-player";
 import BaseReactPlayer from "react-player/base";
@@ -21,12 +21,10 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
   );
 
   // The control container
-  const [setUrl, setSelectedUrl] = useState<string | undefined>(() => {
-    if (data?.sources && data.sources.length > 0) {
-      return data.sources[0].url;
-    }
-    return undefined; // or a default value if you prefer
-  });
+  const [setUrl, setSelectedUrl] = useState<string | undefined>();
+  const [error, setError] = useState("")
+
+  console.log(data);
 
   const playerRef = useRef<BaseReactPlayer<ReactPlayerProps>>(null);
 
@@ -37,6 +35,13 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
   };
 
   // if (isError) return <p>Error loading video...</p>;
+  useEffect(() => {
+    if(data){
+      if(data.sources) {
+        setSelectedUrl(data.sources[0].url)
+      }
+    }
+  },[data])
 
   return (
     <>
@@ -48,11 +53,12 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
         ) : (
           <ReactPlayer
             ref={playerRef}
-            url={setUrl || data?.sources[0].url || ""}
+            url={setUrl || ""}
             className="video-element text-primary"
             minwidth={"100%"}
             maxwidth={"820px"}
             width={"100%"}
+            onError={() => setError("Video playing error occurred!")}
             height={"100%"}
             minheight={393}
             maxheight={462}
@@ -73,6 +79,10 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
               },
             }}
           />
+        )}
+
+        {error && (
+          <p>{error}</p>
         )}
 
         {/* <select className="text-black" name="" onChange={handleChange} id="">
