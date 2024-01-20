@@ -11,6 +11,7 @@ import AiringAnime from "@/components/airing-anime";
 import { MdArrowForwardIos } from "react-icons/md";
 import AnimeCard from "@/components/shared/anime-card";
 import HomeLoading from "@/components/loaders/home-loading";
+import ScheduleAnime from "@/components/shared/schedule-anime";
 
 const HomePage = () => {
   const { data, isLoading, isError } = useGetAllAnime();
@@ -169,6 +170,11 @@ const HomePage = () => {
             <AnimeCard key={anime.id} anime={anime} />
           ))}
         </div>
+      </div>
+
+      {/* Schedule anime here! */}
+      <div className="px-4">
+        <ScheduleAnime />
       </div>
     </div>
   );

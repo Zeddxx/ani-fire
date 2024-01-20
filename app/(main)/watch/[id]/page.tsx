@@ -25,18 +25,15 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
     params.id
   );
 
-  console.log({ episodes });
-
   const { data: animeInfo, isLoading: isInfoLoading } = useGetAnimeInfo(
     params.id
   );
 
   const description = animeInfo?.anime.info.description;
-  console.log(animeInfo);
 
   const handleClick = (server: string) => {
     return window.location.assign(
-      `/watch/one-piece-100?ep=2416&server=${server}`
+      `/watch/${query}&server=${server}`
     );
   };
 
