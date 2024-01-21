@@ -29,7 +29,7 @@ const ScheduleAnime = () => {
 
 useEffect(() => {
   const prevDays = Array.from({ length: 15 }).map((_, index) => {
-    return date.addDays(now, -(index + 1))
+    return date.addDays(now, -(index))
   })
 
   setPrevDays(prevDays)
