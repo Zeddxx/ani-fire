@@ -6,40 +6,79 @@ import { Button, buttonVariants } from "../ui/button";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { useEffect, useState } from "react";
 import date from 'date-and-time'
+import Link from "next/link";
+import { ScheduleAnimeTypes } from "@/types";
 
 const ScheduleAnime = () => {
-  const now = new Date()
+  const now = new Date();
 
-  let today = date.format(now, '[GMT]Z MM/DD/YYYY hh:mm:ss A');
-  const [currentTime, setCurrentTime] = useState(today)
-  const [prevDays, setPrevDays] = useState<Date[]>([])
+  let current = date.format(now, "[GMT]ZZ DD/MM/YYYY hh:mm:ss A");
+  let today = date.format(now, "YYYY-MM-DD");
 
-  const [activeSlideIndex, setActiveSlideIndex] = useState(14)
+  const [currentTime, setCurrentTime] = useState(current);
+  const [prevDays, setPrevDays] = useState<Date[]>([]);
+  const [upcomingDays, setUpcomingDays] = useState<Date[]>([]);
+  const [fetchDate, setFetchDate] = useState<string>(today);
+  const [data, setData] = useState<ScheduleAnimeTypes[]>([]);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(14);
+
+  const [activeButton, setActiveButton] = useState<string>(today)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const now = new Date()
-      setCurrentTime(date.format(now, 'hh:mm:ss'))
-    }, 1000)
+      const now = new Date();
+      setCurrentTime(date.format(now, "hh:mm:ss"));
+    }, 1000);
 
     return () => {
-      clearInterval(intervalId)
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  useEffect(() => {
+    const prevDays = Array.from({ length: 15 }).map((_, index) => {
+      return date.addDays(now, -(index+1));
+    });
+
+    setPrevDays(prevDays);
+
+    const upcomingDays = Array.from({ length: 15 }).map((_, index) => {
+      return date.addDays(now, index);
+    });
+
+    setUpcomingDays(upcomingDays);
+  }, []);
+
+  const fetchAnimeSchedule = async (date: string) => {
+    const data = await fetch(
+      `http://localhost:4000/anime/schedule?date=${date}`
+    );
+    const res = await data.json();
+    return res.scheduledAnimes as ScheduleAnimeTypes[];
+  };
+
+  useEffect(() => {
+    if (fetchDate) {
+      const newData = async () => {
+        const schedule = await fetchAnimeSchedule(fetchDate);
+        setData(schedule);
+      }
+
+      newData()
     }
-  }, [])
+  }, [fetchDate]);
 
-useEffect(() => {
-  const prevDays = Array.from({ length: 15 }).map((_, index) => {
-    return date.addDays(now, -(index))
-  })
+  const handleShow = (date: number, month: number, year: number) => {
+    const data =
+      year +
+      "-" +
+      (month + 1 < 10 ? "0" + (month + 1) : month + 1) +
+      "-" +
+      (date < 10 ? "0" + (date) : date);
+    return setFetchDate(data);
+  };
 
-  setPrevDays(prevDays)
-}, [])
-
-const handleShow = (date: number, month: number, year: number) => {
-  console.log(date, month + 1, year);
-}
-
-const dayAbbreviations = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayAbbreviations = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
     <>
@@ -48,7 +87,7 @@ const dayAbbreviations = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           Estimated Schedule
         </h6>
         <p className="font-semibold text-sm bg-secondary flex gap-1 items-center px-3 rounded-full">
-          {today}
+          {current}
         </p>
       </div>
 
@@ -97,7 +136,7 @@ const dayAbbreviations = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           }}
           responsiveProps={[
             {
-              itemsToShow: 6,
+              itemsToShow: 12,
               itemsToScroll: 1,
               minWidth: 768,
               maxWidth: 1536,
@@ -105,14 +144,56 @@ const dayAbbreviations = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           ]}
           speed={400}
           infinite={false}
+          disableSwipeByTouch
+          disableSwipeByMouse
           easing="ease-in-out"
         >
-          {prevDays.map((prev, index) => (
-            <Button key={index} onClick={() => handleShow(prev.getDate(), prev.getMonth(), prev.getFullYear())}>
-              {dayAbbreviations[prev.getDay()]} {prev.getDate()}
+          {prevDays
+            .map((prev, index) => (
+              <Button
+                className={cn("w-48 rounded-none mr-6 h-12", activeButton === prev.getFullYear() + String(prev.getMonth() > 10 ? prev.getMonth() : "0" + prev.getMonth()) + String(prev.getDate() < 10 ? "0" + prev.getDate() : prev.getDate())  && "bg-primary")}
+                variant="outline"
+                key={index}
+                onClick={() =>
+                  handleShow(
+                    prev.getDate(),
+                    prev.getMonth(),
+                    prev.getFullYear()
+                  )
+                }
+              >
+                {dayAbbreviations[prev.getDay()]} {prev.getDate()}
+              </Button>
+            ))
+            .reverse()}
+          {upcomingDays.map((next, index) => (
+            <Button
+              key={index}
+              className="w-48 rounded-none mr-6 h-12"
+              variant="outline"
+              onClick={() =>
+                handleShow(next.getDate(), next.getMonth(), next.getFullYear())
+              }
+            >
+              {dayAbbreviations[next.getDay()]} {next.getDate()}
             </Button>
-          )).reverse()}
+          ))}
         </ReactSimplyCarousel>
+      </div>
+
+      <div className="w-full h-auto">
+        {!data ? "loading" :
+          data?.map((data, index) =>(
+            <div className="w-full py-4 border-b border-y-muted flex gap-x-2 justify-between" key={index}>
+              <Link href={`/${data.id}`} className="text-md hover:text-primary duration-200">
+                {data.name}
+              </Link>
+
+              <p className="text-primary">
+                {data.time}
+              </p>
+            </div>
+          ))}
       </div>
     </>
   );
