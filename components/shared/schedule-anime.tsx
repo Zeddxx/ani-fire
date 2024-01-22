@@ -5,9 +5,15 @@ import ReactSimplyCarousel from "react-simply-carousel";
 import { Button, buttonVariants } from "../ui/button";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { useEffect, useState } from "react";
-import date from 'date-and-time'
+import date from "date-and-time";
 import Link from "next/link";
 import { ScheduleAnimeTypes } from "@/types";
+
+const primaryUrl =
+  process.env.NODE_ENV !== "production"
+    ? "http://localhost:4000"
+    : process.env.NEXT_PUBLIC_ANIME_URL;
+const backupUrl = "https://api-aniwatch.onrender.com";
 
 const ScheduleAnime = () => {
   const now = new Date();
@@ -22,7 +28,7 @@ const ScheduleAnime = () => {
   const [data, setData] = useState<ScheduleAnimeTypes[]>([]);
   const [activeSlideIndex, setActiveSlideIndex] = useState(14);
 
-  const [activeButton, setActiveButton] = useState<string>(today)
+  const [activeButton, setActiveButton] = useState<string>(today);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -37,7 +43,7 @@ const ScheduleAnime = () => {
 
   useEffect(() => {
     const prevDays = Array.from({ length: 15 }).map((_, index) => {
-      return date.addDays(now, -(index+1));
+      return date.addDays(now, -(index + 1));
     });
 
     setPrevDays(prevDays);
@@ -50,11 +56,20 @@ const ScheduleAnime = () => {
   }, []);
 
   const fetchAnimeSchedule = async (date: string) => {
-    const data = await fetch(
-      `http://localhost:4000/anime/schedule?date=${date}`
-    );
-    const res = await data.json();
-    return res.scheduledAnimes as ScheduleAnimeTypes[];
+    try {
+      const data = await fetch(`${primaryUrl}/anime/schedule?date=${date}`);
+
+      if (data.status === 409) {
+        const data = await fetch(`${backupUrl}/anime/schedule?date=${date}`);
+        const res = await data.json();
+        return res.scheduledAnimes as ScheduleAnimeTypes[];
+      }
+
+      const res = await data.json();
+      return res.scheduledAnimes as ScheduleAnimeTypes[];
+    } catch (error) {
+      throw error as Error;
+    }
   };
 
   useEffect(() => {
@@ -62,9 +77,9 @@ const ScheduleAnime = () => {
       const newData = async () => {
         const schedule = await fetchAnimeSchedule(fetchDate);
         setData(schedule);
-      }
+      };
 
-      newData()
+      newData();
     }
   }, [fetchDate]);
 
@@ -74,7 +89,7 @@ const ScheduleAnime = () => {
       "-" +
       (month + 1 < 10 ? "0" + (month + 1) : month + 1) +
       "-" +
-      (date < 10 ? "0" + (date) : date);
+      (date < 10 ? "0" + date : date);
     return setFetchDate(data);
   };
 
@@ -151,7 +166,21 @@ const ScheduleAnime = () => {
           {prevDays
             .map((prev, index) => (
               <Button
-                className={cn("w-48 rounded-none mr-6 h-12", activeButton === prev.getFullYear() + String(prev.getMonth() > 10 ? prev.getMonth() : "0" + prev.getMonth()) + String(prev.getDate() < 10 ? "0" + prev.getDate() : prev.getDate())  && "bg-primary")}
+                className={cn(
+                  "w-48 rounded-none mr-6 h-12",
+                  activeButton ===
+                    prev.getFullYear() +
+                      String(
+                        prev.getMonth() > 10
+                          ? prev.getMonth()
+                          : "0" + prev.getMonth()
+                      ) +
+                      String(
+                        prev.getDate() < 10
+                          ? "0" + prev.getDate()
+                          : prev.getDate()
+                      ) && "bg-primary"
+                )}
                 variant="outline"
                 key={index}
                 onClick={() =>
@@ -182,18 +211,23 @@ const ScheduleAnime = () => {
       </div>
 
       <div className="w-full h-auto">
-        {!data ? "loading" :
-          data?.map((data, index) =>(
-            <div className="w-full py-4 border-b border-y-muted flex gap-x-2 justify-between" key={index}>
-              <Link href={`/${data.id}`} className="text-md hover:text-primary duration-200">
-                {data.name}
-              </Link>
+        {!data
+          ? "loading"
+          : data?.map((data, index) => (
+              <div
+                className="w-full py-4 border-b border-y-muted flex gap-x-2 justify-between"
+                key={index}
+              >
+                <Link
+                  href={`/${data.id}`}
+                  className="text-md hover:text-primary duration-200"
+                >
+                  {data.name}
+                </Link>
 
-              <p className="text-primary">
-                {data.time}
-              </p>
-            </div>
-          ))}
+                <p className="text-primary">{data.time}</p>
+              </div>
+            ))}
       </div>
     </>
   );
