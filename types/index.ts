@@ -222,3 +222,10 @@ export type AnimeByGenreTypes = {
     topAiringAnimes: Top10AnimeProps
     totalPages: number
 }
+
+export type ScheduleAnimeTypes = {
+    name: string
+    jname: string
+    time: string
+    id: string
+}
