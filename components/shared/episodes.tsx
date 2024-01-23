@@ -23,13 +23,13 @@ const Episodes = ({
     <>
       <aside
         className={cn(
-          "bg-black episode-scroll overflow-y-scroll w-full relative",
+          "dark:bg-black border bg-white episode-scroll overflow-y-scroll w-full relative",
           screen === "PC"
             ? "xl:block hidden h-[36rem] max-w-[18rem]"
             : "block xl:hidden w-full my-4"
         )}
       >
-        <div className="w-full bg-black border-b border-muted sticky left-0 py-4 px-4 top-0">
+        <div className="w-full dark:bg-black border-b border-muted sticky left-0 py-4 px-4 top-0">
           <p className="text-sm text-muted-foreground w-full">
             No. of episodes
           </p>

@@ -32,31 +32,31 @@ const AnimeInfo = ({
         </div>
 
         <div className="">
-          <h1 className="text-3xl font-semibold">{data?.anime.info.name}</h1>
+          <h1 className="text-3xl font-semibold text-secondary-foreground dark:text-secondary">{data?.anime.info.name}</h1>
 
           <div className="rounded-sm my-4 items-center flex gap-px overflow-hidden">
             <p className="bg-white text-black py-1 font-semibold px-2 text-xs">
               {data?.anime.info.stats.rating}
             </p>
 
-            <p className="bg-rose-700 font-semibold py-1 px-2 text-xs">
+            <p className="bg-primary text-white font-semibold py-1 px-2 text-xs">
               CC: {data?.anime.info.stats.episodes.sub}
             </p>
 
-            <p className="bg-yellow-500 font-semibold py-1 px-2 text-xs">
+            <p className="bg-yellow-500 text-white font-semibold py-1 px-2 text-xs">
               {data?.anime.info.stats.quality}
             </p>
-            <p className="bg-yellow-500 font-semibold py-1 px-2 text-xs">
+            <p className="bg-yellow-500 text-white font-semibold py-1 px-2 text-xs">
               {data?.anime.info.stats.episodes.sub}
             </p>
 
             <span className="h-1.5 mx-2 w-1.5 rounded-full bg-muted-foreground"></span>
 
-            <p className="text-sm">{data?.anime.info.stats.type}</p>
+            <p className="text-sm text-secondary-foreground dark:text-secondary">{data?.anime.info.stats.type}</p>
 
             <span className="h-1.5 mx-2 w-1.5 rounded-full bg-muted-foreground"></span>
 
-            <p className="text-sm">{data?.anime.info.stats.duration}</p>
+            <p className="text-sm text-secondary-foreground dark:text-secondary">{data?.anime.info.stats.duration}</p>
           </div>
 
           {page === "AnimePage" && (
@@ -74,7 +74,7 @@ const AnimeInfo = ({
 
           {/* Description here! */}
 
-          <p className={cn("text-slate-50 text-sm", page !== "AnimePage" && "overflow-y-auto h-24")}>
+          <p className={cn("dark:text-slate-50 text-sm", page !== "AnimePage" && "overflow-y-auto h-24")}>
             {description?.length! > 300
               ? isShowMore
                 ? description
@@ -100,7 +100,7 @@ const AnimeInfo = ({
 
         {/* More info's */}
         {page === "AnimePage" && (
-          <div className="lg:max-w-96 w-full flex-shrink-0 flex flex-col text-sm border border-muted bg-black p-6 backdrop-blur-md gap-4 justify-center lg:h-max">
+          <div className="lg:max-w-96 w-full flex-shrink-0 flex flex-col text-sm border border-muted-foreground bg-secondary dark:bg-black p-6 backdrop-blur-md gap-4 justify-center lg:h-max">
             <p>
               <span className="font-medium">Japanese:</span>{" "}
               {data?.anime.moreInfo.japanese}
@@ -129,7 +129,7 @@ const AnimeInfo = ({
             <Separator />
 
             <div className="flex flex-wrap gap-3">
-              <span className="text-sm text-primary-foreground">Genre :</span>{" "}
+              <span className="text-sm text-secondary-foreground dark:text-primary-foreground">Genre :</span>{" "}
               {data.anime.moreInfo.genres.map((genre) => (
                 <Badge
                   variant="secondary"

@@ -51,9 +51,9 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
         {animes?.map((anime) => {
           const description = anime.description;
           return(
-            <div className="min-h-80 max-h-[580px] h-[50vw] w-screen relative before:absolute before:bottom-0 before:left-0 before:h-1/2 before:w-full before:bg-gradient-to-t before:from-black before:to-transparent before:z-20" key={anime.id}>
+            <div className="min-h-80 max-h-[580px] h-[50vw] w-screen relative before:absolute before:bottom-0 before:left-0 before:h-1/2 before:w-full before:bg-gradient-to-t before:from-white/70 before:to-transparent dark:before:from-black dark:before:to-transparent before:z-20" key={anime.id}>
               <div className="absolute bottom-4 z-20 w-[90%] xl:w-[60%] left-4">
-                <p className="xl:text-2xl text-md md:text-lg text-rose-500">#{anime.rank} Spotlight</p>
+                <p className="xl:text-2xl text-md md:text-lg text-primary">#{anime.rank} Spotlight</p>
                 <div className="flex gap-x-2 my-3">
                   {anime.otherInfo.map((info) => (
                     <Badge variant="secondary" className="rounded-none" key={info}>{info}</Badge>
@@ -70,8 +70,8 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
                 </Button>
               </div>
               </div>
-              <div className="absolute before:absolute before:w-full before:h-full before:bg-gradient-to-r before:from-black before:via-transparent before:to-black before:z-10 w-full xl:w-3/4 h-full right-0">
-                <img src={anime.poster} alt="anime posters" className="h-full w-full absolute opacity-75 filter saturate-150 object-cover pointer-events-none" />
+              <div className="absolute before:absolute before:w-full before:h-full before:bg-gradient-to-r before:from-white dark:before:from-black before:via-transparent before:to-transparent dark:before:to-transparent before:z-10 w-full xl:w-3/4 h-full right-0">
+                <img src={anime.poster} alt="anime posters" className="h-full w-full absolute opacity-75 saturate-150 object-cover pointer-events-none" />
               </div>
             </div>
           )

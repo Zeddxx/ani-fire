@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { MenuIcon, SearchIcon } from "lucide-react";
+import { MenuIcon, Moon, SearchIcon, SunIcon, SunMoonIcon } from "lucide-react";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { IoIosArrowBack, IoIosArrowUp } from "react-icons/io";
 
@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Input } from "../ui/input";
 import { useScrollTop } from "@/hooks";
+import { useTheme } from "next-themes";
 
 const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -20,6 +21,8 @@ const MainNavbar = () => {
   const searchRef = useRef<HTMLInputElement>(null);
   const params = useSearchParams();
   const scrolled = useScrollTop()
+
+  const { theme, setTheme } = useTheme()
 
   const handleButton = () => {
     return window.location.assign(`/search?keyword=${searchQuery}&page=1`)
@@ -61,6 +64,16 @@ const MainNavbar = () => {
 
   }, [params])
 
+  const toggleTheme = () => {
+    if(theme === "light" || theme === "system") {
+      return setTheme("dark")
+    }else if(theme === "dark" || theme === "system") {
+      return setTheme("light")
+    }else {
+      return setTheme("system")
+    }
+  }
+
   return (
     <>
       {isMenuOpen && !isSearchOpen && (
@@ -91,12 +104,12 @@ const MainNavbar = () => {
           ))}
         </ul>
       </aside>
-      <header className="h-20 px-4 bg-gradient-to-t w-full fixed z-30 top-0 flex items-center duration-300 from-transparent via-black/50 to-black">
+      <header className={cn("h-16 px-4 w-full sticky z-30 top-0 flex items-center bg-white dark:bg-black dark:border-b-muted", scrolled && "border-b")}>
         <nav className="flex justify-between items-center max-w-screen-2xl z-20 mx-auto w-full">
           <div className="flex gap-x-4 items-center">
             <button
               onClick={() => setIsMenuOpen(true)}
-              className="flex gap-x-2"
+              className="flex gap-x-2 text-secondary-foreground dark:text-white"
             >
               <MenuIcon />
               <span className="md:block hidden">Menu</span>
@@ -109,8 +122,14 @@ const MainNavbar = () => {
           </div>
 
           <div className="flex items-center gap-x-3 sm:gap-x-3">
+            <Button onClick={toggleTheme} size="icon" variant="outline">
+              {theme === "system"
+              ? <SunMoonIcon />
+            : theme === "dark" ? <Moon /> : <SunIcon />}
+            </Button>
+
             <Button onClick={handleSearchOption} size="icon" variant="outline">
-              <SearchIcon className="h-6 w-6" />
+              <SearchIcon className="h-6 w-6 text-secondary-foreground dark:text-secondary" />
             </Button>
 
             <Button disabled className="sm:w-36 px-2 sm:py-1">

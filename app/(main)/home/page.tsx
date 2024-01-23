@@ -41,7 +41,7 @@ const HomePage = () => {
             forwardBtnProps={{
               //here you can also pass className, or any other button element attributes
               className:
-                "hidden md:block z-10 absolute right-0 bottom-0 h-[49%]",
+                "hidden lg:block z-10 absolute right-0 bottom-0 h-[49%]",
               children: (
                 <span
                   className={cn(
@@ -57,7 +57,7 @@ const HomePage = () => {
             }}
             backwardBtnProps={{
               //here you can also pass className, or any other button element attributes
-              className: "hidden md:block z-10 absolute right-0 top-0 h-[49%]",
+              className: "hidden lg:block z-10 absolute right-0 top-0 h-[49%]",
               children: (
                 <span
                   className={cn(
@@ -123,13 +123,13 @@ const HomePage = () => {
                   <div className="select-none hidden md:block">
                     <p
                       className={cn(
-                        "veritcal-text truncate h-52 text-sm font-medium pr-2 pl-2",
+                        "veritcal-text dark:text-white text-secondary-foreground truncate h-52 text-sm font-medium pr-2 pl-2",
                         index === 0 && "pr-0"
                       )}
                     >
                       {anime.name}
                     </p>
-                    <p className="text-end pr-3 text-xl mt-4 leading-none font-semibold">
+                    <p className="text-end pr-3 text-xl dark:text-white text-secondary-foreground mt-4 leading-none font-semibold">
                       {Number(animeRank) < 10 ? "0" + animeRank : animeRank}
                     </p>
                   </div>

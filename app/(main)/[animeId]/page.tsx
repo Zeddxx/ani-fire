@@ -2,7 +2,7 @@
 
 import AnimeCard from "@/components/shared/anime-card";
 import { useGetAnimeEpisodes, useGetAnimeInfo } from "@/lib/query-api";
-
+import { FaClosedCaptioning } from "react-icons/fa";
 import { Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AnimeInfo from "@/components/anime-info";
@@ -66,8 +66,8 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
         </div>
 
         <div className="xl:max-w-xs w-full">
-          <h4 className="text-2xl mb-5">Related Animes</h4>
-          <div className="w-full py-6 px-2 bg-stone-950 border border-muted flex flex-col">
+          <h4 className="text-2xl mb-5 text-primary font-semibold">Related Animes ☺️</h4>
+          <div className="w-full py-6 px-2 bg-slate-100 dark:bg-stone-950 border border-muted flex flex-col">
             {data?.relatedAnimes.slice(0, 6).map((anime, index) => (
               <div className="w-full h-auto" key={anime.id + index}>
                 <div className="flex justify-between px-3">
@@ -83,14 +83,14 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
                     <div className="flex-shrink-0 flex-1 xl:text-sm text-wrap">
                       <a href={`/${anime.id}`} className="w-fit hover:text-primary">
                       <h5 className="text-sm font-semibold leading-tight">
-                        {anime.name}
+                        👉 {anime.name}
                       </h5>
                       </a>
-                      <div className="flex h-5 mt-2 items-center overflow-hidden text-xs">
-                        <p className="bg-rose-600 text-xs px-2 py-1 font-normal">
-                          CC: {anime.episodes.sub || 0}
+                      <div className="flex h-5 mt-2 items-center border w-fit pr-2 overflow-hidden text-xs">
+                        <p className="bg-rose-600 dark:text-black text-white flex items-center text-xs px-2 py-1 font-normal">
+                          <span><FaClosedCaptioning size={17} className="mr-1" /></span> {anime.episodes.sub || 0}
                         </p>
-                        <p className="text-xs flex bg-black px-2 items-center gap-x-1">
+                        <p className="text-xs flex dark:bg-black px-2 items-center gap-x-1">
                           <Mic className="h-4 w-4" />
                           {anime.episodes.dub || 0}
                         </p>
