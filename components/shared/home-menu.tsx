@@ -8,6 +8,7 @@ import Link from "next/link";
 
 const HomeMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+  
   return (
     <>
       <header className="h-20 max-w-[1220px] mx-auto w-full xl:px-0 flex items-center px-4">

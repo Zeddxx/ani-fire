@@ -72,14 +72,14 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
   return (
     <section className="relative w-full pt-20 h-auto">
       {/* Background image */}
-      <div className="absolute w-full left-1/2 -translate-x-1/2 h-96 -z-10">
+      {/* <div className="absolute w-full left-1/2 -translate-x-1/2 h-96 -z-10">
         <img
           src="/assets/bg-image.jpg"
           alt="background image"
           loading="lazy"
           className="h-full w-full blur-2xl brightness-50 object-cover"
         />
-      </div>
+      </div> */}
 
       {/* Flow Tree */}
       <div className="flex text-sm my-4 max-w-screen-2xl mx-auto gap-x-1 items-center px-4">
@@ -87,7 +87,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
         <Link
           href="/home"
           title="Home"
-          className="hover:text-rose-600 text-primary-foreground"
+          className="hover:text-rose-600 text-secondary-foreground dark:text-primary-foreground"
         >
           Home
         </Link>
@@ -95,14 +95,14 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
         <a
           href="/anime/tv"
           title="TV"
-          className="hover:text-rose-600 text-primary-foreground"
+          className="hover:text-rose-600 text-secondary-foreground dark:text-primary-foreground"
         >
           TV
         </a>
         <span className="h-1 w-1 flex rounded-full bg-muted-foreground mx-2"></span>
 
         {/* TODO: To fix the episode code here */}
-        <a href={`/${animeInfo?.anime.info.id}`}>{animeInfo?.anime.info.name}</a>
+        <a href={`/${animeInfo?.anime.info.id}`} className="">{animeInfo?.anime.info.name}</a>
       </div>
 
       {/* main episodes no. and video player here! */}

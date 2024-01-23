@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google'
 import './globals.css'
 import { QueryProvider } from '@/lib/query-provider'
 import { cn } from '@/lib/utils'
+import Provider from '@/providers/theme-provider'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -20,10 +21,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={cn(poppins.className, "bg-black antialiased text-white dark")}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(poppins.className, "dark:bg-black antialiased")}>
         <QueryProvider>
-          {children}
+          <Provider>
+            {children}
+          </Provider>
         </QueryProvider>
       </body>
     </html>

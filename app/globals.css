@@ -27,13 +27,13 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
+/*
 body::-webkit-scrollbar {
   background: #333;
 }
 body::-webkit-scrollbar-thumb {
   background: #000000;
-}
+} */
 
 .veritcal-text {
   writing-mode: vertical-lr;

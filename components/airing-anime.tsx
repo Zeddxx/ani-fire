@@ -32,16 +32,16 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               <div className="">
                 <a
                   href={`/${anime.id}`}
-                  className="font-medium text-sm hover:text-primary duration-200"
+                  className="font-medium text-sm hover:text-primary dark:text-primary-foreground text-secondary-foreground duration-200"
                 >
                   {anime.name}
                 </a>
-                <div className="flex w-fit gap-1 font-semibold text-xs border-muted border items-center mt-2">
+                <div className="flex text-white w-fit gap-1 font-semibold text-xs border-muted border items-center mt-2">
                   <p className="bg-primary px-2 py-1 flex items-center">
                     <FaClosedCaptioning className="mr-1 h-4 w-4" />{" "}
                     {anime.episodes.sub || 0}
                   </p>
-                  <p className="flex items-center">
+                  <p className="flex items-center text-black dark:text-white text-secondary-foreground dark:text-secondary">
                     <IoIosMic className="mr-1 h-4 w-4" />
                     {anime.episodes.dub || 0}
                   </p>
@@ -88,16 +88,16 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               <div className="">
                 <a
                   href={`/${anime.id}`}
-                  className="font-medium hover:text-primary duration-200 text-sm"
+                  className="font-medium hover:text-primary dark:text-primary-foreground text-secondary-foreground duration-200 text-sm"
                 >
                   {anime.name}
                 </a>
                 <div className="flex w-fit gap-1 font-semibold text-xs border-muted border items-center mt-2">
-                  <p className="bg-primary px-2 py-1 flex items-center">
+                  <p className="bg-primary text-white px-2 py-1 flex items-center">
                     <FaClosedCaptioning className="mr-1 h-4 w-4" />{" "}
                     {anime.episodes.sub || 0}
                   </p>
-                  <p className="flex items-center">
+                  <p className="flex items-center dark:text-white text-black text-secondary-foreground dark:text-secondary">
                     <IoIosMic className="mr-1 h-4 w-4" />
                     {anime.episodes.dub || 0}
                   </p>
@@ -145,16 +145,16 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               <div className="">
                 <a
                   href={`/${anime.id}`}
-                  className="font-medium hover:text-primary duration-200 text-sm"
+                  className="font-medium text-secondary-foreground dark:text-primary-foreground hover:text-primary duration-200 text-sm"
                 >
                   {anime.name}
                 </a>
                 <div className="flex w-fit gap-1 font-semibold text-xs border-muted border items-center mt-2">
-                  <p className="bg-primary px-2 py-1 flex items-center">
+                  <p className="bg-primary px-2 py-1 text-white flex items-center">
                     <FaClosedCaptioning className="mr-1 h-4 w-4" />{" "}
                     {anime.episodes.sub || 0}
                   </p>
-                  <p className="flex items-center">
+                  <p className="flex items-center text-black dark:text-white text-secondary-foreground dark:text-secondary">
                     <IoIosMic className="mr-1 h-4 w-4" />
                     {anime.episodes.dub || 0}
                   </p>
@@ -202,16 +202,16 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               <div className="">
                 <a
                   href={`/${anime.id}`}
-                  className="font-medium hover:text-primary duration-200 text-sm"
+                  className="font-medium text-secondary-foreground dark:text-primary-foreground hover:text-primary duration-200 text-sm"
                 >
                   {anime.name}
                 </a>
                 <div className="flex w-fit gap-1 font-semibold text-xs border-muted border items-center mt-2">
-                  <p className="bg-primary px-2 py-1 flex items-center">
+                  <p className="bg-primary px-2 text-white py-1 flex items-center">
                     <FaClosedCaptioning className="mr-1 h-4 w-4" />{" "}
                     {anime.episodes.sub || 0}
                   </p>
-                  <p className="flex items-center">
+                  <p className="flex items-center text-black dark:text-white text-secondary-foreground dark:text-secondary">
                     <IoIosMic className="mr-1 h-4 w-4" />
                     {anime.episodes.dub || 0}
                   </p>
