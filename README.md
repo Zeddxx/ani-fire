@@ -17,3 +17,10 @@ Welcome to the Awesome Anime Website, your go-to destination for watching anime 
 - **Extensive Library**: Explore a vast collection of anime series and movies from various genres.
 
 - **User-Friendly Interface**: Our website is designed with simplicity in mind, ensuring a smooth and enjoyable user experience.
+
+## TODO'S
+
+🤔 Some functionality in will add in future:
+
+- **Auth Functionality**: Authenticating user into ani-fire.
+- **Wishlisting the anime**: User can wishlist there *watch-later* anime in ani-fire 🔥.
