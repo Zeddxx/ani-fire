@@ -10,6 +10,8 @@ Welcome to the Awesome Anime Website, your go-to destination for watching anime 
 
 🎉 Dive into the captivating world of anime without interruptions! Our website provides a seamless streaming experience, free from distracting advertisements. Enjoy your favorite anime series and movies with ease.
 
+<img src="/public/main.jpeg" alt="intro image"/>
+
 ## Features
 
 ✨ Here are some of the features that make our anime website awesome:
