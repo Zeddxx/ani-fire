@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { MenuIcon, Moon, SearchIcon, SunIcon, SunMoonIcon } from "lucide-react";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
-import { IoIosArrowBack, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 
 import { Button } from "../ui/button";
 import { MainNavbarItems } from "@/constants";
@@ -77,7 +77,7 @@ const MainNavbar = () => {
   return (
     <>
       {isMenuOpen && !isSearchOpen && (
-        <div onClick={() => setIsMenuOpen(false)} className="w-full h-full bg-black/40 backdrop-blur-xl fixed z-30"></div>
+        <div onClick={() => setIsMenuOpen(false)} className="w-full h-screen bg-black/40 backdrop-blur-sm fixed z-40"></div>
       )}
       <aside
         className={cn(
@@ -87,16 +87,15 @@ const MainNavbar = () => {
       >
         <Button
           onClick={() => setIsMenuOpen(false)}
-          variant="ghost"
-          className="flex gap-x-2 shrink-0 items-center rounded-full  py-3 px-4"
+          variant="outline"
+          className="flex gap-x-2 shrink-0 items-center rounded-full py-3"
         >
-          <IoIosArrowBack />
           <p className="overflow-hidden truncate">Close menu</p>
         </Button>
 
         <ul className="my-4 flex-shrink-0">
           {MainNavbarItems.map((item) => (
-            <li className="py-4 font-semibold truncate" key={item.name}>
+            <li className="py-4 font-semibold truncate dark:text-current text-white" key={item.name}>
               <a href={item.href} className="hover:text-primary" title={"Go To"+ " " + item.name}>
                 {item.name}
               </a>
@@ -117,19 +116,18 @@ const MainNavbar = () => {
 
             <Link href="/home">
               <img src="/assets/nav.gif" alt="logo" loading="eager" height={56} width={56} />
-              {/* <p className="font-extrabold text-primary">アニメ</p> */}
             </Link>
           </div>
 
           <div className="flex items-center gap-x-3 sm:gap-x-3">
             <Button onClick={toggleTheme} size="icon" variant="outline">
               {theme === "system"
-              ? <SunMoonIcon />
-            : theme === "dark" ? <Moon /> : <SunIcon />}
+              ? <SunMoonIcon size={18} />
+            : theme === "dark" ? <Moon size={18} /> : <SunIcon size={18} />}
             </Button>
 
             <Button onClick={handleSearchOption} size="icon" variant="outline">
-              <SearchIcon className="h-6 w-6 text-secondary-foreground dark:text-secondary" />
+              <SearchIcon className="h-6 w-6 text-secondary-foreground dark:text-secondary-foreground" />
             </Button>
 
             <Button disabled className="sm:w-36 px-2 sm:py-1">

@@ -32,7 +32,7 @@ const AnimeInfo = ({
         </div>
 
         <div className="">
-          <h1 className="text-3xl font-semibold text-secondary-foreground dark:text-secondary">{data?.anime.info.name}</h1>
+          <h1 className="text-3xl font-semibold text-secondary-foreground">{data?.anime.info.name}</h1>
 
           <div className="rounded-sm my-4 items-center flex gap-px overflow-hidden">
             <p className="bg-white text-black py-1 font-semibold px-2 text-xs">
@@ -52,11 +52,11 @@ const AnimeInfo = ({
 
             <span className="h-1.5 mx-2 w-1.5 rounded-full bg-muted-foreground"></span>
 
-            <p className="text-sm text-secondary-foreground dark:text-secondary">{data?.anime.info.stats.type}</p>
+            <p className="text-sm text-secondary-foreground">{data?.anime.info.stats.type}</p>
 
             <span className="h-1.5 mx-2 w-1.5 rounded-full bg-muted-foreground"></span>
 
-            <p className="text-sm text-secondary-foreground dark:text-secondary">{data?.anime.info.stats.duration}</p>
+            <p className="text-sm text-secondary-foreground">{data?.anime.info.stats.duration}</p>
           </div>
 
           {page === "AnimePage" && (
@@ -100,7 +100,7 @@ const AnimeInfo = ({
 
         {/* More info's */}
         {page === "AnimePage" && (
-          <div className="lg:max-w-96 w-full flex-shrink-0 flex flex-col text-sm border border-muted-foreground bg-secondary dark:bg-black p-6 backdrop-blur-md gap-4 justify-center lg:h-max">
+          <div className="lg:max-w-96 w-full flex-shrink-0 flex flex-col text-sm border border-secondary bg-secondary dark:bg-black p-6 backdrop-blur-md gap-4 justify-center lg:h-max">
             <p>
               <span className="font-medium">Japanese:</span>{" "}
               {data?.anime.moreInfo.japanese}
