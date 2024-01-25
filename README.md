@@ -16,15 +16,17 @@ Welcome to the Awesome Anime Website, your go-to destination for watching anime 
 
 ✨ Here are some of the features that make our anime website awesome:
 
-- **Ad-Free Experience**: Say goodbye to pesky ads and enjoy uninterrupted anime viewing.
+- 👉 **Ad-Free Experience**: Say goodbye to pesky ads and enjoy uninterrupted anime viewing.
 
-- **Extensive Library**: Explore a vast collection of anime series and movies from various genres.
+- 👉 **Extensive Library**: Explore a vast collection of anime series and movies from various genres.
 
-- **User-Friendly Interface**: Our website is designed with simplicity in mind, ensuring a smooth and enjoyable user experience.
+- 👉 **User-Friendly Interface**: Our website is designed with simplicity in mind, ensuring a smooth and enjoyable user experience.
+
+- 👉 **Responsive**: Ani-Fire is fully responsive for all screens. ✨
 
 ## TODO'S
 
 🤔 Some functionality in will add in future:
 
-- **Auth Functionality**: Authenticating user into ani-fire.
-- **Wishlisting the anime**: User can wishlist there *watch-later* anime in ani-fire 🔥.
+- 👉 **Auth Functionality**: Authenticating user into ani-fire.
+- 👉 **Wishlisting the anime**: User can wishlist there *watch-later* anime in ani-fire 🔥.
