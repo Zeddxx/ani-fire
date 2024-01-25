@@ -1,5 +1,7 @@
 > This project is for educational purpose only and i am not making any revenew from this website.
 
+<img src="/public/banner.jpeg" alt="banner image"/>
+
 # Awesome Anime Website
 
 Welcome to the Awesome Anime Website, your go-to destination for watching anime without any annoying ads. This project is created for educational purposes only.
