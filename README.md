@@ -2,7 +2,7 @@
 
 <img src="/public/banner.jpeg" alt="banner image"/>
 
-# Awesome Anime Website
+# Awesome Anime Website <img src="/public/assets/nav.gif" alt="gif" width=56 />
 
 Welcome to the Awesome Anime Website, your go-to destination for watching anime without any annoying ads. This project is created for educational purposes only.
 
@@ -10,7 +10,7 @@ Welcome to the Awesome Anime Website, your go-to destination for watching anime 
 
 🎉 Dive into the captivating world of anime without interruptions! Our website provides a seamless streaming experience, free from distracting advertisements. Enjoy your favorite anime series and movies with ease.
 
-<img src="/public/main.jpeg" alt="intro image"/>
+<img src="/public/main.jpeg" alt="intro image" />
 
 ## Features
 
