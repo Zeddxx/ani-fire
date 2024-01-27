@@ -70,7 +70,7 @@ const AnimePagination = ({
           <PaginationItem key={page}>
             <PaginationLink
               isActive={page === currentPage}
-              href={paginate === "Search" ? `/search?keyword=${query}&page=${pageNumber}` : paginate === "Genre" ? `/genre/${query}?page=${pageNumber}` : `/anime/${query}?page=${page}`}
+              href={paginate === "Search" ? `/search?keyword=${query}&page=${page}` : paginate === "Genre" ? `/genre/${query}?page=${page}` : `/anime/${query}?page=${page}`}
             >
               {page}
             </PaginationLink>

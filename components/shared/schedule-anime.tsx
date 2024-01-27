@@ -97,11 +97,11 @@ const ScheduleAnime = () => {
 
   return (
     <>
-      <div className="flex justify-between w-full">
+      <div className="flex sm:flex-row flex-col gap-y-2 justify-between w-full">
         <h6 className="text-2xl font-semibold text-primary">
           Estimated Schedule
         </h6>
-        <p className="font-semibold text-sm bg-secondary flex gap-1 items-center px-3 rounded-full">
+        <p className="font-semibold sm:py-0 py-2 text-sm bg-secondary flex gap-1 items-center px-3 rounded-full">
           {current}
         </p>
       </div>
@@ -235,21 +235,24 @@ const ScheduleAnime = () => {
       <div className="w-full h-auto">
         {!data
           ? "loading"
-          : data?.map((data, index) => (
+          : data?.map((data, index) => {
+            const isEven = index % 2;
+            return(
               <div
-                className="w-full py-4 border-b border-y-muted flex gap-x-2 justify-between"
+                className={cn("w-full py-3 border-b border-y-muted flex gap-x-2 justify-between px-2", isEven && "bg-slate-200 dark:bg-neutral-800")}
                 key={index}
               >
                 <Link
                   href={`/${data.id}`}
-                  className="text-md hover:text-primary duration-200"
+                  className="text-md font-medium text-base hover:text-primary duration-200"
                 >
                   {data.name}
                 </Link>
 
                 <p className="text-primary">{data.time}</p>
               </div>
-            ))}
+            )
+          })}
       </div>
     </>
   );

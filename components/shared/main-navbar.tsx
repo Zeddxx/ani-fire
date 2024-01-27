@@ -147,7 +147,7 @@ const MainNavbar = () => {
                 ) : theme === "dark" ? (
                   <Image src="/assets/icons/moon.svg" alt="moon icon" className="invert select-none" height={18} width={18} />
                 ) : (
-                  <Image src="/assets/icons/sun.svg" alt="sun icon" height={20} className=" select-none" width={20} />
+                  <Image src="/assets/icons/sun.svg" alt="sun icon" height={20} className="dark:invert select-none" width={20} />
                 )}
               </span>
             </Button>
