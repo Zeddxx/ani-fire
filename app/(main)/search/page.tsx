@@ -5,15 +5,18 @@ import AnimeCard from "@/components/shared/anime-card";
 import AnimePagination from "@/components/shared/pagination";
 import { Button } from "@/components/ui/button";
 import { useGetAllAnime, useGetSearchedAnime } from "@/lib/query-api";
+import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const SearchPage = () => {
   const params = useSearchParams();
   const query = params.get("keyword");
-  const page = Number(params.get("page"));
+  const page = Number(params.get("page")) || 1;
 
   const { data: genres, isLoading: isGenreLoading } = useGetAllAnime();
   const { data, isLoading, isError } = useGetSearchedAnime(query!, page);
+  const [isActiveGenre, setIsActiveGenre] = useState<string>("")
 
   if (isGenreLoading && isLoading) return <SearchPageLoading />;
 
@@ -22,6 +25,10 @@ const SearchPage = () => {
       Something happened! 🥲
     </p>
   )
+
+  const handleClick = (genre: string) => {
+    window.location.assign(`/genre/${genre}?page=1`)
+  }
   return (
     <>
       <div className="h-full max-w-[1420px] pt-20 mx-auto flex w-full gap-x-4 mt-8 xl:px-0 px-4">
@@ -29,21 +36,27 @@ const SearchPage = () => {
           <div className="w-full h-auto xl:py-10 p-6 border border-muted rounded-xl">
             <h1 className="mb-6 text-xl">Genre</h1>
             <div className="flex flex-wrap gap-2">
-              {genres?.genres.map((genre) => (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="bg-transparent text-xs"
-                  key={genre}
-                >
-                  {genre}
-                </Button>
-              ))}
+              {genres?.genres.map((genre) => {
+                const isActive = isActiveGenre === genre;
+                return(
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={cn("bg-transparent text-xs", isActive && "bg-muted underline")}
+                    key={genre}
+                    onClick={() => setIsActiveGenre(genre.toLowerCase())}
+                  >
+                    {genre}
+                  </Button>
+                )
+              })}
             </div>
 
             <Button
               className="mt-6 bg-[#FF003D] hover:bg-[#FF003D]/80 text-md w-40"
               size="sm"
+              disabled={!isActiveGenre}
+              onClick={() => handleClick(isActiveGenre)}
             >
               Filter
             </Button>

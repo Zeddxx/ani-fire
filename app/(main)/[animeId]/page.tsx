@@ -17,7 +17,6 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
   if (isError) return <p>Error..</p>;
 
   const description = data?.anime.info.description || "";
-
   return (
     <section className="relative h-auto pt-20">
       <div className="absolute w-full h-full -z-10">

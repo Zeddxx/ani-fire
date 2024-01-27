@@ -97,11 +97,11 @@ const ScheduleAnime = () => {
 
   return (
     <>
-      <div className="flex justify-between w-full">
+      <div className="flex sm:flex-row flex-col gap-y-2 justify-between w-full">
         <h6 className="text-2xl font-semibold text-primary">
           Estimated Schedule
         </h6>
-        <p className="font-semibold text-sm bg-secondary flex gap-1 items-center px-3 rounded-full">
+        <p className="font-semibold sm:py-0 py-2 text-sm bg-secondary flex gap-1 items-center px-3 rounded-full">
           {current}
         </p>
       </div>
@@ -116,14 +116,14 @@ const ScheduleAnime = () => {
           forwardBtnProps={{
             //here you can also pass className, or any other button element attributes
             className:
-              "hidden md:block z-10 absolute right-0 bottom-1/2 translate-y-1/2",
+              "h-full z-10 absolute right-0 bottom-1/2 translate-y-1/2",
             children: (
               <span
                 className={cn(
                   buttonVariants({
                     variant: "secondary",
                     size: "icon",
-                    className: "h-full w-full rounded-full",
+                    className: "h-full w-full rounded-none",
                   })
                 )}
               >
@@ -134,14 +134,14 @@ const ScheduleAnime = () => {
           backwardBtnProps={{
             //here you can also pass className, or any other button element attributes
             className:
-              "hidden md:block z-10 absolute left-0 top-1/2 -translate-y-1/2",
+              "z-10 absolute h-full left-0 top-1/2 -translate-y-1/2",
             children: (
               <span
                 className={cn(
                   buttonVariants({
                     variant: "secondary",
                     size: "icon",
-                    className: "h-full w-full rounded-full",
+                    className: "h-full w-full rounded-none",
                   })
                 )}
               >
@@ -164,70 +164,95 @@ const ScheduleAnime = () => {
           easing="ease-in-out"
         >
           {prevDays
-            .map((prev, index) => (
+            .map((prev, index) => {
+              const isActive =
+                prev.getFullYear() +
+                  "-" +
+                  (prev.getMonth() + 1 < 10
+                    ? "0" + (prev.getMonth() + 1)
+                    : prev.getMonth() + 1) +
+                  "-" +
+                  (prev.getDate() < 10
+                    ? "0" + prev.getDate()
+                    : prev.getDate()) ===
+                fetchDate;
+              return (
+                <Button
+                  className={cn(
+                    "w-48 rounded-none mr-6 h-12",
+                    isActive && "bg-primary"
+                  )}
+                  variant="outline"
+                  key={index}
+                  onClick={() =>
+                    handleShow(
+                      prev.getDate(),
+                      prev.getMonth(),
+                      prev.getFullYear()
+                    )
+                  }
+                >
+                  {dayAbbreviations[prev.getDay()]} {prev.getDate()}
+                </Button>
+              );
+            })
+            .reverse()}
+          {upcomingDays.map((next, index) => {
+            const isActive =
+              next.getFullYear() +
+                "-" +
+                (next.getMonth() + 1 < 10
+                  ? "0" + (next.getMonth() + 1)
+                  : next.getMonth() + 1) +
+                "-" +
+                (next.getDate() < 10
+                  ? "0" + next.getDate()
+                  : next.getDate()) ===
+              fetchDate;
+            return (
               <Button
+                key={index}
                 className={cn(
                   "w-48 rounded-none mr-6 h-12",
-                  activeButton ===
-                    prev.getFullYear() +
-                      String(
-                        prev.getMonth() > 10
-                          ? prev.getMonth()
-                          : "0" + prev.getMonth()
-                      ) +
-                      String(
-                        prev.getDate() < 10
-                          ? "0" + prev.getDate()
-                          : prev.getDate()
-                      ) && "bg-primary"
+                  isActive && "bg-primary text-white hover:bg-rose-400"
                 )}
-                variant="outline"
-                key={index}
+                variant="secondary"
                 onClick={() =>
                   handleShow(
-                    prev.getDate(),
-                    prev.getMonth(),
-                    prev.getFullYear()
+                    next.getDate(),
+                    next.getMonth(),
+                    next.getFullYear()
                   )
                 }
               >
-                {dayAbbreviations[prev.getDay()]} {prev.getDate()}
+                {dayAbbreviations[next.getDay()]} {next.getDate()}
               </Button>
-            ))
-            .reverse()}
-          {upcomingDays.map((next, index) => (
-            <Button
-              key={index}
-              className="w-48 rounded-none mr-6 h-12"
-              variant="outline"
-              onClick={() =>
-                handleShow(next.getDate(), next.getMonth(), next.getFullYear())
-              }
-            >
-              {dayAbbreviations[next.getDay()]} {next.getDate()}
-            </Button>
-          ))}
+            );
+          })}
         </ReactSimplyCarousel>
       </div>
 
       <div className="w-full h-auto">
         {!data
           ? "loading"
-          : data?.map((data, index) => (
+          : data?.map((data, index) => {
+            const isEven = index % 2;
+            return(
               <div
-                className="w-full py-4 border-b border-y-muted flex gap-x-2 justify-between"
+                className={cn("w-full py-3 border-b border-y-muted flex gap-x-2 justify-between px-2", isEven && "bg-slate-200 dark:bg-neutral-800")}
                 key={index}
               >
                 <Link
                   href={`/${data.id}`}
-                  className="text-md hover:text-primary duration-200"
+                  className="text-md font-medium text-base hover:text-primary duration-200"
                 >
                   {data.name}
                 </Link>
 
                 <p className="text-primary">{data.time}</p>
               </div>
-            ))}
+            )
+          })}
       </div>
     </>
   );

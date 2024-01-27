@@ -2,20 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useGetAllAnime } from "@/lib/query-api";
+import { TopSearchItems } from "@/constants";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
 const Home = () => {
-  const { data, isLoading } = useGetAllAnime();
   const [query, setQuery] = useState<string>("");
 
-  if (isLoading) return null;
-
   return (
-    <div className="w-full h-auto max-w-[1220px] my-4 mx-auto xl:px-0 px-4">
+    <div className="w-full h-auto max-w-[1220px] my-4 mx-auto xl:px-0 sm:px-4 px-2">
       <div className="flex gap-x-0 items-end">
         <img src="/assets/nav.gif" alt="logo" width={80} height={72} />
         <p className="text-6xl font-bold text-secondary-foreground dark:text-white leading-none">
@@ -46,7 +43,7 @@ const Home = () => {
           <div className="flex w-full">
             <p>
               <span className="font-medium mr-2 dark:text-primary-foreground text-secondary-foreground">Top search:</span>
-              {isLoading
+              {/* {isLoading
                 ? "loading..."
                 : data?.trendingAnimes.map((anime) => (
                     <a
@@ -57,6 +54,11 @@ const Home = () => {
                       {anime.name}
                       {", "}
                     </a>
+                  ))} */}
+                  {TopSearchItems.map((item, index) => (
+                    <Link key={item.name + index} href={item.href}>
+                      {item.name}{', '}
+                    </Link>
                   ))}
             </p>
           </div>

@@ -70,17 +70,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
   if (isError) return <p>Error</p>;
 
   return (
-    <section className="relative w-full pt-20 h-auto">
-      {/* Background image */}
-      {/* <div className="absolute w-full left-1/2 -translate-x-1/2 h-96 -z-10">
-        <img
-          src="/assets/bg-image.jpg"
-          alt="background image"
-          loading="lazy"
-          className="h-full w-full blur-2xl brightness-50 object-cover"
-        />
-      </div> */}
-
+    <section className="relative w-full h-auto">
       {/* Flow Tree */}
       <div className="flex text-sm my-4 max-w-screen-2xl mx-auto gap-x-1 items-center px-4">
         {/* TODO: make it working as link element */}

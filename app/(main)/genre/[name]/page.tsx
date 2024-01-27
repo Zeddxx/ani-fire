@@ -7,14 +7,14 @@ import { useSearchParams } from "next/navigation";
 
 const GenrePage = ({ params }: { params: { name: string } }) => {
   const para = useSearchParams();
-  const page = Number(para.get("page")) || 1;
+  const page = Number(para.get('page'));
 
   const { data, isLoading, isError } = useGetAnimeByGenres(params.name, page);
-  console.log(data);
 
   if (isLoading) return <p>Loading...</p>;
+
   return (
-    <section className="max-w-screen-2xl pt-24 mx-auto w-full px-4">
+    <section className="max-w-screen-2xl mx-auto w-full px-4">
       <h1 className="text-2xl font-semibold text-primary my-3">
         {data?.genreName}
       </h1>

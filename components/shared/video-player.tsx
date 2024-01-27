@@ -80,11 +80,6 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
             }}
           />
         )}
-
-        {error && (
-          <p>{error}</p>
-        )}
-
         {/* <select className="text-black" name="" onChange={handleChange} id="">
           {data?.sources?.map((source, index) => (
             <option
