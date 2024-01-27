@@ -7,14 +7,10 @@ import { Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AnimeInfo from "@/components/anime-info";
 import { Separator } from "@/components/ui/separator";
-import { useSearchParams } from "next/navigation";
 
 const AnimePage = ({ params }: { params: { animeId: string } }) => {
   const { data, isLoading, isError } = useGetAnimeInfo(params.animeId);
   const { data: episode } = useGetAnimeEpisodes(params.animeId);
-
-  const ref = useSearchParams()
-  const latest = ref.get('ref');
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -32,7 +28,7 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
         />
       </div>
       {/* Anime general information */}
-      <AnimeInfo latest={latest} page="AnimePage" data={data!} description={description} episode={episode!} />
+      <AnimeInfo page="AnimePage" data={data!} description={description} episode={episode!} />
 
       <div className="flex max-w-screen-2xl mx-auto w-full xl:px-0 px-4 gap-3 flex-wrap">
         {data?.seasons.map((season, index) => (

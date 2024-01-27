@@ -17,7 +17,7 @@ const AnimeCard = ({ anime, latest } : AnimeCardProps ) => {
   return (
       <div key={anime.id} className="flex flex-col">
       <a
-        href={latest === "latest" ? `/${anime.id}?ref=latest` : `/${anime.id}`}
+        href={`/${anime.id}`}
         className="rounded-md w-full h-[30vw] max-h-80 lg:max-h-64 min-h-60 overflow-hidden relative"
       >
         <img
@@ -40,7 +40,7 @@ const AnimeCard = ({ anime, latest } : AnimeCardProps ) => {
         </div>
       </a>
       <a
-        href={latest === "latest" ? `/${anime.id}?ref=latest` : `/${anime.id}`}
+        href={`/${anime.id}`}
         className="mt-1.5 truncate w-full hover:text-rose-500"
       >
         {anime.name}
