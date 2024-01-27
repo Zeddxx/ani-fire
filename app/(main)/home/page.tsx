@@ -167,7 +167,7 @@ const HomePage = () => {
 
           <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
           {data?.latestEpisodeAnimes.map((anime) => (
-            <AnimeCard key={anime.id} anime={anime} />
+            <AnimeCard latest="latest" key={anime.id} anime={anime} />
           ))}
         </div>
       </div>

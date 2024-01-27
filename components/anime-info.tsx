@@ -11,18 +11,34 @@ const AnimeInfo = ({
   episode,
   description,
   page,
+  latest
 }: {
   data: AnimeInfoTypeProps;
   episode?: GetAnimeEpisodes;
   description?: string;
   page: "AnimePage" | "Watching";
+  latest?: string | null
 }) => {
   const [isShowMore, setIsShowMore] = useState<boolean>(false);
 
+  const isRedirectToLatest = !!latest;
+
   return (
     <div className="flex max-w-screen-2xl mx-auto w-full h-max px-4 py-10 relative">
-      <div className={cn("h-full w-full", page === "AnimePage" ? "flex lg:flex-row flex-col items-center lg:items-start gap-x-4" : "")}>
-        <div className={cn("relative mb-6 lg:mb-0 overflow-hidden rounded-md before:absolute before:w-full before:bg-gradient-to-t before:from-stone-950 before:to-transparent before:h-32 before:bottom-0 before:left-0 before:z-20", page === "AnimePage" ? "h-80 w-52 lg:min-w-64" : "h-44 w-32")}>
+      <div
+        className={cn(
+          "h-full w-full",
+          page === "AnimePage"
+            ? "flex lg:flex-row flex-col items-center lg:items-start gap-x-4"
+            : ""
+        )}
+      >
+        <div
+          className={cn(
+            "relative mb-6 lg:mb-0 overflow-hidden rounded-md before:absolute before:w-full before:bg-gradient-to-t before:from-stone-950 before:to-transparent before:h-32 before:bottom-0 before:left-0 before:z-20",
+            page === "AnimePage" ? "h-80 w-52 lg:min-w-64" : "h-44 w-32"
+          )}
+        >
           <img
             src={data?.anime.info.poster}
             alt={"anime poster"}
@@ -32,7 +48,9 @@ const AnimeInfo = ({
         </div>
 
         <div className="">
-          <h1 className="text-3xl font-semibold text-secondary-foreground">{data?.anime.info.name}</h1>
+          <h1 className="text-3xl font-semibold text-secondary-foreground">
+            {data?.anime.info.name}
+          </h1>
 
           <div className="rounded-sm my-4 items-center flex gap-px overflow-hidden">
             <p className="bg-white text-black py-1 font-semibold px-2 text-xs">
@@ -52,11 +70,15 @@ const AnimeInfo = ({
 
             <span className="h-1.5 mx-2 w-1.5 rounded-full bg-muted-foreground"></span>
 
-            <p className="text-sm text-secondary-foreground">{data?.anime.info.stats.type}</p>
+            <p className="text-sm text-secondary-foreground">
+              {data?.anime.info.stats.type}
+            </p>
 
             <span className="h-1.5 mx-2 w-1.5 rounded-full bg-muted-foreground"></span>
 
-            <p className="text-sm text-secondary-foreground">{data?.anime.info.stats.duration}</p>
+            <p className="text-sm text-secondary-foreground">
+              {data?.anime.info.stats.duration}
+            </p>
           </div>
 
           {page === "AnimePage" && (
@@ -65,8 +87,8 @@ const AnimeInfo = ({
                 asChild
                 className="bg-rose-600 rounded-full hover:bg-rose-700"
               >
-                <a href={`/watch/${episode?.episodes[0].episodeId}`}>
-                  <FaPlay className="mr-2" /> Watch now
+                <a href={isRedirectToLatest ? `/watch/${episode?.episodes[0].episodeId}&ref=latest` : `/watch/${episode?.episodes[0].episodeId}`}>
+                  <FaPlay className="mr-2" /> Watch {isRedirectToLatest ? "latest" : "now"}
                 </a>
               </Button>
             </div>
@@ -74,7 +96,12 @@ const AnimeInfo = ({
 
           {/* Description here! */}
 
-          <p className={cn("dark:text-slate-50 text-sm", page !== "AnimePage" && "overflow-y-auto h-24")}>
+          <p
+            className={cn(
+              "dark:text-slate-50 text-sm",
+              page !== "AnimePage" && "overflow-y-auto h-24"
+            )}
+          >
             {description?.length! > 300
               ? isShowMore
                 ? description
@@ -129,7 +156,9 @@ const AnimeInfo = ({
             <Separator />
 
             <div className="flex flex-wrap gap-3">
-              <span className="text-sm text-secondary-foreground dark:text-primary-foreground">Genre :</span>{" "}
+              <span className="text-sm text-secondary-foreground dark:text-primary-foreground">
+                Genre :
+              </span>{" "}
               {data.anime.moreInfo.genres.map((genre) => (
                 <Badge
                   variant="secondary"

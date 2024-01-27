@@ -4,8 +4,12 @@ import { Mic } from "lucide-react";
 import { FaPlay } from "react-icons/fa";
 import { AnimesProps, LatestAnimeProps, TopUpcomingAnimes } from "@/types";
 
+type AnimeCardProps = {
+  anime: AnimesProps | TopUpcomingAnimes | LatestAnimeProps
+  latest?: string
+}
 
-const AnimeCard = ({ anime } : { anime: AnimesProps | TopUpcomingAnimes | LatestAnimeProps } ) => {
+const AnimeCard = ({ anime, latest } : AnimeCardProps ) => {
   const isNull = Number(anime.episodes.sub) === 0;
 
   if(isNull) return null;
@@ -13,7 +17,7 @@ const AnimeCard = ({ anime } : { anime: AnimesProps | TopUpcomingAnimes | Latest
   return (
       <div key={anime.id} className="flex flex-col">
       <a
-        href={`/${anime.id}`}
+        href={latest === "latest" ? `/${anime.id}?ref=latest` : `/${anime.id}`}
         className="rounded-md w-full h-[30vw] max-h-80 lg:max-h-64 min-h-60 overflow-hidden relative"
       >
         <img
@@ -36,7 +40,7 @@ const AnimeCard = ({ anime } : { anime: AnimesProps | TopUpcomingAnimes | Latest
         </div>
       </a>
       <a
-        href={`/${anime.id}`}
+        href={latest === "latest" ? `/${anime.id}?ref=latest` : `/${anime.id}`}
         className="mt-1.5 truncate w-full hover:text-rose-500"
       >
         {anime.name}

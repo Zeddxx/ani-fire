@@ -116,14 +116,14 @@ const ScheduleAnime = () => {
           forwardBtnProps={{
             //here you can also pass className, or any other button element attributes
             className:
-              "hidden md:block z-10 absolute right-0 bottom-1/2 translate-y-1/2",
+              "h-full z-10 absolute right-0 bottom-1/2 translate-y-1/2",
             children: (
               <span
                 className={cn(
                   buttonVariants({
                     variant: "secondary",
                     size: "icon",
-                    className: "h-full w-full rounded-full",
+                    className: "h-full w-full rounded-none",
                   })
                 )}
               >
@@ -134,14 +134,14 @@ const ScheduleAnime = () => {
           backwardBtnProps={{
             //here you can also pass className, or any other button element attributes
             className:
-              "hidden md:block z-10 absolute left-0 top-1/2 -translate-y-1/2",
+              "z-10 absolute h-full left-0 top-1/2 -translate-y-1/2",
             children: (
               <span
                 className={cn(
                   buttonVariants({
                     variant: "secondary",
                     size: "icon",
-                    className: "h-full w-full rounded-full",
+                    className: "h-full w-full rounded-none",
                   })
                 )}
               >
@@ -164,49 +164,71 @@ const ScheduleAnime = () => {
           easing="ease-in-out"
         >
           {prevDays
-            .map((prev, index) => (
+            .map((prev, index) => {
+              const isActive =
+                prev.getFullYear() +
+                  "-" +
+                  (prev.getMonth() + 1 < 10
+                    ? "0" + (prev.getMonth() + 1)
+                    : prev.getMonth() + 1) +
+                  "-" +
+                  (prev.getDate() < 10
+                    ? "0" + prev.getDate()
+                    : prev.getDate()) ===
+                fetchDate;
+              return (
+                <Button
+                  className={cn(
+                    "w-48 rounded-none mr-6 h-12",
+                    isActive && "bg-primary"
+                  )}
+                  variant="outline"
+                  key={index}
+                  onClick={() =>
+                    handleShow(
+                      prev.getDate(),
+                      prev.getMonth(),
+                      prev.getFullYear()
+                    )
+                  }
+                >
+                  {dayAbbreviations[prev.getDay()]} {prev.getDate()}
+                </Button>
+              );
+            })
+            .reverse()}
+          {upcomingDays.map((next, index) => {
+            const isActive =
+              next.getFullYear() +
+                "-" +
+                (next.getMonth() + 1 < 10
+                  ? "0" + (next.getMonth() + 1)
+                  : next.getMonth() + 1) +
+                "-" +
+                (next.getDate() < 10
+                  ? "0" + next.getDate()
+                  : next.getDate()) ===
+              fetchDate;
+            return (
               <Button
+                key={index}
                 className={cn(
                   "w-48 rounded-none mr-6 h-12",
-                  activeButton ===
-                    prev.getFullYear() +
-                      String(
-                        prev.getMonth() > 10
-                          ? prev.getMonth()
-                          : "0" + prev.getMonth()
-                      ) +
-                      String(
-                        prev.getDate() < 10
-                          ? "0" + prev.getDate()
-                          : prev.getDate()
-                      ) && "bg-primary"
+                  isActive && "bg-primary text-white hover:bg-rose-400"
                 )}
-                variant="outline"
-                key={index}
+                variant="secondary"
                 onClick={() =>
                   handleShow(
-                    prev.getDate(),
-                    prev.getMonth(),
-                    prev.getFullYear()
+                    next.getDate(),
+                    next.getMonth(),
+                    next.getFullYear()
                   )
                 }
               >
-                {dayAbbreviations[prev.getDay()]} {prev.getDate()}
+                {dayAbbreviations[next.getDay()]} {next.getDate()}
               </Button>
-            ))
-            .reverse()}
-          {upcomingDays.map((next, index) => (
-            <Button
-              key={index}
-              className="w-48 rounded-none mr-6 h-12"
-              variant="outline"
-              onClick={() =>
-                handleShow(next.getDate(), next.getMonth(), next.getFullYear())
-              }
-            >
-              {dayAbbreviations[next.getDay()]} {next.getDate()}
-            </Button>
-          ))}
+            );
+          })}
         </ReactSimplyCarousel>
       </div>
 

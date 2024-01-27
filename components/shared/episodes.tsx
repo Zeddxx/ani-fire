@@ -2,7 +2,6 @@
 
 import { Episode } from "@/types";
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
 
 type EpisodesProps = {
   moreEpisodes: number;

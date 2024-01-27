@@ -44,4 +44,10 @@ export const MainNavbarItems = [
   { name: "Subbed Anime", href: "/anime/subbed-anime" },
   { name: "Dubbed Anime", href: "/anime/dubbed-anime" },
   { name: "Most Popular", href: "/anime/most-popular" },
+  { name: "Movies", href: "/anime/movies" },
+  { name: "TV Series", href: "/anime/tv" },
+  { name: "OVAs", href: "/anime/ova" },
+  { name: "ONAs", href: "/anime/ona" },
+  { name: "Specials", href: "/anime/special" },
+  { name: "Events", href: "/anime/event" },
 ];
