@@ -24,8 +24,6 @@ const VideoPlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
   const [setUrl, setSelectedUrl] = useState<string | undefined>();
   const [error, setError] = useState("")
 
-  console.log(data);
-
   const playerRef = useRef<BaseReactPlayer<ReactPlayerProps>>(null);
 
   const subtitles = data?.subtitles || [];

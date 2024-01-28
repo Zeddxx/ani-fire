@@ -114,7 +114,7 @@ const MainNavbar = () => {
       </aside>
       <header
         className={cn(
-          "h-16 px-4 w-full sticky z-30 top-0 flex items-center bg-white dark:bg-black dark:border-b-muted",
+          "h-16 px-4 w-full sticky z-40 top-0 flex items-center bg-white dark:bg-black dark:border-b-muted",
           scrolled && "border-b"
         )}
       >
