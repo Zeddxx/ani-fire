@@ -12,7 +12,7 @@ import { useState } from "react";
 const SearchPage = () => {
   const params = useSearchParams();
   const query = params.get("keyword");
-  const page = Number(params.get("page"));
+  const page = Number(params.get("page")) || 1;
 
   const { data: genres, isLoading: isGenreLoading } = useGetAllAnime();
   const { data, isLoading, isError } = useGetSearchedAnime(query!, page);
