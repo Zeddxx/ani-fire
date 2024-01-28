@@ -22,10 +22,10 @@ const Episodes = ({
     <>
       <aside
         className={cn(
-          "dark:bg-black border bg-white episode-scroll overflow-y-scroll w-full relative",
+          "dark:bg-black border border-muted bg-white episode-scroll overflow-y-scroll w-full relative",
           screen === "PC"
-            ? "xl:block hidden h-[36rem] max-w-[18rem]"
-            : "block xl:hidden w-full my-4"
+            ? "2xl:block hidden h-[36rem] max-w-[18rem]"
+            : "block xl:hidden max-h-72 w-full my-4"
         )}
       >
         <div className="w-full dark:bg-black border-b border-muted sticky left-0 py-4 px-4 top-0">
@@ -35,10 +35,10 @@ const Episodes = ({
         </div>
         <div
           className={cn(
-            "h-full w-full py-4 sm:py-1 px-4",
+            "h-full w-full py-4 px-4",
             moreEpisodes > 24
-              ? "grid grid-cols-5 xl:h-auto h-60 sm:grid-cols-8 xl:grid-cols-4 gap-2"
-              : "flex flex-col max-h-56 overflow-y-auto"
+              ? "grid grid-cols-5 xl:h-auto sm:grid-cols-8 xl:grid-cols-4 gap-2"
+              : "flex flex-col overflow-y-auto"
           )}
         >
           {/* TODO: make it dynamic or adding links to it */}

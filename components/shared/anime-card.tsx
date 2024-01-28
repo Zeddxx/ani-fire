@@ -2,10 +2,10 @@
 
 import { Mic } from "lucide-react";
 import { FaPlay } from "react-icons/fa";
-import { AnimesProps, LatestAnimeProps, TopUpcomingAnimes } from "@/types";
+import { AnimesProps, LatestAnimeProps, RelatedAnimeProps, TopUpcomingAnimes } from "@/types";
 
 type AnimeCardProps = {
-  anime: AnimesProps | TopUpcomingAnimes | LatestAnimeProps
+  anime: AnimesProps | TopUpcomingAnimes | LatestAnimeProps | RelatedAnimeProps
   latest?: string
 }
 
