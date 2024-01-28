@@ -13,6 +13,7 @@ import {
 } from "@/lib/query-api";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import FirePlayer from "@/components/players/fire-player";
 
 const WatchAnime = ({ params }: { params: { id: string } }) => {
   const para = useSearchParams();
@@ -114,10 +115,15 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
           {isLoading && !episodeNumber ? (
             <div className="h-64 w-full bg-black"></div>
           ) : (
-            <VideoPlayer
-              episodeId={data?.episodeId!}
-              server={!server ? "vidstreaming" : server}
-              category={"sub"}
+            // <VideoPlayer
+            //   episodeId={data?.episodeId!}
+            //   server={!server ? "vidstreaming" : server}
+            //   category={"sub"}
+            // />
+            <FirePlayer
+            episodeId={data?.episodeId!}
+            server={!server ? "vidstreaming" : server}
+            category={"sub"}
             />
           )}
 
