@@ -35,7 +35,7 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
   useEffect(() => {
     if (data) {
       if (data.sources) {
-        setSelectedUrl(data.sources[0].url);
+        setSelectedUrl(data.sources[0].url || data.sources[1].url);
       }
     }
   }, [data]);
@@ -65,7 +65,7 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
 
   let options: Option = {
     container: ".artplayer-app",
-    url: setUrl || data?.sources[0].url! || data?.sources[1].url!,
+    url: data?.sources[0].url!,
     customType: {
       m3u8: playM3u8,
     },
@@ -73,7 +73,8 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     volume: 1,
     isLive: false,
     muted: false,
-    autoplay: true,
+    autoplay: false,
+    type: "m3u8",
     autoOrientation: true,
     pip: true,
     autoSize: false,
@@ -82,6 +83,7 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     setting: true,
     loop: false,
     flip: true,
+    lock: true,
     playbackRate: true,
     aspectRatio: true,
     fullscreen: true,
@@ -117,6 +119,6 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
         </div>
     );
   }
-  return <Player option={options} className="xl:h-[460px] z-10 sm:h-96 h-64 w-full" />;
+  return <Player option={options} className="xl:h-[460px] -z-10 md:h-[520px] sm:h-96 h-60 w-full" />;
 };
 export default FirePlayer;

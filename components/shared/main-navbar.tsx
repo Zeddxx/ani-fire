@@ -78,12 +78,12 @@ const MainNavbar = () => {
       {isMenuOpen && !isSearchOpen && (
         <div
           onClick={() => setIsMenuOpen(false)}
-          className="w-full h-screen bg-black/40 backdrop-blur-sm fixed z-40"
+          className="w-full h-screen bg-black/40 backdrop-blur-sm fixed z-[99999]"
         ></div>
       )}
       <aside
         className={cn(
-          "py-10 fixed left-0 z-40 top-0 h-screen bg-black/50 backdrop-blur-md overflow-hidden duration-200",
+          "py-10 fixed left-0 z-[99999] top-0 h-screen bg-black/50 backdrop-blur-md overflow-hidden duration-200",
           isMenuOpen ? "w-[18rem] px-3" : "w-0"
         )}
       >
@@ -114,7 +114,7 @@ const MainNavbar = () => {
       </aside>
       <header
         className={cn(
-          "h-16 px-4 w-full sticky z-40 top-0 flex items-center bg-white dark:bg-black dark:border-b-muted",
+          "h-16 px-4 w-full sticky z-[999] top-0 flex items-center bg-white dark:bg-black dark:border-b-muted",
           scrolled && "border-b"
         )}
       >

@@ -14,6 +14,7 @@ import {
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import FirePlayer from "@/components/players/fire-player";
+import AnimeCard from "@/components/shared/anime-card";
 
 const WatchAnime = ({ params }: { params: { id: string } }) => {
   const para = useSearchParams();
@@ -29,6 +30,8 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
   const { data: animeInfo, isLoading: isInfoLoading } = useGetAnimeInfo(
     params.id
   );
+
+  console.log(animeInfo);
 
   const description = animeInfo?.anime.info.description;
 
@@ -97,7 +100,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
       </div>
 
       {/* main episodes no. and video player here! */}
-      <div className="max-w-screen-2xl px-4 mx-auto w-full flex xl:flex-row flex-col h-auto">
+      <div className="2xl:max-w-screen-2xl max-w-6xl px-4 mx-auto w-full flex 2xl:flex-row flex-col h-auto">
         {isEpisodeLoading && !episodes ? (
           <p>Loading...</p>
         ) : (
@@ -147,8 +150,8 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
               Next <IoPlayForwardSharp className="h-4 w-4 ml-2" />
             </Button>
           </div>
-          <div className="flex lg:flex-row flex-col gap-x-4 py-3">
-            <div className="lg:w-1/2 w-full flex flex-col bg-primary p-3 items-center justify-center text-center">
+          <div className="flex 2xl:flex-row flex-col gap-x-4 py-3">
+            <div className="2xl:w-1/2 w-full flex flex-col bg-primary p-3 items-center justify-center text-center">
               <p className="text-sm text-black inline">
                 You are watching{" "}
                 <span className="font-semibold">
@@ -157,7 +160,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
                 If current server doesnt work please try other servers beside.
               </p>
             </div>
-            <div className="lg:mt-0 mt-4">
+            <div className="2xl:mt-0 mt-4">
               <div className="flex items-center gap-x-4 mb-4">
                 <p className="text-sm">Sub: </p>
                 <div className="flex gap-4 flex-wrap">
@@ -204,7 +207,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
         />
 
         {/* TODO: add a brief info of the anime */}
-        <aside className="xl:block h-auto xl:max-w-[23rem] w-full flex gap-x-4">
+        <aside className="2xl:block h-auto 2xl:max-w-[23rem] w-full flex gap-x-4">
           {isInfoLoading && !animeInfo ? (
             <p>Loading Anime info.</p>
           ) : (
@@ -215,6 +218,16 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
             />
           )}
         </aside>
+      </div>
+
+      <div className="2xl:max-w-screen-2xl max-w-6xl mx-auto px-4 w-full h-auto">
+        <h3 className="text-3xl text-primary font-medium">Related Anime</h3>
+
+        <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
+          {animeInfo?.relatedAnimes.map((anime, index) => (
+            <AnimeCard anime={anime} key={anime.id + index} />
+          ))}
+        </div>
       </div>
     </section>
   );

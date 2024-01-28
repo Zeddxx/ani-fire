@@ -7,18 +7,19 @@ import { Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AnimeInfo from "@/components/anime-info";
 import { Separator } from "@/components/ui/separator";
+import AnimeInfoLoading from "@/components/loaders/anime-info-loader";
 
 const AnimePage = ({ params }: { params: { animeId: string } }) => {
   const { data, isLoading, isError } = useGetAnimeInfo(params.animeId);
   const { data: episode } = useGetAnimeEpisodes(params.animeId);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <AnimeInfoLoading />;
 
   if (isError) return <p>Error..</p>;
 
   const description = data?.anime.info.description || "";
   return (
-    <section className="relative h-auto pt-20">
+    <section className="relative h-auto">
       <div className="absolute w-full h-full -z-10">
         <img
           src={data?.anime.info.poster!}
@@ -57,7 +58,7 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
       <div className="max-w-screen-2xl flex xl:flex-row flex-col gap-x-4 px-4 mx-auto w-full my-10 h-auto">
         <div className="w-full h-auto">
           <h3 className="text-2xl font-semibold">Recommanded Animes</h3>
-          <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
+          <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
             {data?.recommendedAnimes.map((anime, index) => (
               <AnimeCard anime={anime} key={anime.id + index} />
             ))}
