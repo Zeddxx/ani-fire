@@ -31,8 +31,6 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
     params.id
   );
 
-  console.log(animeInfo);
-
   const description = animeInfo?.anime.info.description;
 
   const handleClick = (server: string) => {

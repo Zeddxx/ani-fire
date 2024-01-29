@@ -9,8 +9,8 @@ const nextConfig = {
     ],
   },
   experimental: {
-    missingSuspenseWithCSRBailout: false,
-  },
+  missingSuspenseWithCSRBailout: false,
+ },
 };
 
 module.exports = nextConfig;
