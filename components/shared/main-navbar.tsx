@@ -6,21 +6,23 @@ import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 
 import { Button } from "../ui/button";
-import { MainNavbarItems } from "@/constants";
+import { MainNavbarItems, genreList } from "@/constants";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { Input } from "../ui/input";
 import { useScrollTop } from "@/hooks";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [more, setMore] = useState<number>(10);
+  const params = useSearchParams()
 
   const searchRef = useRef<HTMLInputElement>(null);
-  const params = useSearchParams();
+
   const scrolled = useScrollTop();
 
   const { theme, setTheme } = useTheme();
@@ -95,22 +97,36 @@ const MainNavbar = () => {
           <p className="overflow-hidden truncate">Close menu</p>
         </Button>
 
-        <ul className="my-4 flex-shrink-0">
-          {MainNavbarItems.map((item) => (
-            <li
-              className="py-3 font-medium truncate dark:text-current text-white"
-              key={item.name}
-            >
-              <a
-                href={item.href}
-                className="hover:text-primary"
-                title={"Go To" + " " + item.name}
+        <div className="h-full overflow-y-scroll scroll-hidden">
+          <ul className="my-4 flex-shrink-0">
+            {MainNavbarItems.map((item) => (
+              <li
+                className="py-3 font-medium truncate dark:text-current text-white"
+                key={item.name}
               >
-                {item.name}
-              </a>
-            </li>
-          ))}
-        </ul>
+                <a
+                  href={item.href}
+                  className="hover:text-primary"
+                  title={"Go To" + " " + item.name}
+                >
+                  {item.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <ul className="grid grid-cols-3 gap-4">
+            {genreList.slice(0, more).map((genre, index) => (
+              <li
+                className="truncate font-normal text-secondary text-sm"
+                key={index}
+              >
+                <a href={genre.href}>{genre.name}</a>
+              </li>
+            ))}
+            <p onClick={() => setMore(40)}>more</p>
+          </ul>
+        </div>
       </aside>
       <header
         className={cn(
@@ -124,7 +140,13 @@ const MainNavbar = () => {
               onClick={() => setIsMenuOpen(true)}
               className="flex gap-x-2 text-secondary-foreground dark:text-white items-center"
             >
-              <Image src="/assets/icons/menu.svg" alt="Menu icon" height={24} className="invert dark:invert-0" width={24} />
+              <Image
+                src="/assets/icons/menu.svg"
+                alt="Menu icon"
+                height={24}
+                className="invert dark:invert-0"
+                width={24}
+              />
               <span className="md:block hidden">Menu</span>
             </button>
 
@@ -145,18 +167,26 @@ const MainNavbar = () => {
                 {theme === "system" ? (
                   <SunMoonIcon size={18} />
                 ) : theme === "dark" ? (
-                  <Image src="/assets/icons/moon.svg" alt="moon icon" className="invert select-none" height={18} width={18} />
+                  <Image
+                    src="/assets/icons/moon.svg"
+                    alt="moon icon"
+                    className="invert select-none"
+                    height={18}
+                    width={18}
+                  />
                 ) : (
-                  <Image src="/assets/icons/sun.svg" alt="sun icon" height={20} className="dark:invert select-none" width={20} />
+                  <Image
+                    src="/assets/icons/sun.svg"
+                    alt="sun icon"
+                    height={20}
+                    className="dark:invert select-none"
+                    width={20}
+                  />
                 )}
               </span>
             </Button>
 
-            <Button
-              onClick={handleSearchOption}
-              size="icon"
-              variant="outline"
-            >
+            <Button onClick={handleSearchOption} size="icon" variant="outline">
               <SearchIcon className="h-6 w-6 text-secondary-foreground dark:text-secondary-foreground" />
             </Button>
 

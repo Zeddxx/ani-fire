@@ -21,11 +21,8 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     category
   );
 
-  const uri = data?.sources.find((url) => url.url);
-
   // The control container
   const [setUrl, setSelectedUrl] = useState<string | undefined>();
-  const [error, setError] = useState("");
 
   const subtitles = data?.subtitles || [];
 
@@ -37,7 +34,8 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
   useEffect(() => {
     if (data) {
       if (data.sources) {
-        setSelectedUrl(data.sources[0].url || data.sources[1].url);
+        const uri = data.sources.find((source) => source.url);
+        setSelectedUrl(uri?.url)
       }
     }
   }, [data]);
@@ -67,7 +65,7 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
 
   let options: Option = {
     container: ".artplayer-app",
-    url: uri?.url!,
+    url: setUrl! || "",
     customType: {
       m3u8: playM3u8,
     },
@@ -79,7 +77,8 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     type: "m3u8",
     autoOrientation: true,
     pip: true,
-    autoSize: false,
+    autoSize: true,
+    fastForward: true,
     autoMini: false,
     screenshot: true,
     setting: true,
@@ -91,7 +90,7 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     fullscreen: true,
     fullscreenWeb: false,
     subtitleOffset: false,
-    miniProgressBar: true,
+    miniProgressBar: false,
     mutex: true,
     backdrop: true,
     playsInline: true,
@@ -104,7 +103,7 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     subtitle: {
       url:
         typeof subtitles !== "undefined"
-          ? subtitles.find((sub) => sub.lang === "English")?.url
+          ? subtitles.find((sub) => sub.lang === "English")?.url || ""
           : "",
       type: "vtt",
       style: {
@@ -114,13 +113,16 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     },
   };
 
-  if (isLoading) {
+  if (isLoading && !setUrl) {
     return(
         <div className="xl:h-[460px] sm:h-96 h-64 w-full grid place-items-center">
             <Loader2 className="animate-spin h-6 w-6" />
         </div>
     );
   }
-  return <Player option={options} className="xl:h-[460px] -z-10 md:h-[520px] sm:h-96 h-60 w-full" />;
+  return <Player
+  option={options}
+  className="-z-10 lg:max-h-[630px] h-[60vw] md:max-h-[630px] sm:max-h-[470px] max-h-[256px] w-full"
+  />;
 };
 export default FirePlayer;
