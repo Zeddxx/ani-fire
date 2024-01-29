@@ -21,6 +21,8 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     category
   );
 
+  const uri = data?.sources.find((url) => url.url);
+
   // The control container
   const [setUrl, setSelectedUrl] = useState<string | undefined>();
   const [error, setError] = useState("");
@@ -65,7 +67,7 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
 
   let options: Option = {
     container: ".artplayer-app",
-    url: data?.sources[0].url!,
+    url: uri?.url!,
     customType: {
       m3u8: playM3u8,
     },
