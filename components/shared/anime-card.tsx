@@ -1,15 +1,12 @@
-'use client';
-
 import { Mic } from "lucide-react";
 import { FaPlay } from "react-icons/fa";
 import { AnimesProps, LatestAnimeProps, RelatedAnimeProps, TopUpcomingAnimes } from "@/types";
 
 type AnimeCardProps = {
   anime: AnimesProps | TopUpcomingAnimes | LatestAnimeProps | RelatedAnimeProps
-  latest?: string
 }
 
-const AnimeCard = ({ anime, latest } : AnimeCardProps ) => {
+const AnimeCard = ({ anime } : AnimeCardProps ) => {
   const isNull = Number(anime.episodes.sub) === 0;
 
   if(isNull) return null;

@@ -2,7 +2,6 @@
 
 import AnimeInfo from "@/components/anime-info";
 import Episodes from "@/components/shared/episodes";
-import VideoPlayer from "@/components/shared/video-player";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { IoPlayBackSharp, IoPlayForwardSharp } from "react-icons/io5";
@@ -15,6 +14,8 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import FirePlayer from "@/components/players/fire-player";
 import AnimeCard from "@/components/shared/anime-card";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { useEffect } from "react";
 
 const WatchAnime = ({ params }: { params: { id: string } }) => {
   const para = useSearchParams();
@@ -27,6 +28,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
     params.id
   );
 
+  const { setAnimeWatch } = useLocalStorage()
   const { data: animeInfo, isLoading: isInfoLoading } = useGetAnimeInfo(
     params.id
   );
@@ -57,6 +59,17 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
   const prevEpisode =
     isPrevEpisode &&
     episodes?.episodes[Number(currentEpisodeIndex) - 1].episodeId;
+
+    useEffect(() => {
+        if(animeInfo && episodes) {
+          setAnimeWatch({
+            episodeId: query,
+            episodeNumber: currentEpisodeIndex! + 1,
+            poster: animeInfo?.anime.info.poster,
+            title: animeInfo?.anime.info.name
+          })
+        }
+    })
 
   const handlePrev = () => {
     return window.location.assign(`/watch/${prevEpisode}`);
@@ -112,15 +125,9 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
 
         {/* Video player --> */}
         <div className="w-full h-full">
-          {/* TODO: make loading a rectangle of height same as the video height */}
           {isLoading && !episodeNumber ? (
             <div className="h-64 w-full bg-black"></div>
           ) : (
-            // <VideoPlayer
-            //   episodeId={data?.episodeId!}
-            //   server={!server ? "vidstreaming" : server}
-            //   category={"sub"}
-            // />
             <FirePlayer
             episodeId={data?.episodeId!}
             server={!server ? "vidstreaming" : server}
