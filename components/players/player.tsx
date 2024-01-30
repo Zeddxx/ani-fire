@@ -1,15 +1,42 @@
 'use client';
 
+import { SubtitlesProps } from "@/types";
 import ArtPlayer from "artplayer"
+import Option from "artplayer/types/option";
 import { useEffect, useRef } from "react"
 
-const Player = ({ option, getInstance, ...rest } : any) => {
-  const artRef = useRef();
+type TPlayer = {
+    option: Option,
+    getInstance?: any
+    subtitles: SubtitlesProps[]
+    className: string
+}
+
+const Player = ({ option, getInstance, subtitles, className } : TPlayer) => {
+  const artRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const art = new ArtPlayer({
         ...option,
-        container: artRef.current,
+        container: artRef.current!,
+        settings: [
+            {
+              html: "Subtitle",
+              tooltip: "English",
+              selector:
+                subtitles.map((sub) => ({
+                  default: sub.lang === "English",
+                  html: sub.lang,
+                  url: sub.url
+                })),
+                onSelect: function (item) {
+                  art.subtitle.switch(item.url, {
+                    name: item.html,
+                  });
+                  return item.html;
+                }
+            }
+          ],
     });
 
     art.on("resize", () => {
@@ -34,7 +61,7 @@ const Player = ({ option, getInstance, ...rest } : any) => {
   })
 
   return (
-    <div ref={artRef} {...rest}></div>
+    <div ref={artRef} className={className}></div>
   )
 }
 export default Player

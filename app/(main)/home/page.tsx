@@ -12,6 +12,7 @@ import { MdArrowForwardIos } from "react-icons/md";
 import AnimeCard from "@/components/shared/anime-card";
 import HomeLoading from "@/components/loaders/home-loading";
 import ScheduleAnime from "@/components/shared/schedule-anime";
+import RecentlyWatched from "@/components/shared/recently-watched";
 
 const HomePage = () => {
   const { data, isLoading, isError } = useGetAllAnime();
@@ -85,13 +86,13 @@ const HomePage = () => {
                 maxWidth: 320,
               },
               {
-                itemsToShow: 2,
-                itemsToScroll: 2,
+                itemsToShow: 3,
+                itemsToScroll: 1,
                 minWidth: 320,
                 maxWidth: 512,
               },
               {
-                itemsToShow: 3,
+                itemsToShow: 4,
                 itemsToScroll: 2,
                 minWidth: 512,
                 maxWidth: 768,
@@ -114,7 +115,7 @@ const HomePage = () => {
                 >
                   <p
                     className={cn(
-                      "absolute top-0 z-10 bg-primary grid place-items-center w-8 h-8 md:hidden",
+                      "absolute top-0 z-10 bg-primary text-white grid place-items-center w-8 h-8 md:hidden",
                       index === 0 ? "left-0" : "left-3"
                     )}
                   >
@@ -151,6 +152,10 @@ const HomePage = () => {
           </ReactSimplyCarousel>
         </div>
       </div>
+
+      {/* Recently watched! */}
+      <RecentlyWatched />
+
       <div className="w-full grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 h-auto">
         <AiringAnime anime={data!} />
       </div>
@@ -165,7 +170,7 @@ const HomePage = () => {
           </p>
         </div>
 
-          <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
+        <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
           {data?.latestEpisodeAnimes.map((anime) => (
             <AnimeCard key={anime.id} anime={anime} />
           ))}

@@ -21,7 +21,7 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
         autoplayDelay={6000}
         autoplayDirection="forward"
         itemsToScroll={1}
-        swipeTreshold={300}
+        swipeTreshold={100}
         forwardBtnProps={{
           //here you can also pass className, or any other button element attributes
           className : "absolute z-10 right-4 bottom-16",
@@ -60,7 +60,7 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
                   ))}
                 </div>
                 <h1 className="leading-normal xl:text-5xl text-2xl md:text-3xl font-semibold text-secondary-foreground">{anime.name}</h1>
-                <p className="w-[80%] xl:block hidden">{description.length > 300 ? description.slice(0,300) + "..." : description}</p>
+                <p className="w-[80%] lg:block hidden">{description.length > 300 ? description.slice(0,300) + "..." : description}</p>
                 <div className="flex gap-x-2 mt-4 ">
                   <a href={`/${anime.id}`} className={cn("flex", buttonVariants({ variant: "default", className: "rounded-none" }))}>
                     <BsPlayCircleFill className="mr-3 h-5 w-5" /> Watch now

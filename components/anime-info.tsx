@@ -24,7 +24,7 @@ const AnimeInfo = ({
   const isRedirectToLatest = !!latest;
 
   return (
-    <div className="flex max-w-screen-2xl mx-auto w-full h-max px-4 py-10 relative">
+    <div className={cn("flex max-w-screen-2xl mx-auto w-full h-max px-4 relative", page === "Watching" ? "py-0" : "py-10")}>
       <div
         className={cn(
           "h-full w-full",
@@ -47,7 +47,7 @@ const AnimeInfo = ({
           />
         </div>
 
-        <div className="">
+        <div className="xl:mt-3">
           <h1 className="text-3xl font-semibold text-secondary-foreground">
             {data?.anime.info.name}
           </h1>

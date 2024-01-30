@@ -15,7 +15,7 @@ const GenrePage = ({ params }: { params: { name: string } }) => {
 
   return (
     <section className="max-w-screen-2xl mx-auto w-full px-4">
-      <h1 className="text-2xl font-semibold text-primary my-3">
+      <h1 className="text-2xl font-semibold text-primary mb-3">
         {data?.genreName}
       </h1>
       <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">

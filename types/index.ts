@@ -191,7 +191,7 @@ type Sources = {
     url: string
 }
 
-type SubtitlesProps = {
+export type SubtitlesProps = {
     lang: string
     url: string
 }

@@ -2,8 +2,8 @@
 
 import { useGetAnimeStreaming } from "@/lib/query-api";
 import Hls from "hls.js";
-import type ArtPlayer from "artplayer";
-import { useEffect, useState } from "react";
+import ArtPlayer from "artplayer";
+import { useEffect, useRef, useState } from "react";
 import Player from "./player";
 import Option from "artplayer/types/option";
 import { Loader2 } from "lucide-react";
@@ -23,7 +23,6 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
 
   // The control container
   const [setUrl, setSelectedUrl] = useState<string | undefined>();
-
   const subtitles = data?.subtitles || [];
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -122,7 +121,8 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
   }
   return <Player
   option={options}
-  className="-z-10 lg:max-h-[630px] h-[60vw] md:max-h-[630px] sm:max-h-[470px] max-h-[256px] w-full"
+  subtitles={subtitles}
+  className="-z-10 art-container lg:max-h-[468px] h-[60vw] md:max-h-[630px] sm:max-h-[470px] max-h-[256px] w-full"
   />;
 };
 export default FirePlayer;
