@@ -1,6 +1,6 @@
 > This project is for educational purpose only and i am not making any revenew from this website.
 
-<img src="/public/banner.jpeg" alt="banner image"/>
+<img src="/public/ani-fire-cover.png" alt="banner image"/>
 
 # Awesome Anime Website <img src="/public/assets/nav.gif" alt="gif" width=56 />
 
