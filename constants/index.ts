@@ -100,3 +100,9 @@ export const genreList = [
   { name: "thriller", href: "/genre/thriller?page=1" },
   { name: "vampire", href: "/genre/vampire?page=1" },
 ]
+
+export const headerItems = [
+  { name: "About", href: "/" },
+  { name: "Community", href: "/community" },
+  { name: "Github", href: "https://github.com/zeddxx"},
+]
