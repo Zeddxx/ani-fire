@@ -3,7 +3,7 @@
 import { useGetAnimeStreaming } from "@/lib/query-api";
 import Hls from "hls.js";
 import ArtPlayer from "artplayer";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Player from "./player";
 import Option from "artplayer/types/option";
 import { Loader2 } from "lucide-react";
@@ -12,9 +12,10 @@ type VideoPlayerProps = {
   episodeId: string;
   server: string;
   category: string;
+  poster: string;
 };
 
-const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
+const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) => {
   const { data, isLoading, isError } = useGetAnimeStreaming(
     episodeId,
     server,
@@ -68,12 +69,11 @@ const FirePlayer = ({ episodeId, server, category }: VideoPlayerProps) => {
     customType: {
       m3u8: playM3u8,
     },
-    poster: "",
+    poster: poster || "",
     volume: 1,
     isLive: false,
     muted: false,
     autoplay: false,
-    type: "m3u8",
     autoOrientation: true,
     pip: true,
     autoSize: true,

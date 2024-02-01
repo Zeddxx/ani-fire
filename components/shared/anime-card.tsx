@@ -4,9 +4,11 @@ import { AnimesProps, LatestAnimeProps, RelatedAnimeProps, TopUpcomingAnimes } f
 
 type AnimeCardProps = {
   anime: AnimesProps | TopUpcomingAnimes | LatestAnimeProps | RelatedAnimeProps
+  type: "Latest" | "Normal"
+  latestLink?: string
 }
 
-const AnimeCard = ({ anime } : AnimeCardProps ) => {
+const AnimeCard = ({ anime, type, latestLink } : AnimeCardProps ) => {
   const isNull = Number(anime.episodes.sub) === 0;
 
   if(isNull) return null;
@@ -14,7 +16,7 @@ const AnimeCard = ({ anime } : AnimeCardProps ) => {
   return (
       <div key={anime.id} className="flex flex-col">
       <a
-        href={`/${anime.id}`}
+        href={type === "Latest" ? `/watch/${latestLink}` : `/${anime.id}`}
         className="rounded-md w-full h-[30vw] max-h-80 lg:max-h-80 min-h-60 overflow-hidden relative"
       >
         <img
@@ -37,7 +39,7 @@ const AnimeCard = ({ anime } : AnimeCardProps ) => {
         </div>
       </a>
       <a
-        href={`/${anime.id}`}
+        href={type === "Latest" ? `/watch/${latestLink}` : `/${anime.id}`}
         className="mt-1.5 truncate w-full hover:text-rose-500"
       >
         {anime.name}

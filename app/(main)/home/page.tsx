@@ -3,21 +3,29 @@
 import AnimeCarousel from "@/components/shared/anime-carousel";
 import { useGetAllAnime } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactSimplyCarousel from "react-simply-carousel";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { buttonVariants } from "@/components/ui/button";
 import AiringAnime from "@/components/airing-anime";
 import { MdArrowForwardIos } from "react-icons/md";
-import AnimeCard from "@/components/shared/anime-card";
 import HomeLoading from "@/components/loaders/home-loading";
 import ScheduleAnime from "@/components/shared/schedule-anime";
 import RecentlyWatched from "@/components/shared/recently-watched";
+import LatestAnimes from "@/components/shared/latest-animes";
 
 const HomePage = () => {
   const { data, isLoading, isError } = useGetAllAnime();
 
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [id, setId] = useState<string[]>([])
+
+  useEffect(() => {
+    if(data?.latestEpisodeAnimes) {
+      const ids = data.latestEpisodeAnimes.map(anime => anime.id)
+      setId(ids)
+    }
+  }, [data?.latestEpisodeAnimes])
 
   if (isLoading && !data) return <HomeLoading />;
 
@@ -170,11 +178,7 @@ const HomePage = () => {
           </p>
         </div>
 
-        <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
-          {data?.latestEpisodeAnimes.map((anime) => (
-            <AnimeCard key={anime.id} anime={anime} />
-          ))}
-        </div>
+        <LatestAnimes id={id} latestEpisodes={data?.latestEpisodeAnimes!} />
       </div>
 
       {/* Schedule anime here! */}

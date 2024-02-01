@@ -129,6 +129,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
             <div className="h-64 w-full bg-black"></div>
           ) : (
             <FirePlayer
+            poster={animeInfo?.anime.info.poster!}
             episodeId={data?.episodeId!}
             server={!server ? "vidstreaming" : server}
             category={"sub"}
@@ -157,7 +158,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
           </div>
           <div className="flex 2xl:flex-row flex-col gap-x-4 py-3">
             <div className="2xl:w-1/2 w-full flex flex-col bg-primary p-3 items-center justify-center text-center">
-              <p className="text-sm text-black inline">
+              <p className="text-sm text-white inline">
                 You are watching{" "}
                 <span className="font-semibold">
                   Episode {!!isCurrentEpisode && isCurrentEpisode[0].number}
@@ -230,7 +231,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
 
         <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
           {animeInfo?.relatedAnimes.map((anime, index) => (
-            <AnimeCard anime={anime} key={anime.id + index} />
+            <AnimeCard type="Normal" anime={anime} key={anime.id + index} />
           ))}
         </div>
       </div>
