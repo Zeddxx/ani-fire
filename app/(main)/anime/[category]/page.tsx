@@ -28,7 +28,7 @@ const CategoryAnimesPage = ({ params } : { params : { category: string }}) => {
 
         <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
           {data?.animes.map((anime, index) => (
-            <AnimeCard key={anime.id + index} anime={anime} />
+            <AnimeCard type="Normal" key={anime.id + index} anime={anime} />
           ))}
         </div>
 

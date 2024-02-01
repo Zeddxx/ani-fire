@@ -60,7 +60,7 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
           <h3 className="text-2xl font-semibold">Recommanded Animes</h3>
           <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
             {data?.recommendedAnimes.map((anime, index) => (
-              <AnimeCard anime={anime} key={anime.id + index} />
+              <AnimeCard type="Normal" anime={anime} key={anime.id + index} />
             ))}
           </div>
         </div>

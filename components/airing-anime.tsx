@@ -11,6 +11,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
   const { data: topAiring } = useGetAnimeByCategory("top-airing", 1)
 
   if(!topAiring) return null;
+
   return (
     <>
     {/* Top airing animes */}
