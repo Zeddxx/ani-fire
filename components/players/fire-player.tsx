@@ -1,6 +1,7 @@
 "use client";
 
 import { useGetAnimeStreaming } from "@/lib/query-api";
+import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality"
 import Hls from "hls.js";
 import ArtPlayer from "artplayer";
 import { useEffect, useState } from "react";
@@ -26,10 +27,6 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
   const [setUrl, setSelectedUrl] = useState<string | undefined>();
   const subtitles = data?.subtitles || [];
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedUrl(event.target.value);
-  };
-
   // if (isError) return <p>Error loading video...</p>;
   useEffect(() => {
     if (data) {
@@ -40,13 +37,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     }
   }, [data]);
 
-  useEffect(() => {
-    if(data){
-      if(data.sources) {
-        setSelectedUrl(data.sources[0].url)
-      }
-    }
-  },[data])
+console.log(setUrl);
 
   function playM3u8(video: any, url: string, art: ArtPlayer) {
     if (Hls.isSupported()) {
@@ -55,7 +46,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
       hls.loadSource(url);
       hls.attachMedia(video);
       art.hls = hls;
-      art.on("destroy", () => hls.destroy());
+      // art.on("destroy", () => hls.destroy());
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = url;
     } else {
@@ -81,6 +72,15 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     autoMini: false,
     screenshot: true,
     setting: true,
+    plugins: [
+      artplayerPluginHlsQuality({
+        control: true,
+        getResolution :(level) => level.height + 'p',
+
+        title: 'Quality',
+        auto: 'Auto'
+      }),
+    ],
     loop: false,
     flip: true,
     lock: true,
@@ -122,7 +122,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
   return <Player
   option={options}
   subtitles={subtitles}
-  className="-z-10 art-container lg:max-h-[468px] h-[60vw] md:max-h-[630px] sm:max-h-[470px] max-h-[256px] w-full"
+  className="-z-10 art-container lg:max-h-[468px] h-[60vw] md:max-h-[630px] sm:max-h-[470px] max-h-[356px] w-full"
   />;
 };
 export default FirePlayer;

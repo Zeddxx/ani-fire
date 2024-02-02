@@ -134,6 +134,11 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
             server={!server ? "vidstreaming" : server}
             category={"sub"}
             />
+            // <VideoPlayer
+            // episodeId={data?.episodeId!}
+            // server={!server ? "vidstreaming" : server}
+            // category={"sub"}
+            // />
           )}
 
           <div className="w-full gap-x-2 py-4 h-auto flex justify-end items-center">
