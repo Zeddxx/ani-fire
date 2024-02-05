@@ -8,10 +8,17 @@ import { cn } from "@/lib/utils";
 import AnimeInfo from "@/components/anime-info";
 import { Separator } from "@/components/ui/separator";
 import AnimeInfoLoading from "@/components/loaders/anime-info-loader";
+import { useEffect } from "react";
 
 const AnimePage = ({ params }: { params: { animeId: string } }) => {
   const { data, isLoading, isError } = useGetAnimeInfo(params.animeId);
   const { data: episode } = useGetAnimeEpisodes(params.animeId);
+
+  useEffect(() => {
+    if(typeof window !== "undefined" && !!data) {
+      window.document.title = `${data?.anime.info.name} | AniFire`
+    }
+  }, [data])
 
   if (isLoading) return <AnimeInfoLoading />;
 
