@@ -43,20 +43,8 @@ const Home = () => {
           <div className="flex w-full">
             <p>
               <span className="font-medium mr-2 dark:text-primary-foreground text-secondary-foreground">Top search:</span>
-              {/* {isLoading
-                ? "loading..."
-                : data?.trendingAnimes.map((anime) => (
-                    <a
-                      href={`/search?keyword=${anime.name}&page=1`}
-                      key={anime.id}
-                      className="hover:text-[#FF003D] dark:text-white text-black duration-150"
-                    >
-                      {anime.name}
-                      {", "}
-                    </a>
-                  ))} */}
                   {TopSearchItems.map((item, index) => (
-                    <Link key={item.name + index} href={item.href}>
+                    <Link key={item.name + index} href={item.href} className="hover:text-primary duration-300 text-base">
                       {item.name}{', '}
                     </Link>
                   ))}

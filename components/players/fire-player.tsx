@@ -37,8 +37,6 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     }
   }, [data]);
 
-console.log(setUrl);
-
   function playM3u8(video: any, url: string, art: ArtPlayer) {
     if (Hls.isSupported()) {
       if (art.hls) art.hls.destroy();
@@ -46,7 +44,7 @@ console.log(setUrl);
       hls.loadSource(url);
       hls.attachMedia(video);
       art.hls = hls;
-      // art.on("destroy", () => hls.destroy());
+      art.on("destroy", () => hls.destroy());
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = url;
     } else {
@@ -56,7 +54,7 @@ console.log(setUrl);
 
   let options: Option = {
     container: ".artplayer-app",
-    url: setUrl! || "",
+    url: setUrl ? setUrl : "",
     customType: {
       m3u8: playM3u8,
     },
