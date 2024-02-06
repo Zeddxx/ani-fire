@@ -172,7 +172,7 @@ const MainNavbar = () => {
 
           <div className="flex items-center gap-x-3 sm:gap-x-3">
             <Button onClick={toggleTheme} size="icon" asChild variant="outline">
-              <span>
+              <span className="cursor-pointer">
                 {theme === "system" ? (
                   <SunMoonIcon size={18} />
                 ) : theme === "dark" ? (
