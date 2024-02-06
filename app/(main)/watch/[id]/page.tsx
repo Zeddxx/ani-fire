@@ -61,6 +61,12 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
     episodes?.episodes[Number(currentEpisodeIndex) - 1].episodeId;
 
     useEffect(() => {
+      if(typeof window !== 'undefined') {
+        window.document.title = `Watching ${animeInfo?.anime.info.name} | AniFire`
+      }
+    }, [animeInfo])
+
+    useEffect(() => {
         if(animeInfo && episodes) {
           setAnimeWatch({
             episodeId: query,

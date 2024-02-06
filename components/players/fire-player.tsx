@@ -4,7 +4,7 @@ import { useGetAnimeStreaming } from "@/lib/query-api";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality"
 import Hls from "hls.js";
 import ArtPlayer from "artplayer";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import Player from "./player";
 import Option from "artplayer/types/option";
 import { Loader2 } from "lucide-react";
@@ -27,16 +27,6 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
   const [setUrl, setSelectedUrl] = useState<string | undefined>();
   const subtitles = data?.subtitles || [];
 
-  // if (isError) return <p>Error loading video...</p>;
-  useEffect(() => {
-    if (data) {
-      if (data.sources) {
-        const uri = data.sources.find((source) => source.url);
-        setSelectedUrl(uri?.url)
-      }
-    }
-  }, [data]);
-
   function playM3u8(video: any, url: string, art: ArtPlayer) {
     if (Hls.isSupported()) {
       if (art.hls) art.hls.destroy();
@@ -51,6 +41,12 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
       art.notice.show = "Unsupported playback format: m3u8";
     }
   }
+
+  useMemo(() => {
+    if(data) {
+      setSelectedUrl(data.sources[0].url)
+    }
+  }, [data])
 
   let options: Option = {
     container: ".artplayer-app",

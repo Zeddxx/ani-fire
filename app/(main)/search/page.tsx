@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useGetAllAnime, useGetSearchedAnime } from "@/lib/query-api";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SearchPage = () => {
   const params = useSearchParams();
@@ -17,6 +17,12 @@ const SearchPage = () => {
   const { data: genres, isLoading: isGenreLoading } = useGetAllAnime();
   const { data, isLoading, isError } = useGetSearchedAnime(query!, page);
   const [isActiveGenre, setIsActiveGenre] = useState<string>("")
+
+  useEffect(() => {
+    if(typeof window !== "undefined") {
+      window.document.title = `${query} | AniFire`
+    }
+  }, [query])
 
   if (isGenreLoading && isLoading) return <SearchPageLoading />;
 
@@ -31,7 +37,7 @@ const SearchPage = () => {
   }
   return (
     <>
-      <div className="h-full max-w-[1420px] pt-20 mx-auto flex w-full gap-x-4 mt-8 xl:px-0 px-4">
+      <div className="h-full max-w-[1420px] pt-3 mx-auto flex w-full gap-x-4 mt-8 xl:px-0 px-4">
         <div className="flex-1 h-auto">
           <div className="w-full h-auto xl:py-10 p-6 border border-muted rounded-xl">
             <h1 className="mb-6 text-xl">Genre</h1>
@@ -93,7 +99,7 @@ const SearchPage = () => {
           </div>
         </div>
 
-        <aside className="max-w-xs w-full hidden xl:block bg-black"></aside>
+        <aside className="max-w-xs w-full hidden bg-black"></aside>
       </div>
     </>
   );
