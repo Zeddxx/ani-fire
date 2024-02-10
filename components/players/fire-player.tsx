@@ -4,7 +4,7 @@ import { useGetAnimeStreaming } from "@/lib/query-api";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality"
 import Hls from "hls.js";
 import ArtPlayer from "artplayer";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Player from "./player";
 import Option from "artplayer/types/option";
 import { Loader2 } from "lucide-react";
@@ -42,7 +42,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     }
   }
 
-  useMemo(() => {
+  useEffect(() => {
     if(data) {
       setSelectedUrl(data.sources[0].url)
     }
