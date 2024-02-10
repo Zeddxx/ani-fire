@@ -4,7 +4,7 @@ import { useGetAnimeStreaming } from "@/lib/query-api";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality"
 import Hls from "hls.js";
 import ArtPlayer from "artplayer";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Player from "./player";
 import Option from "artplayer/types/option";
 import { Loader2 } from "lucide-react";
@@ -42,15 +42,15 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     }
   }
 
-  useMemo(() => {
-    if(data) {
-      setSelectedUrl(data.sources[0].url)
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if(data) {
+  //     setSelectedUrl(data.sources[0].url)
+  //   }
+  // }, [data])
 
   let options: Option = {
     container: ".artplayer-app",
-    url: setUrl ? setUrl : "",
+    url: data?.sources[0].url ? data.sources[0].url : "",
     customType: {
       m3u8: playM3u8,
     },
@@ -61,7 +61,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     autoplay: false,
     autoOrientation: true,
     pip: true,
-    autoSize: true,
+    autoSize: false,
     fastForward: true,
     autoMini: false,
     screenshot: true,
@@ -108,7 +108,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
 
   if (isLoading && !setUrl) {
     return(
-        <div className="xl:h-[460px] sm:h-96 h-64 w-full grid place-items-center">
+        <div className="aspect-video w-full grid place-items-center">
             <Loader2 className="animate-spin h-6 w-6" />
         </div>
     );
@@ -116,7 +116,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
   return <Player
   option={options}
   subtitles={subtitles}
-  className="-z-10 art-container lg:max-h-[468px] h-[60vw] md:max-h-[630px] sm:max-h-[470px] max-h-[356px] w-full"
+  className="-z-10 art-container aspect-video"
   />;
 };
 export default FirePlayer;

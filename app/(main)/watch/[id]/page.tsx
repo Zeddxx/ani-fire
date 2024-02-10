@@ -93,7 +93,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
   return (
     <section className="relative w-full h-auto">
       {/* Flow Tree */}
-      <div className="flex text-sm my-4 max-w-screen-2xl mx-auto gap-x-1 items-center px-4">
+      <div className="flex text-sm my-4 2xl:max-w-screen-2xl lg:max-w-5xl mx-auto gap-x-1 items-center px-4">
         {/* TODO: make it working as link element */}
         <Link
           href="/home"
@@ -117,7 +117,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
       </div>
 
       {/* main episodes no. and video player here! */}
-      <div className="2xl:max-w-screen-2xl max-w-6xl px-4 mx-auto w-full flex 2xl:flex-row flex-col h-auto">
+      <div className="2xl:max-w-screen-2xl lg:max-w-5xl px-4 mx-auto w-full flex 2xl:flex-row flex-col h-auto">
         {isEpisodeLoading && !episodes ? (
           <p>Loading...</p>
         ) : (
@@ -147,7 +147,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
             // />
           )}
 
-          <div className="w-full gap-x-2 py-4 h-auto flex justify-end items-center">
+          <div className="w-full 2xl:max-w-screen-2xl lg:max-w-5xl gap-x-2 py-4 h-auto flex justify-end items-center">
             <Button
               size="sm"
               variant="outline"
@@ -237,7 +237,7 @@ const WatchAnime = ({ params }: { params: { id: string } }) => {
         </aside>
       </div>
 
-      <div className="2xl:max-w-screen-2xl max-w-6xl mx-auto px-4 w-full h-auto">
+      <div className="2xl:max-w-screen-2xl mx-auto px-4 w-full h-auto">
         <h3 className="text-3xl text-primary font-medium">Related Anime</h3>
 
         <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
