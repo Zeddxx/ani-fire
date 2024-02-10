@@ -42,15 +42,15 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     }
   }
 
-  useEffect(() => {
-    if(data) {
-      setSelectedUrl(data.sources[0].url)
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if(data) {
+  //     setSelectedUrl(data.sources[0].url)
+  //   }
+  // }, [data])
 
   let options: Option = {
     container: ".artplayer-app",
-    url: setUrl ? setUrl : "",
+    url: data?.sources[0].url ? data.sources[0].url : "",
     customType: {
       m3u8: playM3u8,
     },
