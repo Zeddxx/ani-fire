@@ -26,7 +26,7 @@ const LatestAnimes = ({ latestEpisodes, id } :{ latestEpisodes: LatestAnimeProps
   }, [episodes, id]);
 
   return (
-    <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
+    <div className="grid xl:grid-cols-6 lg:grid-cols-5 sm:grid-cols-3 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
           {latestEpisodes.map((anime, index) => {
             const lastEpisode = lastEpisodeArray[index]?.episodeId;
 

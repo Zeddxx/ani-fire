@@ -18,7 +18,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
       <div className="px-4">
         <h3 className="text-2xl font-semibold text-primary my-3">Top Airing</h3>
         <div className="">
-          {topAiring?.animes.slice(0, 5).map((anime, index) => (
+          {topAiring?.animes?.slice(0, 5).map((anime, index) => (
             <div
               className="flex gap-x-4 py-4 border-b-muted border-b"
               key={anime.id + index}

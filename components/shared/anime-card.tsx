@@ -17,7 +17,7 @@ const AnimeCard = ({ anime, type, latestLink } : AnimeCardProps ) => {
       <div key={anime.id} className="flex flex-col">
       <a
         href={type === "Latest" ? `/watch/${latestLink}` : `/${anime.id}`}
-        className="rounded-md w-full h-[30vw] max-h-80 lg:max-h-80 min-h-60 overflow-hidden relative"
+        className="rounded-md w-full h-[30vw] max-h-80 lg:max-h-80 min-h-72 overflow-hidden relative"
       >
         <img
           src={anime.poster}
