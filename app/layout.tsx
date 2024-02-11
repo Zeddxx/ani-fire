@@ -4,6 +4,7 @@ import './globals.css'
 import { QueryProvider } from '@/lib/query-provider'
 import { cn } from '@/lib/utils'
 import Provider from '@/providers/theme-provider'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -21,7 +22,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
       <body className={cn(poppins.className, "dark:bg-black antialiased")}>
         <QueryProvider>
           <Provider>
@@ -30,5 +32,6 @@ export default function RootLayout({
         </QueryProvider>
       </body>
     </html>
+    </ClerkProvider>
   )
 }
