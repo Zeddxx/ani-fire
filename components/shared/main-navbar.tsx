@@ -5,8 +5,8 @@ import { MenuIcon, Moon, SearchIcon, SunIcon, SunMoonIcon } from "lucide-react";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 
-import { Button } from "../ui/button";
-import { MainNavbarItems, genreList, headerItems } from "@/constants";
+import { Button, buttonVariants } from "../ui/button";
+import { COLORS, MainNavbarItems, genreList, headerItems } from "@/constants";
 import Link from "next/link";
 import { Input } from "../ui/input";
 import { useScrollTop } from "@/hooks";
@@ -65,6 +65,14 @@ const MainNavbar = () => {
     setIsMenuOpen(false);
   }, [params]);
 
+  const handleToggle = () => {
+    if(more === 10) {
+      setMore(40)
+    }else if(more === 40) {
+      setMore(10)
+    }
+  }
+
   const toggleTheme = () => {
     if (theme === "light" || theme === "system") {
       return setTheme("dark");
@@ -118,13 +126,18 @@ const MainNavbar = () => {
           <ul className="grid grid-cols-3 gap-4 pb-8">
             {genreList.slice(0, more).map((genre, index) => (
               <li
+              style={{
+                color: COLORS[Number(index) % COLORS.length]
+              }}
                 className={cn("font-normal text-sm rounded-full hover:underline")}
                 key={index}
               >
                 <a href={genre.href} className="truncate w-16">{genre.name}</a>
               </li>
             ))}
-            <p onClick={() => setMore(40)}>more</p>
+           <Button variant="link" onClick={handleToggle} className="h-fit w-fit p-0">
+            {more === 10 ? "More" : "Less"}
+           </Button>
           </ul>
         </div>
       </aside>
