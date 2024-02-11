@@ -104,5 +104,5 @@ export const genreList = [
 export const headerItems = [
   { name: "About", href: "/" },
   { name: "Community", href: "/community" },
-  { name: "Github", href: "https://github.com/zeddxx"},
+  { name: "Watchlist", href: "/watchlist"},
 ]

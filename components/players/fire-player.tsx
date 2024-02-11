@@ -42,12 +42,6 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     }
   }
 
-  // useEffect(() => {
-  //   if(data) {
-  //     setSelectedUrl(data.sources[0].url)
-  //   }
-  // }, [data])
-
   let options: Option = {
     container: ".artplayer-app",
     url: data?.sources[0].url ? data.sources[0].url : "",
