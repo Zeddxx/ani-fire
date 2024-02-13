@@ -13,13 +13,14 @@ import { useScrollTop } from "@/hooks";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [more, setMore] = useState<number>(10);
-  const params = useSearchParams()
+  const params = useSearchParams();
 
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -66,12 +67,12 @@ const MainNavbar = () => {
   }, [params]);
 
   const handleToggle = () => {
-    if(more === 10) {
-      setMore(40)
-    }else if(more === 40) {
-      setMore(10)
+    if (more === 10) {
+      setMore(40);
+    } else if (more === 40) {
+      setMore(10);
     }
-  }
+  };
 
   const toggleTheme = () => {
     if (theme === "light" || theme === "system") {
@@ -126,18 +127,26 @@ const MainNavbar = () => {
           <ul className="grid grid-cols-3 gap-4 pb-8">
             {genreList.slice(0, more).map((genre, index) => (
               <li
-              style={{
-                color: COLORS[Number(index) % COLORS.length]
-              }}
-                className={cn("font-normal text-sm rounded-full hover:underline")}
+                style={{
+                  color: COLORS[Number(index) % COLORS.length],
+                }}
+                className={cn(
+                  "font-normal text-sm rounded-full hover:underline"
+                )}
                 key={index}
               >
-                <a href={genre.href} className="truncate w-16">{genre.name}</a>
+                <a href={genre.href} className="truncate w-16">
+                  {genre.name}
+                </a>
               </li>
             ))}
-           <Button variant="link" onClick={handleToggle} className="h-fit w-fit p-0">
-            {more === 10 ? "More" : "Less"}
-           </Button>
+            <Button
+              variant="link"
+              onClick={handleToggle}
+              className="h-fit w-fit p-0"
+            >
+              {more === 10 ? "More" : "Less"}
+            </Button>
           </ul>
         </div>
       </aside>
@@ -177,8 +186,15 @@ const MainNavbar = () => {
           <ul className="lg:flex gap-4 hidden">
             {headerItems.map((item, index) => (
               <li key={item.name} className="flex gap-4 items-center">
-               <Link href={item.href}>{item.name}</Link>
-                <span className={cn("text-muted-foreground", index === 2 && "hidden")}>{"/"}</span>
+                <Link href={item.href}>{item.name}</Link>
+                <span
+                  className={cn(
+                    "text-muted-foreground",
+                    index === 2 && "hidden"
+                  )}
+                >
+                  {"/"}
+                </span>
               </li>
             ))}
           </ul>
@@ -212,9 +228,17 @@ const MainNavbar = () => {
               <SearchIcon className="h-6 w-6 text-secondary-foreground dark:text-secondary-foreground" />
             </Button>
 
-            <Button disabled className="sm:w-36 px-2 sm:py-1">
-              Login
-            </Button>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button disabled className="sm:w-36 px-3 sm:py-1">
+                  Login
+                </Button>
+              </SignInButton>
+            </SignedOut>
           </div>
         </nav>
 
