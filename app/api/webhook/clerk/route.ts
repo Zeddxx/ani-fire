@@ -24,4 +24,28 @@ export async function POST(req: Request) {
 
     const payload = await req.json()
     const body = JSON.stringify(payload);
+
+    const wh = new Webhook(WEBHOOK_SECRET);
+
+    let evt: WebhookEvent;
+
+    try {
+        evt = wh.verify(body, {
+            "svix-id": svix_id,
+            "svix-timestamp" : svix_timestamp,
+            "svix-signature" : svix_signature
+        }) as WebhookEvent;
+    } catch (error) {
+        console.error("Error verifying webhook:",error);
+        return new Response("Error Occured", {
+            status: 400
+        });
+    }
+
+    const eventType = evt.type;
+
+    if(eventType === "user.created") {
+        const { id, email_addresses, image_url, first_name, last_name, username } = evt.data
+        console.log({ id, email_addresses, image_url, first_name, last_name, username });
+    }
 }
