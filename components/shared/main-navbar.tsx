@@ -234,7 +234,7 @@ const MainNavbar = () => {
 
             <SignedOut>
               <SignInButton mode="modal">
-                <Button className="sm:w-36 px-2 sm:py-1">
+                <Button disabled className="sm:w-36 px-3 sm:py-1">
                   Login
                 </Button>
               </SignInButton>
