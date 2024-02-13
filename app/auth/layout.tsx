@@ -1,13 +1,17 @@
-import React from "react"
+import { Metadata } from "next";
 
-const AuthLayout = ({ children } : { children: React.ReactNode }) => {
-  return (
-    <div className="dark:bg-black bg-white">
-        
-        <section className="h-screen w-full flex justify-center items-center">
-            {children}
-        </section>
-    </div>
-  )
+
+export const metadata: Metadata = {
+    title: "AniFire | Authentication",
+    description: "Login or Create a Account for your favorite anime streaming application! AniFire."
 }
-export default AuthLayout
+
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <main className="flex justify-center items-center h-[100lvh]">{children}</main>
+  );
+}
