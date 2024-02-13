@@ -9,16 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.7",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.15.3",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^5.17.1",
     "artplayer": "^5.1.1",
     "artplayer-plugin-hls-quality": "^2.0.0",
-    "axios": "^1.6.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-and-time": "^3.1.1",
@@ -29,10 +26,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
-    "react-player": "^2.14.1",
     "react-simply-carousel": "^9.1.1",
-    "screenfull": "^6.0.2",
-    "svix": "^1.17.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7"
   },

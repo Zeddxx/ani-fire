@@ -13,7 +13,6 @@ import { useScrollTop } from "@/hooks";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -228,17 +227,9 @@ const MainNavbar = () => {
               <SearchIcon className="h-6 w-6 text-secondary-foreground dark:text-secondary-foreground" />
             </Button>
 
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-
-            <SignedOut>
-              <SignInButton mode="modal">
                 <Button disabled className="sm:w-36 px-3 sm:py-1">
                   Login
                 </Button>
-              </SignInButton>
-            </SignedOut>
           </div>
         </nav>
 
