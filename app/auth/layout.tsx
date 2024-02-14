@@ -1,3 +1,4 @@
+import AniFireBg from "@/components/auth/anifire-bg";
 import { Metadata } from "next";
 
 
@@ -12,6 +13,9 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex justify-center items-center h-[100lvh]">{children}</main>
+    <main className="flex relative justify-center items-center h-[100lvh] bg-primary">
+      <AniFireBg />
+      {children}
+    </main>
   );
 }
