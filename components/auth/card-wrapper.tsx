@@ -29,7 +29,7 @@ const CardWrapper = ({
     showSocial
 }: CardWrapperProps) => {
   return (
-    <Card className="max-w-sm w-full z-10 mx-auto shadow-sm">
+    <Card className="max-w-sm w-full z-10 mx-auto xs:shadow-sm">
         <CardHeader>
           <Header label={headerLabel} />
         </CardHeader>

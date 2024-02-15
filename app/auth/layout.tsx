@@ -13,7 +13,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex relative justify-center items-center h-[100lvh] bg-primary">
+    <main className="flex relative justify-center items-center h-[100lvh] xs:bg-primary">
       <AniFireBg />
       {children}
     </main>

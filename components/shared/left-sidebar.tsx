@@ -1,141 +1,90 @@
 'use client';
 
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { AsideNavbarItems, CategoriesItems, GeneralItems } from "@/constants";
-import { useState } from "react";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "../ui/button";
+import { COLORS, MainNavbarItems, genreList } from "@/constants";
+import { useContext, useState } from "react";
+import { MenuContext } from "@/context/menu-provider";
 
 const LeftSidebar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const { isMenuOpen, isSearchOpen, toggleMenu } = useContext(MenuContext)
+  const [more, setMore] = useState<number>(10);
+
+  const handleToggle = () => {
+    if (more === 10) {
+      setMore(40);
+    } else if (more === 40) {
+      setMore(10);
+    }
+  };
 
   return (
+    <>
+    {isMenuOpen && !isSearchOpen && (
+      <div
+        onClick={toggleMenu}
+        className="w-full h-screen bg-black/40 backdrop-blur-sm fixed z-[99999]"
+      ></div>
+    )}
     <aside
-        className={cn(
-          "lg:max-w-xs sticky top-0 border-r lg:w-full bg-stone-900 h-screen duration-200",
-          isOpen ? "w-[16rem]" : "w-16"
-        )}
+      className={cn(
+        "py-10 fixed left-0 z-[99999] top-0 h-screen bg-black/50 backdrop-blur-md overflow-hidden duration-200",
+        isMenuOpen ? "w-[18rem] px-3" : "w-0"
+      )}
+    >
+      <Button
+        onClick={toggleMenu}
+        variant="outline"
+        className="flex gap-x-2 shrink-0 items-center rounded-full py-3"
       >
-        <div className="pt-4 flex flex-col">
-          <div className="pl-4">
-            <Image
-              src="/assets/logo.svg"
-              alt="logo"
-              width={28}
-              height={28}
-              className=""
-            />
-          </div>
+        <p className="overflow-hidden truncate">Close menu</p>
+      </Button>
 
-          <button className="text-white" onClick={() => setIsOpen(!isOpen)}>{isOpen ? "close" : "open"}</button>
+      <div className="h-full overflow-y-scroll scroll-hidden">
+        <ul className="my-4 flex-shrink-0">
+          {MainNavbarItems.map((item) => (
+            <li
+              className="py-3 font-medium truncate dark:text-current text-white"
+              key={item.name}
+            >
+              <a
+                href={item.href}
+                className="hover:text-primary"
+                title={"Go To" + " " + item.name}
+              >
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
 
-          <div className="my-10">
-            <h1 className="text-white flex gap-x-5 items-center overflow-hidden font-medium text-xl ml-4">
-              <Image
-                src="/assets/menu.svg"
-                width={24}
-                height={24}
-                alt="menu item"
-                className={cn("invert", isOpen && "hidden")}
-              />
-              <span className={cn(isOpen ? "block" : "hidden")}>Menu</span>
-            </h1>
-
-            <Separator className="mt-4 bg-stone-700" />
-
-            <div className="my-4">
-              {AsideNavbarItems.map((item, index) => (
-                <button
-                  key={index}
-                  className="w-full text-white my-2 hover:bg-stone-100/10 pl-4 flex overflow-hidden gap-x-6 text-start py-2"
-                >
-                  <Image
-                    src={item.icon}
-                    alt="icon"
-                    width={24}
-                    height={24}
-                    className="invert shrink-0"
-                  />
-                  <span className="text-md">{item.name}</span>
-                </button>
-              ))}
-            </div>
-
-            <Separator className="bg-stone-700" />
-
-            <div className="my-4">
-              <h2 className="pl-4 text-xl text-white font-medium">
-                <Image
-                  src="/assets/category.svg"
-                  width={24}
-                  height={24}
-                  alt="menu item"
-                  className={cn("invert", isOpen && "hidden")}
-                />
-                <span className={cn(isOpen ? "block" : "hidden")}>
-                  Categories
-                </span>
-              </h2>
-            </div>
-
-            <Separator className="bg-stone-700" />
-
-            <div className="my-4">
-              {CategoriesItems.map((item, index) => (
-                <button
-                  key={index}
-                  className="w-full text-white my-2 hover:bg-stone-100/10 pl-4 flex overflow-hidden gap-x-6 text-start py-2"
-                >
-                  <Image
-                    src={item.icon}
-                    alt="icon"
-                    width={24}
-                    height={24}
-                    className="invert shrink-0"
-                  />
-                  <span className="text-md shrink-0">{item.name}</span>
-                </button>
-              ))}
-            </div>
-            <Separator className="bg-stone-700" />
-
-            <div className="my-4">
-              <h2 className="pl-4 text-xl text-white font-medium">
-                <Image
-                  src="/assets/category.svg"
-                  width={24}
-                  height={24}
-                  alt="menu item"
-                  className={cn("invert", isOpen && "hidden")}
-                />
-                <span className={cn(isOpen ? "block" : "hidden")}>
-                  Generals
-                </span>
-              </h2>
-            </div>
-
-            <Separator className="bg-stone-700" />
-
-            <div className="my-4">
-              {GeneralItems.map((item, index) => (
-                <button
-                  key={index}
-                  className="w-full text-white my-2 hover:bg-stone-100/10 pl-4 flex overflow-hidden gap-x-6 text-start py-2"
-                >
-                  <Image
-                    src={item.icon}
-                    alt="icon"
-                    width={24}
-                    height={24}
-                    className="invert shrink-0"
-                  />
-                  <span className="text-md shrink-0">{item.name}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </aside>
+        <ul className="grid grid-cols-3 gap-4 pb-8">
+          {genreList.slice(0, more).map((genre, index) => (
+            <li
+              style={{
+                color: COLORS[Number(index) % COLORS.length],
+              }}
+              className={cn(
+                "font-normal text-sm rounded-full hover:underline"
+              )}
+              key={index}
+            >
+              <a href={genre.href} className="truncate w-16">
+                {genre.name}
+              </a>
+            </li>
+          ))}
+          <Button
+            variant="link"
+            onClick={handleToggle}
+            className="h-fit w-fit p-0"
+          >
+            {more === 10 ? "More" : "Less"}
+          </Button>
+        </ul>
+      </div>
+    </aside>
+    </>
   )
 }
 export default LeftSidebar
