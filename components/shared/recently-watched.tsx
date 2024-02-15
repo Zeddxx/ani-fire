@@ -21,7 +21,7 @@ const RecentlyWatched = () => {
   useEffect(() => {
     const initialWatchedData = getAnimeWatched();
     setWatchedData(initialWatchedData);
-  }, [getAnimeWatched]);
+  }, []);
 
   const handleDeleteWatched = (id: string) => {
     deleteAnime(id);
