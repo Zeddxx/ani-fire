@@ -14,7 +14,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.4",
-    "@prisma/client": "^5.7.1",
+    "@prisma/client": "^5.9.1",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
@@ -50,7 +50,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "postcss": "^8",
-    "prisma": "^5.7.1",
+    "prisma": "^5.9.1",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
