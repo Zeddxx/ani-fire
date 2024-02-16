@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams, useSearchParams } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 
 const INITIAL_STATE = {
@@ -16,7 +15,6 @@ const MenuContext = createContext(INITIAL_STATE)
 const MenuProvider = ({ children } : { children: React.ReactNode }) => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-    const params = useSearchParams();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -29,10 +27,6 @@ const MenuProvider = ({ children } : { children: React.ReactNode }) => {
     const closeMenu = () => {
         setIsMenuOpen(false)
     }
-
-    useEffect(() => {
-        setIsMenuOpen(false)
-    }, [params])
 
     useEffect(() => {
         if(isMenuOpen === true) {
