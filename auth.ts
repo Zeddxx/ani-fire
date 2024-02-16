@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import { getUserById } from "./data/user";
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { db } from "./lib/db";
 
 export const {
   handlers: { GET, POST },
@@ -15,35 +15,43 @@ export const {
     error: "/auth/error",
   },
   callbacks: {
-    async signIn({ user, account }) {
-        // if(account?.provider !== "credentials") return true;
+    async signIn({ user }) {
+      // if(account?.provider !== "credentials") return true;
 
-        const existingUser = await getUserById(user.id!)
-        if(!existingUser) return false;
+      const existingUser = await getUserById(user.id!);
+      if (!existingUser) return false;
 
-        return true
+      return true;
     },
     async session({ token, session }) {
-        if(token.sub && session.user) {
-            session.user.id = token.sub;
-        }
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+      }
 
-        if(token.sub && session.user) {
-          session.user.name = token.name
-        }
-        return session;
+      if (token.sub && session.user) {
+        session.user.name = token.name;
+      }
+
+      if (session.user) {
+        session.user.name = token.name;
+        session.user.email = token.email;
+      }
+      return session;
     },
-    async jwt({ token, user, account }) {
-        if(!token.sub) return token;
+    async jwt({ token }) {
+      if (!token.sub) return token;
 
-        const existingUser = await getUserById(token.sub)
+      const existingUser = await getUserById(token.sub);
 
-        if(!existingUser) return token;
+      if (!existingUser) return token;
 
-        return token;
+      token.name = existingUser.name;
+      token.email = existingUser.email;
+
+      return token;
     },
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
-  ...authConfig
+  ...authConfig,
 });
