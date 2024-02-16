@@ -1,8 +1,8 @@
 export const publicRoutes = [
     "/",
     "/home",
-    "/:id",
-    "/watch/:id",
+    "/(.*)",
+    "/watch/:path",
     "/anime/:id",
     "/community",
     "/genre/:id",
