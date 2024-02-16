@@ -1,19 +1,28 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
 model User {
-  id String  @id @default(auto()) @map("_id") @db.ObjectId
-  username String?
-  email String? @unique
-  image String?
-  password String
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  name              String?
+  email             String? @unique
+  image             String? @default("https://notion-avatar.vercel.app/api/svg/eyJmYWNlIjowLCJub3NlIjoxLCJtb3V0aCI6MTgsImV5ZXMiOjQsImV5ZWJyb3dzIjoyLCJnbGFzc2VzIjo3LCJoYWlyIjoxNSwiYWNjZXNzb3JpZXMiOjAsImRldGFpbHMiOjAsImJlYXJkIjowLCJmbGlwIjoxLCJjb2xvciI6InJnYmEoMjU1LCAwLCAwLCAwKSIsInNoYXBlIjoibm9uZSJ9")
+  password          String
+  comments          Comments[]
+}
+
+model Comments {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  author            User @relation(fields: [authorId], references: [id])
+  authorId          String @db.ObjectId
+  caption           String
 }

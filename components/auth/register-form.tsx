@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import CardWrapper from "./card-wrapper";
+import { register } from "@/actions/register";
 
 const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -20,7 +21,7 @@ const RegisterForm = () => {
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
     },
@@ -30,6 +31,13 @@ const RegisterForm = () => {
     setError("")
     setSuccess("")
 
+    startTransition(() => {
+      register(values)
+      .then((data) => {
+        setError(data.error)
+        setSuccess(data.success)
+      })
+    })
     console.log(values);
   }
   return (
@@ -44,7 +52,7 @@ const RegisterForm = () => {
             <div className="space-y-4">
               <FormField 
               control={form.control}
-              name="username"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>

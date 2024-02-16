@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import ReactSimplyCarousel from "react-simply-carousel";
 import { Button, buttonVariants } from "../ui/button";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import date from "date-and-time";
 import Link from "next/link";
 import { ScheduleAnimeTypes } from "@/types";
@@ -16,7 +16,7 @@ const primaryUrl =
 const backupUrl = "https://api-aniwatch.onrender.com";
 
 const ScheduleAnime = () => {
-  const now = new Date();
+  const now = useMemo(() => new Date(), [])
 
   let current = date.format(now, "[GMT]ZZ DD/MM/YYYY hh:mm:ss A");
   let today = date.format(now, "YYYY-MM-DD");
@@ -27,8 +27,6 @@ const ScheduleAnime = () => {
   const [fetchDate, setFetchDate] = useState<string>(today);
   const [data, setData] = useState<ScheduleAnimeTypes[]>([]);
   const [activeSlideIndex, setActiveSlideIndex] = useState(14);
-
-  const [activeButton, setActiveButton] = useState<string>(today);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -53,7 +51,7 @@ const ScheduleAnime = () => {
     });
 
     setUpcomingDays(upcomingDays);
-  }, []);
+  }, [now]);
 
   const fetchAnimeSchedule = async (date: string) => {
     try {

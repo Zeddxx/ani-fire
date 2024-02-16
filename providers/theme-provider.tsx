@@ -1,19 +1,25 @@
-'use client';
+"use client";
 
-import { ThemeProvider }  from "next-themes";
+import { MenuProvider } from "@/context/menu-provider";
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "next-themes";
 import { ReactNode } from "react";
 
-const Provider = ({ children } : { children : ReactNode }) => {
+const Provider = ({ children }: { children: ReactNode }) => {
   return (
-    <ThemeProvider
-    defaultTheme="light"
-    storageKey="ani_fire_theme_storage"
-    enableSystem
-    attribute="class"
-    disableTransitionOnChange
-    >
-        {children}
-    </ThemeProvider>
-  )
-}
-export default Provider
+    <SessionProvider>
+      <MenuProvider>
+        <ThemeProvider
+          defaultTheme="light"
+          storageKey="ani_fire_theme_storage"
+          enableSystem
+          attribute="class"
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </MenuProvider>
+    </SessionProvider>
+  );
+};
+export default Provider;
