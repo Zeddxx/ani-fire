@@ -1,5 +1,3 @@
-"use server";
-
 import bcrypt from 'bcryptjs';
 import { RegisterSchema } from "@/lib/validation";
 import * as z from "zod"
