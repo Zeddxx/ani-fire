@@ -165,10 +165,6 @@ declare type ComputedFieldsMap = {
     [fieldName: string]: ComputedField;
 };
 
-declare type ConnectionInfo = {
-    schemaName?: string;
-};
-
 declare interface Context {
     /**
      * Get a value from the context.
@@ -608,50 +604,50 @@ declare interface Dictionary_2<T> {
 }
 
 export declare namespace DMMF {
-    export type Document = ReadonlyDeep_2<{
+    export interface Document {
         datamodel: Datamodel;
         schema: Schema;
         mappings: Mappings;
-    }>;
-    export type Mappings = ReadonlyDeep_2<{
+    }
+    export interface Mappings {
         modelOperations: ModelMapping[];
         otherOperations: {
             read: string[];
             write: string[];
         };
-    }>;
-    export type OtherOperationMappings = ReadonlyDeep_2<{
+    }
+    export interface OtherOperationMappings {
         read: string[];
         write: string[];
-    }>;
-    export type DatamodelEnum = ReadonlyDeep_2<{
+    }
+    export interface DatamodelEnum {
         name: string;
         values: EnumValue[];
         dbName?: string | null;
         documentation?: string;
-    }>;
-    export type SchemaEnum = ReadonlyDeep_2<{
+    }
+    export interface SchemaEnum {
         name: string;
         values: string[];
-    }>;
-    export type EnumValue = ReadonlyDeep_2<{
+    }
+    export interface EnumValue {
         name: string;
         dbName: string | null;
-    }>;
-    export type Datamodel = ReadonlyDeep_2<{
+    }
+    export interface Datamodel {
         models: Model[];
         enums: DatamodelEnum[];
         types: Model[];
-    }>;
-    export type uniqueIndex = ReadonlyDeep_2<{
+    }
+    export interface uniqueIndex {
         name: string;
         fields: string[];
-    }>;
-    export type PrimaryKey = ReadonlyDeep_2<{
+    }
+    export interface PrimaryKey {
         name: string | null;
         fields: string[];
-    }>;
-    export type Model = ReadonlyDeep_2<{
+    }
+    export interface Model {
         name: string;
         dbName: string | null;
         fields: Field[];
@@ -660,11 +656,11 @@ export declare namespace DMMF {
         documentation?: string;
         primaryKey: PrimaryKey | null;
         isGenerated?: boolean;
-    }>;
+    }
     export type FieldKind = 'scalar' | 'object' | 'enum' | 'unsupported';
     export type FieldNamespace = 'model' | 'prisma';
     export type FieldLocation = 'scalar' | 'inputObjectTypes' | 'outputObjectTypes' | 'enumTypes' | 'fieldRefTypes';
-    export type Field = ReadonlyDeep_2<{
+    export interface Field {
         kind: FieldKind;
         name: string;
         isRequired: boolean;
@@ -687,13 +683,13 @@ export declare namespace DMMF {
         relationOnDelete?: string;
         relationName?: string;
         documentation?: string;
-    }>;
-    export type FieldDefault = ReadonlyDeep_2<{
+    }
+    export interface FieldDefault {
         name: string;
         args: any[];
-    }>;
+    }
     export type FieldDefaultScalar = string | boolean | number;
-    export type Schema = ReadonlyDeep_2<{
+    export interface Schema {
         rootQueryType?: string;
         rootMutationType?: string;
         inputObjectTypes: {
@@ -711,17 +707,17 @@ export declare namespace DMMF {
         fieldRefTypes: {
             prisma?: FieldRefType[];
         };
-    }>;
-    export type Query = ReadonlyDeep_2<{
+    }
+    export interface Query {
         name: string;
         args: SchemaArg[];
         output: QueryOutput;
-    }>;
-    export type QueryOutput = ReadonlyDeep_2<{
+    }
+    export interface QueryOutput {
         name: string;
         isRequired: boolean;
         isList: boolean;
-    }>;
+    }
     export type TypeRef<AllowedLocations extends FieldLocation> = {
         isList: boolean;
         type: string;
@@ -729,33 +725,33 @@ export declare namespace DMMF {
         namespace?: FieldNamespace;
     };
     export type InputTypeRef = TypeRef<'scalar' | 'inputObjectTypes' | 'enumTypes' | 'fieldRefTypes'>;
-    export type SchemaArg = ReadonlyDeep_2<{
+    export interface SchemaArg {
         name: string;
         comment?: string;
         isNullable: boolean;
         isRequired: boolean;
         inputTypes: InputTypeRef[];
         deprecation?: Deprecation;
-    }>;
-    export type OutputType = ReadonlyDeep_2<{
+    }
+    export interface OutputType {
         name: string;
         fields: SchemaField[];
-    }>;
-    export type SchemaField = ReadonlyDeep_2<{
+    }
+    export interface SchemaField {
         name: string;
         isNullable?: boolean;
         outputType: OutputTypeRef;
         args: SchemaArg[];
         deprecation?: Deprecation;
         documentation?: string;
-    }>;
+    }
     export type OutputTypeRef = TypeRef<'scalar' | 'outputObjectTypes' | 'enumTypes'>;
-    export type Deprecation = ReadonlyDeep_2<{
+    export interface Deprecation {
         sinceVersion: string;
         reason: string;
         plannedRemovalVersion?: string;
-    }>;
-    export type InputType = ReadonlyDeep_2<{
+    }
+    export interface InputType {
         name: string;
         constraints: {
             maxNumFields: number | null;
@@ -766,14 +762,14 @@ export declare namespace DMMF {
             source?: string;
         };
         fields: SchemaArg[];
-    }>;
-    export type FieldRefType = ReadonlyDeep_2<{
+    }
+    export interface FieldRefType {
         name: string;
         allowTypes: FieldRefAllowType[];
         fields: SchemaArg[];
-    }>;
+    }
     export type FieldRefAllowType = TypeRef<'scalar' | 'enumTypes'>;
-    export type ModelMapping = ReadonlyDeep_2<{
+    export interface ModelMapping {
         model: string;
         plural: string;
         findUnique?: string | null;
@@ -793,7 +789,7 @@ export declare namespace DMMF {
         count?: string | null;
         findRaw?: string | null;
         aggregateRaw?: string | null;
-    }>;
+    }
     export enum ModelAction {
         findUnique = "findUnique",
         findUniqueOrThrow = "findUniqueOrThrow",
@@ -817,24 +813,24 @@ export declare namespace DMMF {
 
 export declare class DMMFClass implements DMMF.Document {
     document: DMMF.Document;
-    private _compositeNames?;
-    private _inputTypesByName?;
-    private _typeAndModelMap?;
-    private _mappingsMap?;
-    private _outputTypeMap?;
-    private _rootFieldMap?;
+    private compositeNames;
+    private inputTypesByName;
+    readonly typeAndModelMap: Dictionary_2<DMMF.Model>;
+    readonly mappingsMap: Dictionary_2<DMMF.ModelMapping>;
+    readonly outputTypeMap: NamespacedTypeMap<DMMF.OutputType>;
+    readonly rootFieldMap: Dictionary_2<DMMF.SchemaField>;
     constructor(document: DMMF.Document);
-    private get compositeNames();
-    private get inputTypesByName();
-    get typeAndModelMap(): Dictionary_2<DMMF.Model>;
-    get mappingsMap(): Dictionary_2<DMMF.ModelMapping>;
-    get outputTypeMap(): NamespacedTypeMap<DMMF.OutputType>;
-    get rootFieldMap(): Dictionary_2<DMMF.SchemaField>;
     get datamodel(): DMMF.Datamodel;
     get mappings(): DMMF.Mappings;
     get schema(): DMMF.Schema;
-    get inputObjectTypes(): DMMF.Schema['inputObjectTypes'];
-    get outputObjectTypes(): DMMF.Schema['outputObjectTypes'];
+    get inputObjectTypes(): {
+        model?: DMMF.InputType[] | undefined;
+        prisma: DMMF.InputType[];
+    };
+    get outputObjectTypes(): {
+        model: DMMF.OutputType[];
+        prisma: DMMF.OutputType[];
+    };
     isComposite(modelOrTypeName: string): boolean;
     getOtherOperationNames(): string[];
     hasEnumInNamespace(enumName: string, namespace: DMMF.FieldNamespace): boolean;
@@ -854,10 +850,6 @@ export declare interface DriverAdapter extends Queryable {
      * Starts new transation.
      */
     startTransaction(): Promise<Result_4<Transaction>>;
-    /**
-     * Optional method that returns extra connection info
-     */
-    getConnectionInfo?(): Result_4<ConnectionInfo>;
 }
 
 /** Client */
@@ -1006,7 +998,7 @@ export declare const empty: Sql;
 export declare type EmptyToUnknown<T> = T;
 
 declare abstract class Engine<InteractiveTransactionPayload = unknown> {
-    abstract onBeforeExit(callback: () => Promise<void>): void;
+    abstract on(event: EngineEventType, listener: (args?: any) => any): void;
     abstract start(): Promise<void>;
     abstract stop(): Promise<void>;
     abstract version(forceRun?: boolean): Promise<string> | string;
@@ -1038,27 +1030,26 @@ declare interface EngineConfig {
     previewFeatures?: string[];
     engineEndpoint?: string;
     activeProvider?: string;
-    logEmitter: LogEmitter;
+    logEmitter: EventEmitter;
     /**
      * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`.
      * If set, this is only used in the library engine, and all queries would be performed through it,
      * rather than Prisma's Rust drivers.
-     * @remarks only used by LibraryEngine.ts
      */
     adapter?: ErrorCapturingDriverAdapter;
     /**
      * The contents of the schema encoded into a string
-     * @remarks only used by DataProxyEngine.ts
+     * @remarks only used for the purpose of data proxy
      */
     inlineSchema: string;
     /**
      * The contents of the datasource url saved in a string
-     * @remarks only used by DataProxyEngine.ts
+     * @remarks only used for the purpose of data proxy
      */
     inlineDatasources: GetPrismaClientConfig['inlineDatasources'];
     /**
      * The string hash that was produced for a given schema
-     * @remarks only used by DataProxyEngine.ts
+     * @remarks only used for the purpose of data proxy
      */
     inlineSchemaHash: string;
     /**
@@ -1077,14 +1068,11 @@ declare interface EngineConfig {
      * generated specifically for each type of client, eg. Node.js client and Edge
      * clients will have different implementations.
      * @remarks this is a callback on purpose, we only load the wasm if needed.
-     * @remarks only used by LibraryEngine.ts
      */
     getQueryEngineWasmModule?: () => Promise<unknown>;
 }
 
-declare type EngineEvent<E extends EngineEventType> = E extends QueryEventType ? QueryEvent : LogEvent;
-
-declare type EngineEventType = QueryEventType | LogEventType;
+declare type EngineEventType = 'query' | 'info' | 'warn' | 'error' | 'beforeExit';
 
 declare type EngineSpan = {
     span: boolean;
@@ -1159,7 +1147,10 @@ declare interface ErrorWithBatchIndex {
     batchRequestIdx?: number;
 }
 
-declare type EventCallback<E extends ExtendedEventType> = [E] extends ['beforeExit'] ? () => Promise<void> : [E] extends [LogLevel] ? (event: EngineEvent<E>) => void : never;
+declare interface EventEmitter {
+    on(event: string, listener: (...args: any[]) => void): unknown;
+    emit(event: string, args?: any): boolean;
+}
 
 export declare type Exact<A, W> = (A extends unknown ? (W extends A ? {
     [K in keyof A]: Exact<A[K], W[K]>;
@@ -1192,8 +1183,6 @@ declare interface ExceptionWithName {
     name: string;
     stack?: string;
 }
-
-declare type ExtendedEventType = LogLevel | 'beforeExit';
 
 declare type ExtendedSpanOptions = SpanOptions & {
     /** The name of the span */
@@ -1389,7 +1378,7 @@ export declare function getPrismaClient(config: GetPrismaClientConfig): {
          * @param middleware to hook
          */
         $use(middleware: QueryMiddleware): void;
-        $on<E extends ExtendedEventType>(eventType: E, callback: EventCallback<E>): void;
+        $on(eventType: EngineEventType, callback: (event: any) => void): void;
         $connect(): Promise<void>;
         /**
          * Disconnect from the database
@@ -1733,7 +1722,7 @@ export declare type JsInputValue = null | undefined | string | number | boolean 
     [key: string]: JsInputValue;
 };
 
-declare type JsonArgumentValue = number | string | boolean | null | RawTaggedValue | JsonArgumentValue[] | {
+declare type JsonArgumentValue = number | string | boolean | null | JsonTaggedValue | JsonArgumentValue[] | {
     [key: string]: JsonArgumentValue;
 };
 
@@ -1745,7 +1734,7 @@ export declare interface JsonConvertible {
 }
 
 declare type JsonFieldSelection = {
-    arguments?: Record<string, JsonArgumentValue> | RawTaggedValue;
+    arguments?: Record<string, JsonArgumentValue>;
     selection: JsonSelectionSet;
 };
 
@@ -1769,6 +1758,11 @@ declare type JsonSelectionSet = {
     $composites?: boolean;
 } & {
     [fieldName: string]: boolean | JsonFieldSelection;
+};
+
+declare type JsonTaggedValue = {
+    $type: 'Json';
+    value: string;
 };
 
 export declare type JsonValue = string | number | boolean | JsonObject | JsonArray | null;
@@ -1827,20 +1821,6 @@ declare type LogDefinition = {
     level: LogLevel;
     emit: 'stdout' | 'event';
 };
-
-declare type LogEmitter = {
-    on<E extends EngineEventType>(event: E, listener: (event: EngineEvent<E>) => void): LogEmitter;
-    emit(event: QueryEventType, payload: QueryEvent): void;
-    emit(event: LogEventType, payload: LogEvent): void;
-};
-
-declare type LogEvent = {
-    timestamp: Date;
-    message: string;
-    target: string;
-};
-
-declare type LogEventType = 'info' | 'warn' | 'error';
 
 declare type LogLevel = 'info' | 'query' | 'warn' | 'error';
 
@@ -2166,7 +2146,7 @@ export declare type PrismaClientOptions = {
     /**
      * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale.
      */
-    adapter?: DriverAdapter | null;
+    adapter?: DriverAdapter;
     /**
      * Overwrites the datasource url from your schema.prisma file
      */
@@ -2203,8 +2183,6 @@ export declare type PrismaClientOptions = {
             endpoint?: string;
             allowTriggerPanic?: boolean;
         };
-        /** This can be used for testing purposes */
-        configOverride?: Partial<GetPrismaClientConfig>;
     };
 };
 
@@ -2340,16 +2318,6 @@ declare type QueryEngineResult<T> = {
     elapsed: number;
 };
 
-declare type QueryEvent = {
-    timestamp: Date;
-    query: string;
-    params: string;
-    duration: number;
-    target: string;
-};
-
-declare type QueryEventType = 'query';
-
 declare type QueryMiddleware = (params: QueryMiddlewareParams, next: (params: QueryMiddlewareParams) => Promise<unknown>) => Promise<unknown>;
 
 declare type QueryMiddlewareParams = {
@@ -2393,11 +2361,6 @@ export declare type RawParameters = {
 
 export declare type RawQueryArgs = Sql | [query: string, ...values: RawValue[]];
 
-declare type RawTaggedValue = {
-    $type: 'Raw';
-    value: unknown;
-};
-
 /**
  * Supported value or SQL instance.
  */
@@ -2405,10 +2368,6 @@ export declare type RawValue = Value | Sql;
 
 export declare type ReadonlyDeep<T> = {
     readonly [K in keyof T]: ReadonlyDeep<T[K]>;
-};
-
-declare type ReadonlyDeep_2<O> = {
-    +readonly [K in keyof O]: ReadonlyDeep_2<O[K]>;
 };
 
 declare type Record_2<T extends string | number | symbol, U> = {
@@ -2432,7 +2391,7 @@ declare class RequestHandler {
     client: Client;
     dataloader: DataLoader<RequestParams>;
     private logEmitter?;
-    constructor(client: Client, logEmitter?: LogEmitter);
+    constructor(client: Client, logEmitter?: EventEmitter);
     request(params: RequestParams): Promise<any>;
     mapQueryEngineResult({ dataPath, unpacker }: RequestParams, response: QueryEngineResult<any>): any;
     /**
@@ -2575,7 +2534,7 @@ declare interface ResultSet {
     rows: Array<Array<unknown>>;
     /**
      * The last ID of an `INSERT` statement, if any.
-     * This is required for `AUTO_INCREMENT` columns in databases based on MySQL and SQLite.
+     * This is required for `AUTO_INCREMENT` columns in MySQL and SQLite-flavoured databases.
      */
     lastInsertId?: string;
 }

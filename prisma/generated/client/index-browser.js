@@ -7,7 +7,7 @@ const {
   makeStrictEnum,
   Public,
   detectRuntime,
-} = require('./runtime/index-browser.js')
+} = require('./runtime/index-browser')
 
 
 const Prisma = {}
@@ -16,37 +16,37 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.9.1
+ * Prisma Client JS version: 5.7.1
  * Query Engine version: 23fdc5965b1e05fc54e5f26ed3de66776b93de64
  */
 Prisma.prismaVersion = {
-  client: "5.9.1",
+  client: "5.7.1",
   engine: "23fdc5965b1e05fc54e5f26ed3de66776b93de64"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
   throw new Error(`PrismaClientKnownRequestError is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )};
 Prisma.PrismaClientUnknownRequestError = () => {
   throw new Error(`PrismaClientUnknownRequestError is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.PrismaClientRustPanicError = () => {
   throw new Error(`PrismaClientRustPanicError is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.PrismaClientInitializationError = () => {
   throw new Error(`PrismaClientInitializationError is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.PrismaClientValidationError = () => {
   throw new Error(`PrismaClientValidationError is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.NotFoundError = () => {
   throw new Error(`NotFoundError is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.Decimal = Decimal
 
@@ -55,19 +55,19 @@ Prisma.Decimal = Decimal
  */
 Prisma.sql = () => {
   throw new Error(`sqltag is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.empty = () => {
   throw new Error(`empty is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.join = () => {
   throw new Error(`join is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.raw = () => {
   throw new Error(`raw is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.validator = Public.validator
 
@@ -76,11 +76,11 @@ Prisma.validator = Public.validator
 */
 Prisma.getExtensionContext = () => {
   throw new Error(`Extensions.getExtensionContext is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 Prisma.defineExtension = () => {
   throw new Error(`Extensions.defineExtension is unable to be run ${runtimeDescription}.
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
 
 /**
@@ -142,7 +142,7 @@ class PrismaClient {
           'workerd': 'Cloudflare Workers',
           'deno': 'Deno and Deno Deploy',
           'netlify': 'Netlify Edge Functions',
-          'edge-light': 'Vercel Edge Functions or Edge Middleware',
+          'edge-light': 'Vercel Edge Functions',
         }[runtime]
 
         let message = 'PrismaClient is unable to run in '
@@ -153,7 +153,7 @@ class PrismaClient {
         }
         
         message += `
-If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
+If this is unexpected, please open an issue: https://github.com/prisma/prisma/issues`
 
         throw new Error(message)
       }

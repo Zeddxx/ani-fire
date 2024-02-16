@@ -22,7 +22,7 @@ const {
   defineDmmfProperty,
   Public,
   detectRuntime,
-} = require('./runtime/library.js')
+} = require('./runtime/library')
 
 
 const Prisma = {}
@@ -31,11 +31,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.9.1
+ * Prisma Client JS version: 5.7.1
  * Query Engine version: 23fdc5965b1e05fc54e5f26ed3de66776b93de64
  */
 Prisma.prismaVersion = {
-  client: "5.9.1",
+  client: "5.7.1",
   engine: "23fdc5965b1e05fc54e5f26ed3de66776b93de64"
 }
 
@@ -142,13 +142,13 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
-  "clientVersion": "5.9.1",
+  "clientVersion": "5.7.1",
   "engineVersion": "23fdc5965b1e05fc54e5f26ed3de66776b93de64",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "mongodb",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -184,7 +184,7 @@ defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.getQueryEngineWasmModule = undefined
 
 
-const { warnEnvConflicts } = require('./runtime/library.js')
+const { warnEnvConflicts } = require('./runtime/library')
 
 warnEnvConflicts({
     rootEnvPath: config.relativeEnvPaths.rootEnvPath && path.resolve(config.dirname, config.relativeEnvPaths.rootEnvPath),
