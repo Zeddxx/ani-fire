@@ -27,7 +27,7 @@ const RegisterForm = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("")
     setSuccess("")
 
