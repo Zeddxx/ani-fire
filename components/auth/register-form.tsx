@@ -38,7 +38,6 @@ const RegisterForm = () => {
         setSuccess(data.success)
       })
     })
-    console.log(values);
   }
   return (
     <CardWrapper

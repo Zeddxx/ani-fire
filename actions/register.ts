@@ -22,15 +22,13 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return { error: "Email already in use! 💀" };
     }
 
-    const userCreated = await db.user.create({
+    await db.user.create({
         data: {
             email,
             name,
             password: hashedPassword
         }
     })
-
-    if(!userCreated) return { error: "User creation failed! 🥲" }
 
     return { success: "User created successfully!" }
 }
