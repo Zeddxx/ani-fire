@@ -33,12 +33,13 @@ const RegisterForm = () => {
 
     startTransition(() => {
       register(values)
-      .then((data) => {
-        setError(data.error)
-        setSuccess(data.success)
+       .then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
       })
-    })
-  }
+    });
+  };
+
   return (
     <CardWrapper
     headerLabel="Create an account!"
