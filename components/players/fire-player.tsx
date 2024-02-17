@@ -4,7 +4,7 @@ import { useGetAnimeStreaming } from "@/lib/query-api";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality"
 import Hls from "hls.js";
 import ArtPlayer from "artplayer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Player from "./player";
 import Option from "artplayer/types/option";
 import { Loader2 } from "lucide-react";
@@ -17,7 +17,7 @@ type VideoPlayerProps = {
 };
 
 const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) => {
-  const { data, isLoading, isError } = useGetAnimeStreaming(
+  const { data, isLoading, isError, error } = useGetAnimeStreaming(
     episodeId,
     server,
     category
@@ -44,7 +44,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
 
   let options: Option = {
     container: ".artplayer-app",
-    url: data?.sources[0].url ? data.sources[0].url : "",
+    url: data && data.status !== 500 ? data.sources[0].url : "",
     customType: {
       m3u8: playM3u8,
     },

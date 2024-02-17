@@ -60,7 +60,7 @@ const LoginButton = async () => {
     );
   }
   return (
-    <Button asChild className="sm:w-36 px-3 sm:py-1">
+    <Button asChild disabled className="sm:w-36 px-3 sm:py-1">
       <Link href="/auth/login">Login</Link>
     </Button>
   );

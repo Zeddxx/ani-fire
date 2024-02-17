@@ -36,7 +36,7 @@ export const useGetAnimeEpisodeServer = (id: string) => {
 
 export const useGetAnimeStreaming = (id: string, server: string, category: string) => {
     return useQuery({
-        queryKey: ['getAnimeStreaming'],
+        queryKey: ['getAnimeStreamings'],
         queryFn: () => getStreamEpisode(id, server, category),
         enabled: !!id && !!server && !!category
     })
