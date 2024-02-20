@@ -24,6 +24,15 @@ Here are some of the features that make our anime website awesome:
 
 - **Responsive**: Ani-Fire is fully responsive for all screens. ✨
 
+## .env
+```
+NEXT_PUBLIC_ANIME_URL=YOUR_ANIME_URL
+
+# As The auth have some error still you can try
+DATABASE_URL=YOUR_MONGODB_URI
+AUTH_SECRET=YOUR_AUTH_SECRET
+```
+
 ## TODO'S
 
 🤔 Some functionality in will add in future:
