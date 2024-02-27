@@ -1,49 +1,45 @@
-import NextAuth from "next-auth";
-import { getUserById } from "./data/user";
+import NextAuth from "next-auth"
+import authConfig from "@/auth.config"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { db } from "@/lib/db";
-import authConfig from "@/auth.config";
+import { db } from "./lib/db"
+import { getUserById } from "@/data/user"
 
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
-  signOut,
+  signOut
 } = NextAuth({
-  pages: {
-    signIn: "/auth/login",
-    error: "/auth/error",
-  },
-  callbacks: {
-    async signIn({ user, account }) {
-        // if(account?.provider !== "credentials") return true;
-
-        const existingUser = await getUserById(user.id!)
-        if(!existingUser) return false;
-
-        return true
-    },
-    async session({ token, session }) {
+    callbacks: {
+      async session({ token, session }) {
         if(token.sub && session.user) {
-            session.user.id = token.sub;
+          session.user.id = token.sub;
         }
 
-        if(token.sub && session.user) {
+        if(token.role && session.user) {
+          session.user.role = token.role
+        }
+
+        if(session.user && token.email) {
           session.user.name = token.name
+          session.user.email = token.email
+          session.user.image = token.picture
         }
-        return session;
-    },
-    async jwt({ token, user, account }) {
-        if(!token.sub) return token;
-
-        const existingUser = await getUserById(token.sub)
+        return session
+      },
+      async jwt({ token }) {
+        if(!token.sub) return token
+        const existingUser = await getUserById(token.sub);
 
         if(!existingUser) return token;
-
+        token.name = existingUser.name
+        token.email = existingUser.email
+        token.role = existingUser.role;
+        token.picture = existingUser.image
         return token;
+      }
     },
-  },
-  adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
-  ...authConfig
-});
+    adapter: PrismaAdapter(db),
+    session: { strategy: "jwt" },
+    ...authConfig,
+})

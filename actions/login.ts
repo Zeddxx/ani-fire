@@ -1,44 +1,39 @@
 "use server";
 
+import * as z from "zod";
 import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
 import { LoginSchema } from "@/lib/validation";
-import { DEFAULT_LOGIN_REDIRECT } from "@/route";
-import { AuthError } from "next-auth";
-import { z } from "zod";
 
-export const login = async (values: z.infer<typeof LoginSchema>) => {
+
+export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: string | null) => {
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid Fields!" };
+    return { error: "Invalid fields!" };
   }
 
   const { email, password } = validatedFields.data;
 
   const existingUser = await getUserByEmail(email);
 
-  if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: "Email does not exists!" };
+  if(!existingUser || !existingUser.email || !existingUser.password) {
+    return { error: "Email does not exist!" };
   }
 
   try {
-    const user = await signIn("credentials", {
+    await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
-
-    if(!user) return { error: "Something went wrong!" }
-
-    console.log(user);
-
-    return { success: "User logged in successfully!" }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid credentials!" };
+          return { error: "Invalid Credentials!" };
         default:
           return { error: "Something went wrong!" };
       }

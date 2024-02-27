@@ -201,6 +201,8 @@ export type AnimeStreamingProp = {
     malID: number
     sources: Sources[]
     subtitles: SubtitlesProps[]
+    status: number
+    message: string
 }
 
 export type AnimeByCategoryTypes = {
