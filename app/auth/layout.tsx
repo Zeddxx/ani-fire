@@ -1,6 +1,4 @@
-import AniFireBg from "@/components/auth/anifire-bg";
 import { Metadata } from "next";
-
 
 export const metadata: Metadata = {
     title: "AniFire | Authentication",
@@ -14,7 +12,6 @@ export default function AuthLayout({
 }) {
   return (
     <main className="flex relative justify-center items-center h-[100lvh] xs:bg-primary">
-      <AniFireBg />
       {children}
     </main>
   );

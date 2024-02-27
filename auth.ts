@@ -1,59 +1,45 @@
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import NextAuth from "next-auth";
-import { getUserById } from "./data/user";
-import authConfig from "@/auth.config";
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient()
+import NextAuth from "next-auth"
+import authConfig from "@/auth.config"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { db } from "./lib/db"
+import { getUserById } from "@/data/user"
 
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
-  signOut,
+  signOut
 } = NextAuth({
-  pages: {
-    signIn: "/auth/login",
-    error: "/auth/error",
-  },
-  callbacks: {
-    async signIn({ user }) {
-      // if(account?.provider !== "credentials") return true;
+    callbacks: {
+      async session({ token, session }) {
+        if(token.sub && session.user) {
+          session.user.id = token.sub;
+        }
 
-      const existingUser = await getUserById(user.id!);
-      if (!existingUser) return false;
+        if(token.role && session.user) {
+          session.user.role = token.role
+        }
 
-      return true;
-    },
-    async session({ token, session }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
+        if(session.user && token.email) {
+          session.user.name = token.name
+          session.user.email = token.email
+          session.user.image = token.picture
+        }
+        return session
+      },
+      async jwt({ token }) {
+        if(!token.sub) return token
+        const existingUser = await getUserById(token.sub);
+
+        if(!existingUser) return token;
+        token.name = existingUser.name
+        token.email = existingUser.email
+        token.role = existingUser.role;
+        token.picture = existingUser.image
+        return token;
       }
-
-      if (token.sub && session.user) {
-        session.user.name = token.name;
-      }
-
-      if (session.user) {
-        session.user.name = token.name;
-        session.user.email = token.email;
-      }
-      return session;
     },
-    async jwt({ token }) {
-      if (!token.sub) return token;
-
-      const existingUser = await getUserById(token.sub);
-
-      if (!existingUser) return token;
-
-      token.name = existingUser.name;
-      token.email = existingUser.email;
-
-      return token;
-    },
-  },
-  adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
-  ...authConfig,
-});
+    adapter: PrismaAdapter(db),
+    session: { strategy: "jwt" },
+    ...authConfig,
+})

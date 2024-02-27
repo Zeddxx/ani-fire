@@ -1,28 +1,27 @@
+import NextAuth from "next-auth";
+import authConfig from "@/auth.config";
 import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
-  publicRoutes,
-} from "@/route";
-import NextAuth from "next-auth";
-import authConfig from "./auth.config";
+  protectedRoutes,
+} from "@/routes";
 
 const { auth } = NextAuth(authConfig);
 
+//vscode: disable-linting
+//@ts-ignore
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.some((route) => {
-    // Handling dynamic routes by checking if the pattern matches
-    const pattern = new RegExp(`^${route.replace(/:[^\s/]+/g, "[^/]+")}$`);
-    return pattern.test(nextUrl.pathname);
-  });
-
+  const isProtectedRoute = protectedRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
-  if (isApiAuthRoute) return null;
+  if (isApiAuthRoute) {
+    return null;
+  }
 
   if (isAuthRoute) {
     if (isLoggedIn) {
@@ -31,8 +30,18 @@ export default auth((req) => {
     return null;
   }
 
-  if (!isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+  if (!isLoggedIn && isProtectedRoute) {
+    let callbackUrl = nextUrl.pathname;
+
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+    return Response.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+    );
   }
 
   return null;

@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import CardWrapper from "./card-wrapper";
 import { z } from "zod";
-import { LoginSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -15,16 +14,25 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+
+import { useState, useTransition } from "react";
+
+import { login } from "@/actions/login";
+import { useSearchParams } from "next/navigation";
+import { useToast } from "../ui/use-toast";
+import { LoginSchema } from "@/lib/validation";
 import FormError from "../form-error";
 import FormSuccess from "../form-success";
-import { useState, useTransition } from "react";
-import { login } from "@/actions/login";
 
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
+  const { toast } = useToast()
+  const searchParams = useSearchParams()
+
+  const callbackUrl = searchParams.get("callbackUrl");
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -38,13 +46,22 @@ const LoginForm = () => {
     setSuccess("");
 
     startTransition(() => {
-      login(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
-      });
+      login(values, callbackUrl).then((data) => {
+        if(data?.error) {
+          form.reset();
+          setError(data.error)
+        }
+      })
     });
-    console.log(values);
+
+    if(!error) {
+        toast({
+          title: "Logged in successfully! 🎉",
+          description: "Because this project is still in beta so till now no new features for the logged in user. 🥹"
+        })
+    }
   };
+
   return (
     <CardWrapper
       headerLabel="Welcome Back!"

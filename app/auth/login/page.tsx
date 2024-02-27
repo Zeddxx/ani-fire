@@ -1,12 +1,8 @@
-import { auth } from "@/auth"
-import LoginForm from "@/components/auth/login-form"
+import RegisterForm from "@/components/auth/register-form"
 
-const LoginPage = async () => {
-  const session = await auth()
-  console.log(session);
-
+const RegisterPage = () => {
   return (
-    <LoginForm />
+    <RegisterForm />
   )
 }
-export default LoginPage
+export default RegisterPage

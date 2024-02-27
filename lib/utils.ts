@@ -36,3 +36,5 @@ export const categorizeEpisodes = (episodes: Episode[], range: number) => {
 
   return categorizedEpisodes;
 };
+
+export const convertFileToUrl = (file: File) => URL.createObjectURL(file)

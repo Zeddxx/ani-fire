@@ -1,17 +1,18 @@
 "use client";
 
-import { RegisterSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z  from "zod";
-import FormError from "../form-error";
-import FormSuccess from "../form-success";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import CardWrapper from "./card-wrapper";
+
 import { register } from "@/actions/register";
+import { RegisterSchema } from "@/lib/validation";
+import FormError from "../form-error";
+import FormSuccess from "../form-success";
 
 const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
