@@ -2,46 +2,32 @@
 
 import { useTheme } from "next-themes";
 import { Button } from "../ui/button"
-import { SunMoonIcon } from "lucide-react";
-import Image from "next/image";
+import { Moon, Sun } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 const ToggleTheme = () => {
-  const { theme, setTheme } = useTheme();
-
-  const toggleTheme = () => {
-    if (theme === "light" || theme === "system") {
-      return setTheme("dark");
-    } else if (theme === "dark" || theme === "system") {
-      return setTheme("light");
-    } else {
-      return setTheme("system");
-    }
-  };
+  const { setTheme } = useTheme();
 
   return (
-    <Button onClick={toggleTheme} size="icon" asChild variant="outline">
-              <span className="cursor-pointer">
-                {theme === "system" ? (
-                  <SunMoonIcon size={18} />
-                ) : theme === "dark" ? (
-                  <Image
-                    src="/assets/icons/moon.svg"
-                    alt="moon icon"
-                    className="invert select-none"
-                    height={18}
-                    width={18}
-                  />
-                ) : (
-                  <Image
-                    src="/assets/icons/sun.svg"
-                    alt="sun icon"
-                    height={20}
-                    className="dark:invert select-none"
-                    width={20}
-                  />
-                )}
-              </span>
-              </Button>
+    <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="z-[999]" align="end">
+            <DropdownMenuItem onClick={() => setTheme('light')}>
+                Light
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme('dark')}>
+                Dark
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme('system')}>
+                System
+            </DropdownMenuItem>
+        </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 export default ToggleTheme

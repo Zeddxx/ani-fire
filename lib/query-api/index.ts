@@ -14,7 +14,8 @@ export const useGetAnimeInfo = (id: string) => {
     return useQuery({
         queryKey: ["getAnimeInfo"],
         queryFn: () => getAnimeInfoById(id),
-        enabled: !!id
+        enabled: !!id,
+        refetchOnWindowFocus: false
     })
 }
 
@@ -22,7 +23,8 @@ export const useGetAnimeEpisodes = (id: string) => {
     return useQuery({
         queryKey: ["getAnimeEpisodes"],
         queryFn: () => getAnimeEpisodes(id),
-        enabled: !!id
+        enabled: !!id,
+        refetchOnWindowFocus: false
     })
 }
 
@@ -30,7 +32,8 @@ export const useGetAnimeEpisodeServer = (id: string) => {
     return useQuery({
         queryKey: ['getAnimeServer'],
         queryFn: () => getAnimeEpisodeServer(id),
-        enabled: !!id
+        enabled: !!id,
+        refetchOnWindowFocus: false
     })
 }
 
@@ -38,7 +41,8 @@ export const useGetAnimeStreaming = (id: string, server: string, category: strin
     return useQuery({
         queryKey: ['getAnimeStreamings'],
         queryFn: () => getStreamEpisode(id, server, category),
-        enabled: !!id && !!server && !!category
+        enabled: !!id && !!server && !!category,
+        refetchOnWindowFocus: false
     })
 }
 

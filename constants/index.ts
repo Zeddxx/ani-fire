@@ -108,3 +108,5 @@ export const headerItems = [
   { name: "Community", href: "/community" },
   { name: "Watchlist", href: "/watchlist"},
 ]
+
+export const URI = process.env.NODE_ENV !== "production" ? 'http://localhost:3000' : 'https://ani-fire.vercel.app'

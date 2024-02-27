@@ -30,6 +30,7 @@ import * as z from "zod";
 
 const SettingsForm = () => {
   const { update, data } = useSession();
+
   const [isPending, startTransition] = useTransition();
   const [files, setFiles] = useState<File[]>([]);
 
