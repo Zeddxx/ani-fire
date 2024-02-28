@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 const Community = () => {
   return (
     <section className="h-[calc(100dvh-64px)] max-w-screen-2xl w-full flex items-center justify-center mx-auto px-4">

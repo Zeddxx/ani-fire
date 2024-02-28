@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { FaPlay } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { AnimeInfoTypeProps, GetAnimeEpisodes } from "@/types";
