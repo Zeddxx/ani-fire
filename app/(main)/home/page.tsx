@@ -16,7 +16,8 @@ import RecentlyWatched from "@/components/shared/recently-watched";
 import LatestAnimes from "@/components/shared/latest-animes";
 
 const HomePage = () => {
-  const { data, isLoading, isError } = useGetAllAnime();
+  const { data, isLoading, isError, fetchStatus } = useGetAllAnime();
+  console.log({ data, isError, fetchStatus });
 
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [id, setId] = useState<string[]>([])
@@ -30,7 +31,20 @@ const HomePage = () => {
 
   if (isLoading && !data) return <HomeLoading />;
 
-  if (isError) return "error";
+  if(isError || data?.status) {
+    return (
+      <div className="h-[calc(100lvh-140px)] w-full flex items-center justify-center">
+        <div className="">
+          <img src="/assets/empty.gif" alt="404 not found" className="h-56 w-72 object-contain" />
+          <h1 className="text-center text-2xl">{data?.status} {data?.message}</h1>
+          <p className="text-center">
+            Checkout this{" "}
+            <a className="text-primary underline" href="https://anifire-beta.vercel.app/">AniFire Beta</a>
+          </p>
+        </div>
+      </div>
+    )
+  };
 
   return (
     <div className="max-w-screen-2xl mx-auto w-full">

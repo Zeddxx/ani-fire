@@ -71,6 +71,8 @@ export type HomeAnimeProps = {
     topAiringAnimes: TopAiringAnimesProps[]
     topUpcomingAnimes: TopUpcomingAnimes[]
     trendingAnimes: TrendingAnimeProps[]
+    status: number
+    message: string
 }
 
 export type StatsProps = {

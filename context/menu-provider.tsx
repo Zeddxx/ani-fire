@@ -8,6 +8,8 @@ const INITIAL_STATE = {
     toggleMenu: () => {},
     toggleSearch: () => {},
     closeMenu: () => {},
+    isPageError: false,
+    toggleError: () => {}
 }
 
 const MenuContext = createContext(INITIAL_STATE)
@@ -15,6 +17,7 @@ const MenuContext = createContext(INITIAL_STATE)
 const MenuProvider = ({ children } : { children: React.ReactNode }) => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+    const [isPageError, setIsPageError] = useState<boolean>(false)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -26,6 +29,10 @@ const MenuProvider = ({ children } : { children: React.ReactNode }) => {
 
     const closeMenu = () => {
         setIsMenuOpen(false)
+    }
+
+    const toggleError = () => {
+      setIsPageError(true)
     }
 
     useEffect(() => {
@@ -54,6 +61,8 @@ const MenuProvider = ({ children } : { children: React.ReactNode }) => {
             toggleMenu,
             toggleSearch,
             closeMenu,
+            isPageError,
+            toggleError
         }}
         >
             {children}
