@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
 } from "@/components/ui/card";
 import {
@@ -46,13 +45,12 @@ const SettingsForm = () => {
         const uploadedImages = await startUpload(files);
 
         if (isUploading) {
-          toast({
+          return toast({
             title: "Uploading image...🫷",
             description:
               "Taking too much time? Contact the developer say him to make this work faster 🌸.",
           });
         }
-  
         if (!uploadedImages) {
           return toast({
             variant: "destructive",
@@ -72,24 +70,36 @@ const SettingsForm = () => {
         uploadImageUrl = uploadedImages[0].url;
       }
   
-      startTransition(() => {
-        settings({
+        const updateUser = settings({
           ...values,
           name: values.name,
           image: uploadImageUrl,
-        }).then(() => {
+        }).then((data) => {
           update();
-        });
-      });
-      toast({
-        title: "Profile updated successfully! 🎉",
-        description: "Loved this project give this project a ⭐",
-        action: <ToastAction asChild altText="Github">
-          <a href="https://github.com/zeddxx" target="_blank">
-            Github
-          </a>
-        </ToastAction>
-      })
+          if(data.error) {
+            toast({
+              title: "Error Updating Profile",
+              description: "Eventually this error is occuring due to laziness of out developer. please contact him. 💀",
+              action: <ToastAction asChild altText="Github">
+                <a href="https://github.com/zeddxx" target="_blank">
+                  Github
+                </a>
+              </ToastAction>
+            })
+          }
+          if(data.success) {
+            update();
+            toast({
+              title: "Profile updated successfully! 🎉",
+              description: "Loved this project give this project a ⭐",
+              action: <ToastAction asChild altText="Github">
+                <a href="https://github.com/zeddxx" target="_blank">
+                  Github
+                </a>
+              </ToastAction>
+            })
+          }
+        })
     } catch (error) {
       throw error;
     }
@@ -122,7 +132,7 @@ const SettingsForm = () => {
                     <FormControl>
                       <div className="relative w-full flex justify-center">
                         <FileUploader
-                          isUploading={isUploading && isPending}
+                          isUploading={isUploading || isPending}
                           onFieldChange={field.onChange}
                           imageUrl={field.value || ""}
                           setFiles={setFiles}
@@ -142,7 +152,7 @@ const SettingsForm = () => {
                     <FormControl>
                       <div className="relative">
                         <Input
-                          disabled={isPending && isUploading}
+                          disabled={isPending || isUploading}
                           className="pl-10 h-12"
                           placeholder="@zeddxx"
                           {...field}
@@ -181,7 +191,7 @@ const SettingsForm = () => {
               />
             </div>
             <Button
-              disabled={isPending && isUploading}
+              disabled={isPending || isUploading}
               type="submit"
               className="w-full"
             >

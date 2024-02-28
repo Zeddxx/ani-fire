@@ -21,10 +21,12 @@ export const settings = async (
         return { error: "Unauthorized!" }
     }
 
-    await db.user.update({
+    const updateUser = await db.user.update({
         where: { id: dbUser.id },
         data: {
             ...values
         }
     })
+
+    return { success: "User updated successfully!" }
 }

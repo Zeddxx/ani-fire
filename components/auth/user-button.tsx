@@ -1,0 +1,57 @@
+'use client';
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage
+} from "@/components/ui/avatar"
+import { FaUser } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import { LogoutButton } from "@/components/auth/logout-button";
+import { ExitIcon, GearIcon } from "@radix-ui/react-icons";
+import { BookMarked } from "lucide-react";
+import Link from "next/link";
+
+const UserButton = () => {
+  const { data, status } = useSession();
+
+  if(status === "unauthenticated") return null;
+  return (
+    <DropdownMenu>
+        <DropdownMenuTrigger>
+            <Avatar>
+                <AvatarImage src={data?.user.image || ""} title={data?.user.name || ""} />
+                <AvatarFallback className="bg-muted border-muted">
+                    <FaUser className="dark:text-white" />
+                </AvatarFallback>
+            </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="mt-6 w-40 border-muted" align="end">
+            <Link href="/settings">
+            <DropdownMenuItem>
+                <GearIcon className="h-4 w-4 mr-2" />
+                Settings
+            </DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem>
+                <BookMarked className="h-4 w-4 mr-2" />
+                Dashboard
+            </DropdownMenuItem>
+            <LogoutButton>
+                <DropdownMenuItem>
+                    <ExitIcon className="h-4 w-4 mr-2" />
+                    Logout
+                </DropdownMenuItem>
+            </LogoutButton>
+        </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+export default UserButton

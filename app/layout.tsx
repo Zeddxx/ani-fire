@@ -4,6 +4,7 @@ import './globals.css'
 import { QueryProvider } from '@/lib/query-provider'
 import { cn } from '@/lib/utils'
 import Provider from '@/providers/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -26,6 +27,7 @@ export default function RootLayout({
         <QueryProvider>
           <Provider>
             {children}
+            <Toaster />
           </Provider>
         </QueryProvider>
       </body>
