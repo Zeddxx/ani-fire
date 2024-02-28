@@ -32,8 +32,9 @@
 
 <details>
   <summary>
-    <img src="/public/cover.png" alt="intro image" />
+    Some screenshot here or can say the demo is here!
   </summary>
+  <img src="/public/cover.png" alt="intro image" />
 </details>
 
 ## Features
@@ -50,11 +51,14 @@ Here are some of the features that make our anime website awesome:
 
 ## .env
 ```
-NEXT_PUBLIC_ANIME_URL=YOUR_ANIME_URL
+NEXT_PUBLIC_ANIME_URL=
 
-# As The auth have some error still you can try
-DATABASE_URL=YOUR_MONGODB_URI
-AUTH_SECRET=YOUR_AUTH_SECRET
+UPLOADTHING_SECRET=
+UPLOADTHING_APP_ID=
+
+#database should be a postgresSql
+DATABASE_URL=
+AUTH_SECRET=
 ```
 
 ## TODO'S
