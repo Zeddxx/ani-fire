@@ -2,15 +2,39 @@
 
 <img src="/public/ani-fire-cover.png" alt="banner image"/>
 
-# Awesome Anime Website <img src="/public/assets/nav.gif" alt="gif" width=56 />
+<h1 align="center">
+  <img src="/public/assets/nav.gif" alt="anifire logo" width="66" /> </br>
+  Anifire: Anime streaming website
+</h1>
 
-Welcome to the Awesome Anime Website, your go-to destination for watching anime without any annoying ads. This project is created for educational purposes only.
+<p align="center">
+  <i>
+ This project is in development as for now.
+</i>
+  <br />
+  <br />
+  <img src="https://img.shields.io/badge/NextJs-Typescript-blue" alt="typescrpt badge" />
+  <img src="https://img.shields.io/badge/NextAuth%20Credentials-8A2BE2" alt="next-auth" />
+  <img src="https://img.shields.io/badge/Supabase-386641" alt="supabase" />
+  <br/>
+  <img src="https://img.shields.io/badge/react%20tanstack%20query-E63946" alt="tanstack" />
+</p>
 
-## Introduction
+<h2 align="center">
+  Introduction
+</h2>
+<p align="center">
+  Welcome to the Awesome Anime Website, your go-to destination for watching anime without any annoying ads. This project is created for educational purposes only.</br >
+  🎉 Dive into the captivating world of anime without interruptions! Our website provides a seamless streaming experience, free from distracting advertisements. Enjoy your favorite anime series and movies with ease.
+</p>
 
-🎉 Dive into the captivating world of anime without interruptions! Our website provides a seamless streaming experience, free from distracting advertisements. Enjoy your favorite anime series and movies with ease.
 
-<img src="/public/cover.png" alt="intro image" />
+
+<details>
+  <summary>
+    <img src="/public/cover.png" alt="intro image" />
+  </summary>
+</details>
 
 ## Features
 
