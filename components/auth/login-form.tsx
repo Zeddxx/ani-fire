@@ -50,16 +50,18 @@ const LoginForm = () => {
         if(data?.error) {
           form.reset();
           setError(data.error)
+          toast({
+            title: "Something went wrong!",
+            description: "Some internal error occurred please contact the developer",
+          })
+        }else{
+          toast({
+            title: "Logged in successfully! 🎉",
+            description: "Because this project is still in beta so till now no new features for the logged in user. 🥹"
+          })
         }
       })
     });
-
-    if(!error) {
-        toast({
-          title: "Logged in successfully! 🎉",
-          description: "Because this project is still in beta so till now no new features for the logged in user. 🥹"
-        })
-    }
   };
 
   return (

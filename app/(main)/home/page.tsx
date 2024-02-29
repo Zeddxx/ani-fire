@@ -17,7 +17,6 @@ import LatestAnimes from "@/components/shared/latest-animes";
 
 const HomePage = () => {
   const { data, isLoading, isError, fetchStatus } = useGetAllAnime();
-  console.log({ data, isError, fetchStatus });
 
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [id, setId] = useState<string[]>([])

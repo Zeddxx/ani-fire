@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { currentUser } from "@/lib/auth";
 import { useUploadThing } from "@/lib/uploadthing";
 import { SettingsSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +29,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 const SettingsForm = () => {
-  const { update, data } = useSession();
+  const { update, data } = useSession()
 
   const [isPending, startTransition] = useTransition();
   const [files, setFiles] = useState<File[]>([]);
@@ -70,7 +71,7 @@ const SettingsForm = () => {
         uploadImageUrl = uploadedImages[0].url;
       }
   
-        const updateUser = settings({
+        settings({
           ...values,
           name: values.name,
           image: uploadImageUrl,

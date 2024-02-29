@@ -55,8 +55,6 @@ const WatchAnime = ({ params, searchParams }: Props) => {
   const episodeNumber = searchParams.ep as string;
   const query = params.id + "?ep=" + episodeNumber
   const server = searchParams.server as string;
-  console.log({ params: params.id, query, server });
-
 
   return (
     <MainPage episodeNumber={episodeNumber} params={params.id} query={query} server={server} />
