@@ -104,7 +104,7 @@ AUTH_SECRET=
 
 ## Credits
 
-- [Aniwatch API](https://github.com/ghoshRitesh12) for aniwatch api.
+- [ghostRitesh](https://github.com/ghoshRitesh12) for aniwatch api.
 - [Aniwatch](https://aniwatch.to) for inspiring me.
 
 
