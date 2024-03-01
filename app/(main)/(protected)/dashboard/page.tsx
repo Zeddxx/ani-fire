@@ -1,23 +1,17 @@
 'use client'
 
-import { logout } from "@/actions/logout"
+import MaxWidthContainer from "@/components/container/max-width-container"
 import { useSession } from "next-auth/react"
 
 const Dashboard = () => {
   const { data } = useSession()
 
-  const onClick = () => {
-    logout()
-  }
   return (
-    <div className="dark:text-white">
-        {JSON.stringify(data, null, 2)}
-        <form>
-            <button onClick={onClick} type="submit">
-                Sign out
-            </button>
-        </form>
-    </div>
+    <MaxWidthContainer>
+      <div className="px-4">
+        <p>Underconstruction</p>
+      </div>
+    </MaxWidthContainer>
   )
 }
 export default Dashboard

@@ -40,10 +40,12 @@ const UserButton = () => {
                 Settings
             </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem>
+           <Link href="/dashboard">
+           <DropdownMenuItem>
                 <BookMarked className="h-4 w-4 mr-2" />
                 Dashboard
             </DropdownMenuItem>
+           </Link>
             <LogoutButton>
                 <DropdownMenuItem>
                     <ExitIcon className="h-4 w-4 mr-2" />

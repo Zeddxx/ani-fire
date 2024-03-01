@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,7 @@ const Home = () => {
         <div className="w-full">
           <div className="w-full gap-5 h-auto my-8 flex sm:flex-row flex-col">
             <Input
-              className="rounded-full text-secondary-foreground dark:text-secondary h-14 text-lg pl-6 outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="rounded-full h-14 text-lg pl-6"
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -68,8 +69,10 @@ const Home = () => {
       </div>
 
       <div className="my-8">
-        <h2 className="text-2xl text-pretty text-secondary-foreground dark:text-primary-foreground font-semibold">AniFire: A site which is made just for educational purpose and have no intentions to get any revenew and others.</h2>
-        <p className="text-muted-foreground text-sm">This website is free of ads and made my a solo developer which have no intention to make this public if anyone get to know this website from any people please exit this site. This is made to showcase on my developer portfolio! ❤️</p>
+        <h2 className="text-2xl text-pretty text-secondary-foreground dark:text-primary-foreground font-semibold">AniFire: A website designed exclusively for educational purposes, with no intention of generating revenue or any other commercial pursuits.</h2>
+        <p className="text-muted-foreground text-sm">
+          This website is ad-free and created by an independent developer. Its intended audience is solely for my developer portfolio. If you accessed this site through word-of-mouth, I kindly request you to exit. Thank you for your understanding.
+        </p>
       </div>
     </div>
   );
