@@ -39,31 +39,72 @@
 
 ## Features
 
-Here are some of the features that make our anime website awesome:
+- General
+  - Free ad-supported streaming service
+  - User-friendly interface
+  - Mobile responsive
+  - Fast page load
+  - Authentication
+  - Profile picture uploader
+  - update account
+  - Toggle the theme mode (currently its only `Light`, `Dark` and `System`)
+- Watch Page
+  - Player
+    - Hold and drag to forward or backward the video.
+    - Quality setting
+    - Hold to fast forward video by 3.0x speed
+  - Watching History
+    - User can easily dive into the recents episodes they were watching
 
-- **Ad-Free Experience**: Say goodbye to pesky ads and enjoy uninterrupted anime viewing.
 
-- **Extensive Library**: Explore a vast collection of anime series and movies from various genres.
+## For local development
+> [!CAUTION]
+> If you want to self-host this app, please note that it is only allowed for personal use. Commercial use is not permitted, and including ads on your self-hosted site may result in actions such as site takedown.
 
-- **User-Friendly Interface**: Our website is designed with simplicity in mind, ensuring a smooth and enjoyable user experience.
+- Clone the repository.
+  ```bash
+  git clone https://github.com/Zeddxx/ani-fire.git
+  ```
 
-- **Responsive**: Ani-Fire is fully responsive for all screens. ✨
+- Install the npm or yarn or pnpm.
+  ```bash
+  npm install or yarn add
+  ```
 
-## .env
-```
+- Add the `.env` on root directory.
+> [!TIP]
+> path: /ani-fire
+
+```bash
+## This should be a aniwatch api of ritesh repo (without last slash /)
 NEXT_PUBLIC_ANIME_URL=
 
+## Goto uploadthing signin and create an project and you will get.
 UPLOADTHING_SECRET=
 UPLOADTHING_APP_ID=
 
-#database should be a postgresSql
+## database should any postgresSql (prefered: supabase)
 DATABASE_URL=
+
+## Generate authsecret online or by using the ssl.
 AUTH_SECRET=
 ```
 
 ## TODO'S
+- [ ] Add Dashboard
+- [x] User authentication.
+- [ ] Add commenting feature
+- [ ] Implement admin dashboard functionality.
+- [ ] Share buttons.
+- [x] Episode next and previous button.
+  - [ ] Theater mode
+  - [ ] Focus mode.
+- [ ] Store users wishlist anime into database.
+- [ ] SEO implementation.
 
-🤔 Some functionality in will add in future:
+## Credits
 
-- **Auth Functionality**: Authenticating user into ani-fire.
-- **Wishlisting the anime**: User can wishlist there *watch-later* anime in ani-fire 🔥.
+- [Aniwatch API](https://github.com/ghoshRitesh12) for aniwatch api.
+- [Aniwatch](https://aniwatch.to) for inspiring me.
+
+
