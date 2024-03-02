@@ -10,8 +10,14 @@ import AnimeInfo from "@/components/anime-info";
 import { Separator } from "@/components/ui/separator";
 import AnimeInfoLoading from "@/components/loaders/anime-info-loader";
 import { useEffect } from "react";
+import CommentSection from "@/components/shared/comment-section";
 
-const AnimePage = ({ params }: { params: { animeId: string } }) => {
+type InfoPageProps = {
+  params: { animeId: string }
+  searchParams: { [key: string]: string | string[] | undefined}
+}
+
+const AnimePage = ({ params, searchParams }: InfoPageProps) => {
   const { data, isLoading, isError } = useGetAnimeInfo(params.animeId);
   const { data: episode } = useGetAnimeEpisodes(params.animeId);
 
@@ -38,6 +44,8 @@ const AnimePage = ({ params }: { params: { animeId: string } }) => {
       </div>
       {/* Anime general information */}
       <AnimeInfo page="AnimePage" data={data!} description={description} episode={episode!} />
+
+      <CommentSection />
 
       <div className="flex max-w-screen-2xl mx-auto w-full xl:px-0 px-4 gap-3 flex-wrap">
         {data?.seasons.map((season, index) => (

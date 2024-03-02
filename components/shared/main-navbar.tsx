@@ -18,7 +18,6 @@ import { usePathname } from "next/navigation";
 
 const MainNavbar = () => {
   const pathname = usePathname();
-
   const callbackUrl = encodeURIComponent(pathname);
   return (
     <>

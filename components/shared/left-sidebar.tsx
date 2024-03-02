@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import { MenuContext } from "@/context/menu-provider";
 
 const LeftSidebar = () => {
-  const { isMenuOpen, isSearchOpen, toggleMenu } = useContext(MenuContext)
+  const { isMenuOpen, isSearchOpen, toggleMenu, handleClick } = useContext(MenuContext)
   const [more, setMore] = useState<number>(10);
 
   const handleToggle = () => {
@@ -48,6 +48,7 @@ const LeftSidebar = () => {
               key={item.name}
             >
               <a
+              onClick={handleClick}
                 href={item.href}
                 className="hover:text-primary"
                 title={"Go To" + " " + item.name}
@@ -69,7 +70,7 @@ const LeftSidebar = () => {
               )}
               key={index}
             >
-              <a href={genre.href} className="truncate w-16">
+              <a onClick={handleClick} href={genre.href} className="truncate w-16">
                 {genre.name}
               </a>
             </li>

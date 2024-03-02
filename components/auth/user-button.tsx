@@ -18,14 +18,17 @@ import { LogoutButton } from "@/components/auth/logout-button";
 import { ExitIcon, GearIcon } from "@radix-ui/react-icons";
 import { BookMarked } from "lucide-react";
 import Link from "next/link";
+import { useContext } from "react";
+import { MenuContext } from "@/context/menu-provider";
 
 const UserButton = () => {
   const { data, status } = useSession();
+  const { handleClick } = useContext(MenuContext)
 
   if(status === "unauthenticated") return null;
   return (
     <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger onClick={handleClick}>
             <Avatar>
                 <AvatarImage src={data?.user.image || ""} title={data?.user.name || ""} />
                 <AvatarFallback className="bg-muted border-muted">
