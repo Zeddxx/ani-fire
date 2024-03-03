@@ -45,8 +45,6 @@ const AnimePage = ({ params, searchParams }: InfoPageProps) => {
       {/* Anime general information */}
       <AnimeInfo page="AnimePage" data={data!} description={description} episode={episode!} />
 
-      <CommentSection />
-
       <div className="flex max-w-screen-2xl mx-auto w-full xl:px-0 px-4 gap-3 flex-wrap">
         {data?.seasons.map((season, index) => (
           <a
@@ -71,6 +69,11 @@ const AnimePage = ({ params, searchParams }: InfoPageProps) => {
           </a>
         ))}
       </div>
+
+      {params.animeId && (
+        <CommentSection id={params.animeId} anime={data?.anime.info.name!} />
+      )}
+
       <div className="max-w-screen-2xl flex xl:flex-row flex-col gap-x-4 px-4 mx-auto w-full my-10 h-auto">
         <div className="w-full h-auto">
           <h3 className="text-2xl font-semibold">Recommanded Animes</h3>

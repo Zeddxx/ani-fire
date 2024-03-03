@@ -27,6 +27,7 @@ model User {
   password      String?
   role UserRole @default(USER)
   accounts      Account[]
+  comments      Comment[]
 }
 
 
@@ -47,4 +48,14 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Comment {
+  id                 String       @id @default(cuid())
+  userId             String
+  content            String?
+  animeId            String?
+  isSpoiler          Boolean      @default(false)
+  createdAt          DateTime     @default(now())
+  author             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

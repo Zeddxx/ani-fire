@@ -26,3 +26,10 @@ export const RegisterSchema = z.object({
         message: "Minimum 6 characters required!"
     })
 })
+
+export const CommentSchema = z.object({
+    content: z.string().min(1, { message: "Comment is required!" }),
+    isSpoiler: z.boolean().default(false),
+    userId: z.string(),
+    animeId: z.string()
+})

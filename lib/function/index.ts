@@ -1,3 +1,4 @@
+import { CommentSchema } from '@/lib/validation';
 import {
   AnimeByCategoryTypes,
   AnimeByGenreTypes,
@@ -6,8 +7,12 @@ import {
   GetAnimeEpisodes,
   GetAnimeServerEpisodes,
   HomeAnimeProps,
+  ICommentsTypes,
   SearchedAnimeProps,
 } from "@/types";
+import { z } from 'zod';
+import { comment } from '@/actions/comment';
+import { commentsCount, getComments } from '@/actions/get-comments';
 
 const primaryUrl = process.env.NODE_ENV !== "production" ? "http://localhost:4000" : process.env.NEXT_PUBLIC_ANIME_URL;
 const backupUrl = "https://api-aniwatch.onrender.com";
@@ -188,4 +193,25 @@ export async function getAnimeSchedules(date: string) {
   } catch (error) {
     throw Error;
   }
+}
+
+/**
+ * Getting the comments on particular animeId where:
+ * @type { string } animeId
+ * @description { anime id is important to find the particular comments on the unique}
+ */
+
+export async function getAnimeComments (animeId: string) {
+  const comments = await getComments(animeId)
+  return comments as ICommentsTypes[]
+}
+
+export async function postComment (values: z.infer<typeof CommentSchema>) {
+  const res = await comment(values);
+  return res.comment
+}
+
+export async function getCommentsCount (animeId: string) {
+  const counts = await commentsCount(animeId);
+  return counts;
 }
