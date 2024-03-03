@@ -25,7 +25,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
 
   // The control container
   const [setUrl, setSelectedUrl] = useState<string | undefined>();
-  const subtitles = data?.subtitles || [];
+  const subtitles = data?.tracks || [];
 
   function playM3u8(video: any, url: string, art: ArtPlayer) {
     if (Hls.isSupported()) {
@@ -64,7 +64,6 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
       artplayerPluginHlsQuality({
         control: true,
         getResolution :(level) => level.height + 'p',
-
         title: 'Quality',
         auto: 'Auto'
       }),
@@ -90,7 +89,7 @@ const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) =
     subtitle: {
       url:
         typeof subtitles !== "undefined"
-          ? subtitles.find((sub) => sub.lang === "English")?.url || ""
+          ? subtitles.find((sub) => sub.label === "English")?.file || ""
           : "",
       type: "vtt",
       style: {

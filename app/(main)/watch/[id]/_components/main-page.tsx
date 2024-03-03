@@ -10,7 +10,6 @@ import {
   useGetAnimeEpisodes,
   useGetAnimeInfo,
 } from "@/lib/query-api";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import FirePlayer from "@/components/players/fire-player";
 import AnimeCard from "@/components/shared/anime-card";

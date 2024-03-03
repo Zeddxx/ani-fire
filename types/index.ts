@@ -196,15 +196,24 @@ type Sources = {
 };
 
 export type SubtitlesProps = {
-  lang: string;
-  url: string;
+  label: string;
+  kind: string
+  file: string;
 };
 
 export type AnimeStreamingProp = {
   anilistID: number;
   malID: number;
   sources: Sources[];
-  subtitles: SubtitlesProps[];
+  tracks: SubtitlesProps[];
+  intro: {
+    start: number
+    end: number
+  }
+  outro: {
+    start: number
+    end: number
+  }
   status: number;
   message: string;
 };

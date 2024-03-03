@@ -41,7 +41,7 @@ const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
   };
 
   return (
-    <MaxWidthContainer className="px-4 bg-neutral-950 py-4">
+    <MaxWidthContainer className="px-4 dark:bg-neutral-950 mt-6 bg-slate-50 py-4">
       <div className="w-full">
         <div className="flex justify-between items-center">
           <h2 className="text-xl">Comments</h2>

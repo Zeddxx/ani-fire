@@ -25,9 +25,9 @@ const Player = ({ option, getInstance, subtitles, className } : TPlayer) => {
               tooltip: "English",
               selector:
                 subtitles.map((sub) => ({
-                  default: sub.lang === "English",
-                  html: sub.lang,
-                  url: sub.url
+                  default: sub.label === "English",
+                  html: sub.label,
+                  url: sub.file
                 })),
                 onSelect: function (item) {
                   art.subtitle.switch(item.url, {
@@ -47,6 +47,10 @@ const Player = ({ option, getInstance, subtitles, className } : TPlayer) => {
 
     art.on("subtitleUpdate", (text) => {
         art.template.$subtitle.innerHTML = text;
+    })
+
+    art.on('ready' , () => {
+      art.play()
     })
 
     if(getInstance && typeof getInstance === "function") {
