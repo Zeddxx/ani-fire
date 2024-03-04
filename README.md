@@ -73,7 +73,7 @@
 
 - Add the `.env` on root directory.
 > [!TIP]
-> path: /ani-fire
+> path: root to anifire outside the app directory
 
 ```bash
 ## This should be a aniwatch api of ritesh repo (without last slash /)
@@ -93,7 +93,8 @@ AUTH_SECRET=
 ## TODO'S
 - [ ] Add Dashboard
 - [x] User authentication.
-- [ ] Add commenting feature
+- [x] Add commenting feature
+  - [ ] Add nested comments.
 - [ ] Implement admin dashboard functionality.
 - [ ] Share buttons.
 - [x] Episode next and previous button.
