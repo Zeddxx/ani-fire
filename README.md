@@ -1,3 +1,6 @@
+> [!NOTE]
+> I appreciate users logging into their accounts, but at present, I haven't implemented any functionality specifically for logged-in users. I plan to implement this in the upcoming days, but I'm currently occupied with other tasks. Thank you for your understanding.
+
 > This project is for educational purpose only and i am not making any revenew from this website.
 
 <img src="/public/ani-fire-cover.png" alt="banner image"/>
