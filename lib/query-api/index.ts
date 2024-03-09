@@ -18,6 +18,7 @@ import {
 } from "../function";
 import { z } from "zod";
 import { CommentSchema } from "../validation";
+import { getUsersCommentCounts } from "@/actions/get-comments";
 
 export const useGetAllAnime = () => {
   return useQuery({
@@ -124,6 +125,9 @@ export const useCreateComment = (animeId: string) => {
       queryClient.invalidateQueries({
         queryKey: ["getAnimeCommentsCount", animeId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["getUserCommentsCount", data?.userId],
+      });
     },
   });
 };
@@ -132,5 +136,14 @@ export const useGetCommentCount = (animeId: string) => {
   return useQuery({
     queryKey: ["getAnimeCommentsCount", animeId],
     queryFn: () => getCommentsCount(animeId),
+    enabled: !!animeId
   });
 };
+
+export const useGetUserCommentsCount = (userId: string) => {
+  return useQuery({
+    queryKey: ["getUserCommentsCount", userId],
+    queryFn: () => getUsersCommentCounts(userId),
+    enabled: !!userId
+  })
+}

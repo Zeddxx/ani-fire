@@ -44,3 +44,19 @@ export const commentsCount = async (animeId: string) => {
     console.log(error);
   }
 }
+
+export const getUsersCommentCounts = async (userId: string) => {
+  try {
+      const user = await db.comment.findMany({
+          where: {
+            userId
+          },
+          orderBy: {
+            createdAt: 'desc'
+          }
+        })
+      return user
+  } catch (error) {
+      return null;
+  }
+}

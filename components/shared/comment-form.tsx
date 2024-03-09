@@ -12,19 +12,26 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { useCreateComment } from "@/lib/query-api";
 import { useTransition } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type CommentProps = {
   animeId: string;
   userId: string;
   anime: string
+  status: "authenticated" | "unauthenticated" | "loading"
 }
 
-const CommentForm = ({ animeId, userId, anime }: CommentProps) => {
+const CommentForm = ({ animeId, userId, anime, status }: CommentProps) => {
+  const pathname = usePathname()
+  const callbackUrl = encodeURIComponent(pathname)
   const { mutate: createPost } = useCreateComment(animeId);
   const [isPending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof CommentSchema>>({
     resolver: zodResolver(CommentSchema),
     defaultValues: {
@@ -36,10 +43,12 @@ const CommentForm = ({ animeId, userId, anime }: CommentProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
-    startTransition(() => {
-      createPost(values)
-      form.reset()
-    })
+    console.log({ content: values.content });
+
+    // startTransition(() => {
+    //   createPost(values)
+    //   form.reset()
+    // })
   };
   return (
     <Form {...form}>
@@ -57,7 +66,16 @@ const CommentForm = ({ animeId, userId, anime }: CommentProps) => {
               </FormItem>
             )}
           />
-          <Button disabled={isPending} type="submit" className="sm:w-44 w-full">Submit</Button>
+          {status === "authenticated"
+          ? (
+          <button disabled={isPending} type="submit" className={cn(buttonVariants({ className: "sm:w-44 w-full" }))}>
+            Submit
+          </button>
+          ) : (
+            <Link href={`/auth/login?callbackUrl=${callbackUrl}`} className={cn(buttonVariants({ className: "sm:w-44 w-full" }))}>
+              Submit
+            </Link>
+          )}
         </div>
       </form>
     </Form>

@@ -19,7 +19,7 @@ import { MoreHorizontal, VerifiedIcon } from "lucide-react";
 const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data } = useSession();
+  const { data, status } = useSession();
   const { data: comments, isLoading } = useGetAnimeComments(id);
   const { data: counts } = useGetCommentCount(id)
 
@@ -64,7 +64,7 @@ const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
           </Select>
         </div>
 
-        <CommentForm anime={anime} animeId={id} userId={data?.user.id!} />
+        <CommentForm status={status} anime={anime} animeId={id} userId={data?.user.id!} />
 
         {isLoading && <p>is loading comments</p>}
         <div className="my-3">
@@ -108,7 +108,7 @@ const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
         </div>
 
         <div className="w-full">
-          <p className="text-center text-stone-500 text-sm underline">see more {Number(counts) - 5} comments</p>
+          {!!counts && counts > 5 && <p className="text-center text-stone-500 text-sm underline">see more {Number(counts) - 5} comments</p>}
           <p className="text-center text-stone-500 text-sm mt-5">Underconstruction ⚠️</p>
         </div>
       </div>
