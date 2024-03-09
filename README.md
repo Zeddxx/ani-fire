@@ -1,3 +1,6 @@
+> [!NOTE]
+> I appreciate users logging into their accounts, but at present, I haven't implemented any functionality specifically for logged-in users. I plan to implement this in the upcoming days, but I'm currently occupied with other tasks. Thank you for your understanding.
+
 > This project is for educational purpose only and i am not making any revenew from this website.
 
 <img src="/public/ani-fire-cover.png" alt="banner image"/>
@@ -73,7 +76,7 @@
 
 - Add the `.env` on root directory.
 > [!TIP]
-> path: /ani-fire
+> path: root to anifire outside the app directory
 
 ```bash
 ## This should be a aniwatch api of ritesh repo (without last slash /)
@@ -93,7 +96,8 @@ AUTH_SECRET=
 ## TODO'S
 - [ ] Add Dashboard
 - [x] User authentication.
-- [ ] Add commenting feature
+- [x] Add commenting feature
+  - [ ] Add nested comments.
 - [ ] Implement admin dashboard functionality.
 - [ ] Share buttons.
 - [x] Episode next and previous button.
