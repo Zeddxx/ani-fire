@@ -43,12 +43,10 @@ const CommentForm = ({ animeId, userId, anime, status }: CommentProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
-    console.log({ content: values.content });
-
-    // startTransition(() => {
-    //   createPost(values)
-    //   form.reset()
-    // })
+    startTransition(() => {
+      createPost(values)
+      form.reset()
+    })
   };
   return (
     <Form {...form}>
