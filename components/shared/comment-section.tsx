@@ -11,17 +11,39 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useSession } from "next-auth/react";
-import { useGetAnimeComments, useGetCommentCount } from "@/lib/query-api";
+import {
+  useDeleteUserComment,
+  useGetAnimeComments,
+  useGetCommentCount,
+} from "@/lib/query-api";
 import CommentForm from "./comment-form";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { MoreHorizontal, VerifiedIcon } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { useState } from "react";
 
-const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
+const CommentSection = ({ id, anime }: { id: string; anime: string }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data, status } = useSession();
+
+  const [showSpoiler, setIsShowSpoiler] = useState<{[key: string]:boolean}>({})
+
   const { data: comments, isLoading } = useGetAnimeComments(id);
-  const { data: counts } = useGetCommentCount(id)
+  const { data: counts } = useGetCommentCount(id);
+  const { mutate: deleteComment } = useDeleteUserComment();
+
+  const handleToggleSpoiler = (commentId: string) => {
+    setIsShowSpoiler((prevState => ({
+      ...prevState,
+      [commentId]: !prevState[commentId]
+    })))
+  }
 
   const onSelectFilter = (filter: string) => {
     let newUrl = "";
@@ -45,9 +67,7 @@ const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
       <div className="w-full">
         <div className="flex justify-between items-center">
           <h2 className="text-xl">Comments</h2>
-          <p className="text-sm text-muted-foreground">
-            {counts} comments
-          </p>
+          <p className="text-sm text-muted-foreground">{counts} comments</p>
         </div>
 
         <div className="w-full my-2 flex gap-2">
@@ -64,20 +84,33 @@ const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
           </Select>
         </div>
 
-        <CommentForm status={status} anime={anime} animeId={id} userId={data?.user.id!} />
+        <CommentForm
+          status={status}
+          anime={anime}
+          animeId={id}
+          userId={data?.user.id!}
+        />
 
         {isLoading && <p>is loading comments</p>}
-        <div className="my-3">
+        <div className="my-3 w-full">
           {comments && comments.length > 0 ? (
             comments.map((comment, index) => (
-              <div className={cn("flex justify-between py-4", comments.length - 1 === index ? 'border-none' : 'border-b border-muted')} key={comment.id}>
-                <div className="flex items-start gap-4">
+              <div
+                className={cn(
+                  "flex py-4",
+                  comments.length - 1 === index
+                    ? "border-none"
+                    : "border-b border-muted"
+                )}
+                key={comment.id}
+              >
+                <div className="flex items-start w-full gap-4">
                   <Avatar className="dark:bg-stone-800">
                     <AvatarFallback>AI</AvatarFallback>
                     <AvatarImage src={comment.author.image} />
                   </Avatar>
 
-                  <div className="">
+                  <div className="w-full flex-1">
                     <div className="flex items-center">
                       <h5 className="text-sm underline">
                         {comment.author.name}
@@ -91,14 +124,46 @@ const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
                     <p className="text-xs text-stone-500 leading-none">
                       {comment.author.email}
                     </p>
-                    <p className="text-muted-foreground my-2">
-                      {comment.content}
-                    </p>
+                    <div className="relative w-full">
+                      <p
+                        className={cn(
+                          "text-muted-foreground my-2 w-full",
+                          comment.isSpoiler && "select-none blur-sm",
+                          showSpoiler[comment.id] && "blur-none select-text"
+                        )}
+                      >
+                        {comment.content.replace("#spoiler", "")}
+                      </p>
+                      {comment.isSpoiler && (
+                        <span onClick={() => handleToggleSpoiler(comment.id)} className="text-xs select-none bg-secondary-foreground text-secondary px-2 py-1 cursor-pointer rounded-md">
+                          {showSpoiler[comment.id] ? "Hide spoiler" : "Show spoiler"}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
                 <span>
-                  <MoreHorizontal className="h-5 w-5" />
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <MoreHorizontal className="h-5 w-5" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      {comment.userId === data?.user.id && (
+                        <DropdownMenuItem
+                          onClick={() =>
+                            deleteComment({
+                              userId: data?.user.id!,
+                              commentId: comment.id,
+                            })
+                          }
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuItem disabled>Upvote</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </span>
               </div>
             ))
@@ -108,8 +173,14 @@ const CommentSection = ({ id, anime }: { id: string, anime: string }) => {
         </div>
 
         <div className="w-full">
-          {!!counts && counts > 5 && <p className="text-center text-stone-500 text-sm underline">see more {Number(counts) - 5} comments</p>}
-          <p className="text-center text-stone-500 text-sm mt-5">Underconstruction ⚠️</p>
+          {!!counts && counts > 5 && (
+            <p className="text-center text-stone-500 text-sm underline">
+              see more {Number(counts) - 5} comments
+            </p>
+          )}
+          <p className="text-center text-stone-500 text-sm mt-5">
+            Underconstruction ⚠️
+          </p>
         </div>
       </div>
     </MaxWidthContainer>

@@ -43,8 +43,12 @@ const CommentForm = ({ animeId, userId, anime, status }: CommentProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
+    const checkForSpoiler = values.content.split(" ").some(word => word === "#spoiler")
     startTransition(() => {
-      createPost(values)
+      createPost({
+        ...values,
+        isSpoiler: checkForSpoiler
+      })
       form.reset()
     })
   };
@@ -66,7 +70,7 @@ const CommentForm = ({ animeId, userId, anime, status }: CommentProps) => {
           />
           {status === "authenticated"
           ? (
-          <button disabled={isPending} type="submit" className={cn(buttonVariants({ className: "sm:w-44 w-full" }))}>
+          <button type="submit" className={cn(buttonVariants({ className: "sm:w-44 w-full" }))}>
             Submit
           </button>
           ) : (

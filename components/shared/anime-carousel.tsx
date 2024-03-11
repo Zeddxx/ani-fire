@@ -72,7 +72,7 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
               </div>
               </div>
               <div className="absolute before:absolute before:w-full before:h-full before:bg-gradient-to-r before:from-white dark:before:from-black before:via-transparent before:to-transparent dark:before:to-transparent before:z-10 w-full xl:w-3/4 h-full right-0">
-                <img src={anime.poster} alt="anime posters" className="h-full w-full absolute opacity-75 saturate-150 object-cover pointer-events-none" />
+                <img src={anime.poster} alt="anime posters" onError={(e) => e.currentTarget.src = "/assets/placeholder.gif"} className="h-full w-full absolute opacity-75 saturate-150 object-cover pointer-events-none" />
               </div>
             </div>
           )

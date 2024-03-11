@@ -1,6 +1,7 @@
 'use server';
 
 import { db } from "@/lib/db";
+import { currentUser } from "@/lib/auth";
 
 export const getComments = async (animeId: string) => {
     try {
@@ -58,5 +59,22 @@ export const getUsersCommentCounts = async (userId: string) => {
       return user
   } catch (error) {
       return null;
+  }
+}
+
+export const deleteUserComment = async (userId: string, commentId: string) => {
+  const user = await currentUser()
+  try {
+    if(!userId) return null;
+
+    if(user?.id !== userId) throw Error;
+
+    const deleteComment = await db.comment.delete({
+      where: {
+        id: commentId
+      }
+    })
+  } catch (error) {
+    return null;
   }
 }

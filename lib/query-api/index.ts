@@ -18,7 +18,7 @@ import {
 } from "../function";
 import { z } from "zod";
 import { CommentSchema } from "../validation";
-import { getUsersCommentCounts } from "@/actions/get-comments";
+import { deleteUserComment, getUsersCommentCounts } from "@/actions/get-comments";
 
 export const useGetAllAnime = () => {
   return useQuery({
@@ -128,6 +128,9 @@ export const useCreateComment = (animeId: string) => {
       queryClient.invalidateQueries({
         queryKey: ["getUserCommentsCount", data?.userId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['deleteUserComment']
+      })
     },
   });
 };
@@ -145,5 +148,24 @@ export const useGetUserCommentsCount = (userId: string) => {
     queryKey: ["getUserCommentsCount", userId],
     queryFn: () => getUsersCommentCounts(userId),
     enabled: !!userId
+  })
+}
+
+export const useDeleteUserComment = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['deleteUserComment'],
+    mutationFn: ({ userId, commentId } : { userId: string, commentId: string }) => deleteUserComment(userId, commentId),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ['getUserCommentCount']
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['getAnimeCommentsCount']
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['getAnimeComments']
+      })
+    }
   })
 }

@@ -49,8 +49,9 @@ const Dashboard = () => {
           </div>
 
           {/* User comments counts: how much this user have commented! */}
-          <div className="mt-4">
-            <div className="grid grid-cols-2">
+          <div className="mt-4 border-t border-muted pt-4">
+            <h2 className="text-2xl font-medium">Activity</h2>
+            {/* <div className="grid grid-cols-2">
               <Button className="rounded-none bg-primary hover:bg-primary/90 hover:text-white text-white border-b border-muted" variant="ghost">
                   <MessageCircle className="h-5 w-5" />
                   <p className="ml-2">
@@ -58,12 +59,15 @@ const Dashboard = () => {
                   </p>
               </Button>
 
-              {/* Currently watching */}
               <Button className="rounded-none border-b border-muted" variant="ghost">
                   <p className="text-muted-foreground ml-2">
                     <span className="">Currently Watching</span>
                   </p>
               </Button>
+            </div> */}
+            <div className="flex mt-6 p-4 rounded-lg bg-muted/50 shadow-sm shadow-muted-foreground/50 flex-col items-center w-full">
+              <h2 className="text-7xl font-normal text-primary">{comments?.length}</h2>
+              <p>Comments</p>
             </div>
 
             <div className="h-52 flex items-center justify-center text-muted-foreground">
