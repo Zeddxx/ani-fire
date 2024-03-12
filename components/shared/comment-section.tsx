@@ -84,6 +84,10 @@ const CommentSection = ({ id, anime }: { id: string; anime: string }) => {
           </Select>
         </div>
 
+        <div className="my-2">
+          <p className="text-xs"><strong>Note:</strong> if your comment contains spoilers please do type <span className="text-primary">/spoiler</span></p>
+        </div>
+
         <CommentForm
           status={status}
           anime={anime}
@@ -132,10 +136,10 @@ const CommentSection = ({ id, anime }: { id: string; anime: string }) => {
                           showSpoiler[comment.id] && "blur-none select-text"
                         )}
                       >
-                        {comment.content.replace("#spoiler", "")}
+                        {comment.content.replace("/spoiler", "")}
                       </p>
                       {comment.isSpoiler && (
-                        <span onClick={() => handleToggleSpoiler(comment.id)} className="text-xs select-none bg-secondary-foreground text-secondary px-2 py-1 cursor-pointer rounded-md">
+                        <span onClick={() => handleToggleSpoiler(comment.id)} className="text-xs select-none px-2 py-1 cursor-pointer underline">
                           {showSpoiler[comment.id] ? "Hide spoiler" : "Show spoiler"}
                         </span>
                       )}

@@ -43,7 +43,7 @@ const CommentForm = ({ animeId, userId, anime, status }: CommentProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof CommentSchema>) => {
-    const checkForSpoiler = values.content.split(" ").some(word => word === "#spoiler")
+    const checkForSpoiler = values.content.split(" ").some(word => word === "/spoiler")
     startTransition(() => {
       createPost({
         ...values,
