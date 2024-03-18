@@ -100,6 +100,7 @@ AUTH_SECRET=
   - [ ] Add nested comments.
 - [ ] Implement admin dashboard functionality.
 - [ ] Share buttons.
+- [x] Added Dub functionality.
 - [x] Episode next and previous button.
   - [ ] Theater mode
   - [ ] Focus mode.
