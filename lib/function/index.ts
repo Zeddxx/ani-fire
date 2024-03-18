@@ -1,4 +1,4 @@
-import { CommentSchema } from '@/lib/validation';
+import { CommentSchema } from "@/lib/validation";
 import {
   AnimeByCategoryTypes,
   AnimeByGenreTypes,
@@ -10,11 +10,14 @@ import {
   ICommentsTypes,
   SearchedAnimeProps,
 } from "@/types";
-import { z } from 'zod';
-import { comment } from '@/actions/comment';
-import { commentsCount, getComments } from '@/actions/get-comments';
+import { z } from "zod";
+import { comment } from "@/actions/comment";
+import { commentsCount, getComments } from "@/actions/get-comments";
 
-const primaryUrl = process.env.NODE_ENV !== "production" ? "http://localhost:4000" : process.env.NEXT_PUBLIC_ANIME_URL;
+const primaryUrl =
+  process.env.NODE_ENV !== "production"
+    ? "http://localhost:4000"
+    : process.env.NEXT_PUBLIC_ANIME_URL;
 const backupUrl = "https://api-aniwatch.onrender.com";
 
 export async function getAllAnime() {
@@ -70,15 +73,17 @@ export async function getAnimeEpisodes(id: string) {
 
 export async function getAnimeEpisodeServer(id: string) {
   try {
-    const res = await fetch(`${primaryUrl}/anime/servers?episodeId=${id}`)
-    if(res.status === 429) {
-      const backupRes = await fetch(`${backupUrl}/anime/servers?episodeId=${id}`)
-      const backupData = await backupRes.json()
-      return backupData as GetAnimeServerEpisodes
+    const res = await fetch(`${primaryUrl}/anime/servers?episodeId=${id}`);
+    if (res.status === 429) {
+      const backupRes = await fetch(
+        `${backupUrl}/anime/servers?episodeId=${id}`
+      );
+      const backupData = await backupRes.json();
+      return backupData as GetAnimeServerEpisodes;
     }
 
-    const data = await res.json()
-    return data as GetAnimeServerEpisodes
+    const data = await res.json();
+    return data as GetAnimeServerEpisodes;
   } catch (error) {
     console.log(error);
   }
@@ -94,13 +99,15 @@ export async function getStreamEpisode(
       `${primaryUrl}/anime/episode-srcs?id=${id}&server=${server}&category=${category}`
     );
 
-    if(res.status === 429) {
-      const backupRes = await fetch(`${backupUrl}/anime/episode-srcs?id=${id}&server=${server}&category=${category}`)
-      const backupData = await backupRes.json()
-      return backupData as AnimeStreamingProp
+    if (res.status === 429) {
+      const backupRes = await fetch(
+        `${backupUrl}/anime/episode-srcs?id=${id}&server=${server}&category=${category}`
+      );
+      const backupData = await backupRes.json();
+      return backupData as AnimeStreamingProp;
     }
     const data = await res.json();
-    return data as AnimeStreamingProp
+    return data as AnimeStreamingProp;
   } catch (error) {
     console.log(error);
   }
@@ -112,8 +119,10 @@ export async function getSearchedAnime(query: string, pageNo: number) {
       `${primaryUrl}/anime/search?q=${query}&page=${pageNo}`
     );
 
-    if(res.status === 429) {
-      const res = await fetch(`${backupUrl}/anime/search?q=${query}&page=${pageNo}`)
+    if (res.status === 429) {
+      const res = await fetch(
+        `${backupUrl}/anime/search?q=${query}&page=${pageNo}`
+      );
       const data = await res.json();
       return data as SearchedAnimeProps;
     }
@@ -129,67 +138,66 @@ export async function getAllGenres() {
   try {
     const res = await fetch(`${primaryUrl}/anime/genre`);
 
-    if(res.status === 429){
-      const res = await fetch(`${backupUrl}/anime/genre`)
+    if (res.status === 429) {
+      const res = await fetch(`${backupUrl}/anime/genre`);
       const data = await res.json();
       return data;
     }
-  const data = await res.json();
-  return data;
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.log(error);
     throw Error;
   }
 }
 
-
-export async function getAnimeByCategory(category: string, page: number){
+export async function getAnimeByCategory(category: string, page: number) {
   try {
-    const res = await fetch(`${primaryUrl}/anime/${category}?page=${page}`)
+    const res = await fetch(`${primaryUrl}/anime/${category}?page=${page}`);
 
-  if(res.status === 429){
-    const res = await fetch(`${backupUrl}/anime/${category}?page=${page}`)
-    const data = await res.json()
+    if (res.status === 429) {
+      const res = await fetch(`${backupUrl}/anime/${category}?page=${page}`);
+      const data = await res.json();
+      return data as AnimeByCategoryTypes;
+    }
+
+    const data = await res.json();
     return data as AnimeByCategoryTypes;
-  }
-
-  const data = await res.json()
-  return data as AnimeByCategoryTypes;
   } catch (error) {
     console.log(error);
-    throw Error
+    throw Error;
   }
 }
 
 export async function getAnimeByGenres(name: string, page: number) {
   try {
-    const res = await fetch(`${primaryUrl}/anime/genre/${name}?page=${page}`)
+    const res = await fetch(`${primaryUrl}/anime/genre/${name}?page=${page}`);
 
-    if(res.status === 429) {
-      const res = await fetch(`${backupUrl}/anime/genre/${name}?page=${page}`)
-      const data = await res.json()
+    if (res.status === 429) {
+      const res = await fetch(`${backupUrl}/anime/genre/${name}?page=${page}`);
+      const data = await res.json();
       return data as AnimeByGenreTypes;
     }
 
-    const data = await res.json()
+    const data = await res.json();
     return data as AnimeByGenreTypes;
   } catch (error) {
-    throw Error
+    throw Error;
   }
 }
 
 export async function getAnimeSchedules(date: string) {
   try {
-    const res = await fetch(`${primaryUrl}/anime/schedule?date=${date}`)
+    const res = await fetch(`${primaryUrl}/anime/schedule?date=${date}`);
 
-    if(res.status === 429) {
-      const res = await fetch(`${backupUrl}/anime/schedule?date=${date}`)
-      const data = await res.json()
-      return data
+    if (res.status === 429) {
+      const res = await fetch(`${backupUrl}/anime/schedule?date=${date}`);
+      const data = await res.json();
+      return data;
     }
 
-    const data = await res.json()
-    return data
+    const data = await res.json();
+    return data;
   } catch (error) {
     throw Error;
   }
@@ -201,17 +209,17 @@ export async function getAnimeSchedules(date: string) {
  * @description { anime id is important to find the particular comments on the unique}
  */
 
-export async function getAnimeComments (animeId: string) {
-  const comments = await getComments(animeId)
-  return comments as ICommentsTypes[]
+export async function getAnimeComments(animeId: string) {
+  const comments = await getComments(animeId);
+  return comments as ICommentsTypes[];
 }
 
-export async function postComment (values: z.infer<typeof CommentSchema>) {
+export async function postComment(values: z.infer<typeof CommentSchema>) {
   const res = await comment(values);
-  return res.comment
+  return res.comment;
 }
 
-export async function getCommentsCount (animeId: string) {
+export async function getCommentsCount(animeId: string) {
   const counts = await commentsCount(animeId);
   return counts;
 }

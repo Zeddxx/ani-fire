@@ -54,6 +54,7 @@ export const useGetAnimeEpisodeServer = (id: string) => {
   });
 };
 
+
 export const useGetAnimeStreaming = (
   id: string,
   server: string,

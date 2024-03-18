@@ -1,6 +1,5 @@
 "use client";
 
-import { useGetAnimeStreaming } from "@/lib/query-api";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality"
 import Hls from "hls.js";
 import ArtPlayer from "artplayer";
@@ -8,20 +7,26 @@ import { useState } from "react";
 import Player from "./player";
 import Option from "artplayer/types/option";
 import { Loader2 } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { useGetAnimeStreamingEpisodeQuery } from "@/redux/api";
 
 type VideoPlayerProps = {
   episodeId: string;
-  server: string;
-  category: string;
   poster: string;
 };
 
-const FirePlayer = ({ episodeId, server, category, poster }: VideoPlayerProps) => {
-  const { data, isLoading, isError, error } = useGetAnimeStreaming(
-    episodeId,
-    server,
-    category
-  );
+const FirePlayer = ({ episodeId, poster }: VideoPlayerProps) => {
+
+ const { category, server } = useSelector((state: RootState) => state.selectUtility)
+
+ const { data, isLoading, isError } = useGetAnimeStreamingEpisodeQuery({
+  id: episodeId,
+  server: server,
+  category: category,
+ }, {
+  refetchOnMountOrArgChange: true
+ })
 
   // The control container
   const [setUrl, setSelectedUrl] = useState<string | undefined>();

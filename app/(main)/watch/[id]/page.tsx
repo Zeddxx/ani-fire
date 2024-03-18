@@ -54,10 +54,9 @@ export async function generateMetadata({
 const WatchAnime = ({ params, searchParams }: Props) => {
   const episodeNumber = searchParams.ep as string;
   const query = params.id + "?ep=" + episodeNumber
-  const server = searchParams.server as string;
 
   return (
-    <MainPage episodeNumber={episodeNumber} params={params.id} query={query} server={server} />
+    <MainPage episodeNumber={episodeNumber} params={params.id} query={query} />
   );
 };
 export default WatchAnime;

@@ -8,7 +8,6 @@ const INITIAL_STATE = {
   toggleMenu: () => {},
   toggleSearch: () => {},
   closeMenu: () => {},
-  isPageError: false,
   toggleError: () => {},
   handleClick: () => {},
 };
@@ -68,7 +67,6 @@ const MenuProvider = ({ children }: { children: React.ReactNode }) => {
         toggleMenu,
         toggleSearch,
         closeMenu,
-        isPageError,
         toggleError,
       }}
     >

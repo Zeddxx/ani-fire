@@ -15,75 +15,79 @@ import FirePlayer from "@/components/players/fire-player";
 import AnimeCard from "@/components/shared/anime-card";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategory, setServer } from "@/redux/utilities";
+import { cn } from "@/lib/utils";
+import { RootState } from "@/redux/store";
 
 type MainPageProps = {
-    params: string,
-    server?: string,
-    query: string,
-    episodeNumber: string
-}
+  params: string;
+  query: string;
+  episodeNumber: string;
+};
 
-const MainPage = ({ params, query, server, episodeNumber } : MainPageProps) => {
-    const { data, isLoading, isError } = useGetAnimeEpisodeServer(query);
-    const { data: episodes, isLoading: isEpisodeLoading } = useGetAnimeEpisodes(
-      params
-    );
-  
-    const { setAnimeWatch } = useLocalStorage()
-    const { data: animeInfo, isLoading: isInfoLoading } = useGetAnimeInfo(
-      params
-    );
-  
-    const description = animeInfo?.anime.info.description;
-  
-    const handleClick = (server: string) => {
-      return window.location.assign(
-        `/watch/${query}&server=${server}`
-      );
-    };
-  
-    const isCurrentEpisode = episodes?.episodes.filter(
-      (episode) => episode.episodeId === query
-    );
-  
-    const currentEpisodeIndex = episodes?.episodes.findIndex(
-      (ep) => ep.episodeId === query
-    );
-  
-    const isNextEpisode =
-      Number(currentEpisodeIndex) + 1 !== episodes?.totalEpisodes;
-    const isPrevEpisode = Number(currentEpisodeIndex) + 1 !== 1;
-  
-    const nextEpisode =
-      isNextEpisode &&
-      episodes?.episodes[Number(currentEpisodeIndex) + 1].episodeId;
-    const prevEpisode =
-      isPrevEpisode &&
-      episodes?.episodes[Number(currentEpisodeIndex) - 1].episodeId;
-  
-      useEffect(() => {
-          if(animeInfo && episodes) {
-            setAnimeWatch({
-              episodeId: query,
-              episodeNumber: currentEpisodeIndex! + 1,
-              poster: animeInfo?.anime.info.poster,
-              title: animeInfo?.anime.info.name
-            })
-          }
-      })
-  
-    const handlePrev = () => {
-      return window.location.assign(`/watch/${prevEpisode}`);
-    };
-  
-    const handleNext = () => {
-      return window.location.assign(`/watch/${nextEpisode}`);
-    };
-  
-    if (isEpisodeLoading) return <p>Loading episodes...</p>;
-  
-    if (isLoading) return <p>Loading...</p>;
-    if (isError) return <p>Error</p>;
+const MainPage = ({ params, query, episodeNumber }: MainPageProps) => {
+  // Tanstack queries;
+  const { data, isLoading, isError } = useGetAnimeEpisodeServer(query);
+  const { data: episodes, isLoading: isEpisodeLoading } =
+    useGetAnimeEpisodes(params);
+  const { data: animeInfo, isLoading: isInfoLoading } = useGetAnimeInfo(params);
+
+  // Hooks
+  const { setAnimeWatch } = useLocalStorage();
+  const dispatch = useDispatch();
+  const { category } = useSelector((state: RootState) => state.selectUtility)
+  // Minimal States
+  const description = animeInfo?.anime.info.description;
+
+  // Functions
+  const handleClick = (server: string, category: string) => {
+    dispatch(setServer(server));
+    dispatch(setCategory(category));
+  };
+
+  const isCurrentEpisode = episodes?.episodes.filter(
+    (episode) => episode.episodeId === query
+  );
+
+  const currentEpisodeIndex = episodes?.episodes.findIndex(
+    (ep) => ep.episodeId === query
+  );
+
+  const isNextEpisode =
+    Number(currentEpisodeIndex) + 1 !== episodes?.totalEpisodes;
+  const isPrevEpisode = Number(currentEpisodeIndex) + 1 !== 1;
+
+  const nextEpisode =
+    isNextEpisode &&
+    episodes?.episodes[Number(currentEpisodeIndex) + 1].episodeId;
+  const prevEpisode =
+    isPrevEpisode &&
+    episodes?.episodes[Number(currentEpisodeIndex) - 1].episodeId;
+
+  useEffect(() => {
+    if (animeInfo && episodes) {
+      setAnimeWatch({
+        episodeId: query,
+        episodeNumber: currentEpisodeIndex! + 1,
+        poster: animeInfo?.anime.info.poster,
+        title: animeInfo?.anime.info.name,
+      });
+    }
+  });
+
+  const handlePrev = () => {
+    return window.location.assign(`/watch/${prevEpisode}`);
+  };
+
+  const handleNext = () => {
+    return window.location.assign(`/watch/${nextEpisode}`);
+  };
+
+  if (isEpisodeLoading) return <p>Loading episodes...</p>;
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error</p>;
   return (
     <section className="relative w-full h-auto">
       {/* Flow Tree */}
@@ -107,7 +111,9 @@ const MainPage = ({ params, query, server, episodeNumber } : MainPageProps) => {
         <span className="h-1 w-1 flex rounded-full bg-muted-foreground mx-2"></span>
 
         {/* TODO: To fix the episode code here */}
-        <a href={`/${animeInfo?.anime.info.id}`} className="">{animeInfo?.anime.info.name}</a>
+        <a href={`/${animeInfo?.anime.info.id}`} className="">
+          {animeInfo?.anime.info.name}
+        </a>
       </div>
 
       {/* main episodes no. and video player here! */}
@@ -129,10 +135,8 @@ const MainPage = ({ params, query, server, episodeNumber } : MainPageProps) => {
             <div className="h-64 w-full bg-black"></div>
           ) : (
             <FirePlayer
-            poster={animeInfo?.anime.info.poster!}
-            episodeId={data?.episodeId!}
-            server={!server ? "vidstreaming" : server}
-            category={"sub"}
+              poster={animeInfo?.anime.info.poster!}
+              episodeId={data?.episodeId!}
             />
           )}
 
@@ -173,7 +177,8 @@ const MainPage = ({ params, query, server, episodeNumber } : MainPageProps) => {
                   {data?.sub.map((server) => (
                     <Button
                       size="sm"
-                      onClick={() => handleClick(server.serverName)}
+                      variant={category === "sub" ? "default"  : "outline" }
+                      onClick={() => handleClick(server.serverName, "sub")}
                       key={server.serverName}
                     >
                       {server.serverName}
@@ -184,6 +189,7 @@ const MainPage = ({ params, query, server, episodeNumber } : MainPageProps) => {
 
               <Separator className="w-full" />
 
+              {/* Dub */}
               {!!data && data?.dub.length > 0 && (
                 <div className="flex gap-x-4 mt-4 items-center">
                   <p className="text-sm">Dub:</p>
@@ -191,7 +197,8 @@ const MainPage = ({ params, query, server, episodeNumber } : MainPageProps) => {
                     {data?.dub.map((server) => (
                       <Button
                         size="sm"
-                        onClick={() => handleClick(server.serverName)}
+                        variant={category === "dub" ? "default"  : "outline" }
+                        onClick={() => handleClick("vidstreaming", "dub")}
                         key={server.serverName}
                       >
                         {server.serverName}
@@ -236,6 +243,6 @@ const MainPage = ({ params, query, server, episodeNumber } : MainPageProps) => {
         </div>
       </div>
     </section>
-  )
-}
-export default MainPage
+  );
+};
+export default MainPage;

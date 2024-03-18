@@ -3,7 +3,7 @@ import { Poppins } from 'next/font/google'
 import './globals.css'
 import { QueryProvider } from '@/lib/query-provider'
 import { cn } from '@/lib/utils'
-import Provider from '@/providers/theme-provider'
+import Provider from '@/providers/provider'
 import { Toaster } from '@/components/ui/toaster'
 
 const poppins = Poppins({
