@@ -50,7 +50,6 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
       >
         {/* here you can also pass any other element attributes. Also, you can use your custom components as slides */}
         {animes?.map((anime) => {
-          const description = anime.description;
           return(
             <div className="min-h-80 max-h-[580px] h-[50vw] w-screen relative before:absolute before:bottom-0 before:left-0 before:h-1/2 before:w-full before:bg-gradient-to-t before:from-white/70 before:to-transparent dark:before:from-black dark:before:to-transparent before:z-20" key={anime.id}>
               <div className="absolute bottom-4 z-20 w-[90%] xl:w-[60%] left-4">
@@ -60,8 +59,13 @@ const AnimeCarousel = ({ animes } : { animes: SpotLightAnimesProps[] | undefined
                     <Badge variant="secondary" className="rounded-none" key={info}>{info}</Badge>
                   ))}
                 </div>
-                <h1 className="leading-relaxed xl:text-5xl text-2xl md:text-3xl font-semibold text-secondary-foreground">{anime.name}</h1>
-                <p className="w-[80%] lg:block leading-relaxed hidden">{description.length > 300 ? description.slice(0,300) + "..." : description}</p>
+                {/* Anime Title */}
+                <h1 className="leading-relaxed xl:text-5xl text-3xl md:text-3xl text-secondary-foreground font-logo line-clamp-1">{anime.name}</h1>
+
+                {/* Anime Details */}
+                <p className="w-[80%] lg:block leading-relaxed hidden md:!line-clamp-3">{anime.description}</p>
+
+                {/* Buttons */}
                 <div className="flex gap-x-2 mt-4 ">
                   <a href={`/${anime.id}`} className={cn("flex", buttonVariants({ variant: "default", className: "rounded-none" }))}>
                     <BsPlayCircleFill className="mr-3 h-5 w-5" /> Watch now

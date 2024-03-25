@@ -35,12 +35,12 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               <div className="">
                 <a
                   href={`/${anime.id}`}
-                  className="font-medium text-sm hover:text-primary dark:text-primary-foreground text-secondary-foreground duration-200"
+                  className="font-medium lg:line-clamp-1 line-clamp-none text-sm hover:text-primary dark:text-primary-foreground text-secondary-foreground duration-200"
                 >
                   {anime.name}
                 </a>
                 <div className="flex text-white w-fit gap-1 font-semibold text-xs border-muted border items-center mt-2">
-                  <p className="bg-primary px-2 py-1 flex items-center">
+                  <p className="bg-primary px-2 py-1 flex items-center line-clamp-1">
                     <FaClosedCaptioning className="mr-1 h-4 w-4" />{" "}
                     {anime.episodes.sub || 0}
                   </p>
@@ -91,7 +91,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               <div className="">
                 <a
                   href={`/${anime.id}`}
-                  className="font-medium hover:text-primary dark:text-primary-foreground text-secondary-foreground duration-200 text-sm"
+                  className="font-medium lg:line-clamp-1 line-clamp-none hover:text-primary dark:text-primary-foreground text-secondary-foreground duration-200 text-sm"
                 >
                   {anime.name}
                 </a>
@@ -116,7 +116,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
           <div className="py-4">
             <a
               href="/anime/most-popular"
-              className="hover:text-primary text-sm w-fit flex items-center gap-x-2 duration-200"
+              className="hover:text-primary lg:line-clamp-1 line-clamp-none text-sm w-fit flex items-center gap-x-2 duration-200"
             >
               Show more
               <MdArrowForwardIos />
@@ -148,7 +148,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               <div className="">
                 <a
                   href={`/${anime.id}`}
-                  className="font-medium text-secondary-foreground dark:text-primary-foreground hover:text-primary duration-200 text-sm"
+                  className="font-medium lg:line-clamp-1 line-clamp-none text-secondary-foreground dark:text-primary-foreground hover:text-primary duration-200 text-sm"
                 >
                   {anime.name}
                 </a>
@@ -205,7 +205,7 @@ const AiringAnime = ({ anime }: { anime: HomeAnimeProps }) => {
               <div className="">
                 <a
                   href={`/${anime.id}`}
-                  className="font-medium text-secondary-foreground dark:text-primary-foreground hover:text-primary duration-200 text-sm"
+                  className="font-medium lg:line-clamp-1 line-clamp-none text-secondary-foreground dark:text-primary-foreground hover:text-primary duration-200 text-sm"
                 >
                   {anime.name}
                 </a>
