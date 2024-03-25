@@ -51,6 +51,7 @@
   - Profile picture uploader
   - update account
   - Toggle the theme mode (currently its only `Light`, `Dark` and `System`)
+  - Toggle between sub and dub anime.
 - Watch Page
   - Player
     - Hold and drag to forward or backward the video.
@@ -100,6 +101,7 @@ AUTH_SECRET=
   - [ ] Add nested comments.
 - [ ] Implement admin dashboard functionality.
 - [ ] Share buttons.
+- [x] Added Dub functionality.
 - [x] Episode next and previous button.
   - [ ] Theater mode
   - [ ] Focus mode.
