@@ -149,6 +149,12 @@ export type GetAnimeServerEpisodes = {
   episodeId: string;
   episodeNo: number;
   sub: Sub[];
+  raw: [
+    {
+      serverName: string;
+      serverId: number;
+    }
+  ];
 };
 
 export type Episode = {
@@ -197,7 +203,7 @@ type Sources = {
 
 export type SubtitlesProps = {
   label: string;
-  kind: string
+  kind: string;
   file: string;
 };
 
@@ -207,13 +213,13 @@ export type AnimeStreamingProp = {
   sources: Sources[];
   tracks: SubtitlesProps[];
   intro: {
-    start: number
-    end: number
-  }
+    start: number;
+    end: number;
+  };
   outro: {
-    start: number
-    end: number
-  }
+    start: number;
+    end: number;
+  };
   status: number;
   message: string;
 };

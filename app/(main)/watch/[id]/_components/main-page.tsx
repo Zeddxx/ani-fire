@@ -17,7 +17,6 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory, setServer } from "@/redux/utilities";
-import { cn } from "@/lib/utils";
 import { RootState } from "@/redux/store";
 
 type MainPageProps = {
@@ -36,13 +35,25 @@ const MainPage = ({ params, query, episodeNumber }: MainPageProps) => {
   // Hooks
   const { setAnimeWatch } = useLocalStorage();
   const dispatch = useDispatch();
-  const { category } = useSelector((state: RootState) => state.selectUtility)
+  const { category, server } = useSelector(
+    (state: RootState) => state.selectUtility
+  );
+
+  // effects
+  useEffect(() => {
+    if (data && data.sub && data.sub.length > 0) {
+      dispatch(setServer(data.sub[0].serverName));
+    } else if (data && data.raw && data.raw.length > 0) {
+      dispatch(setServer(data.raw[0].serverName));
+    }
+  }, [data, dispatch]);
+
   // Minimal States
   const description = animeInfo?.anime.info.description;
 
   // Functions
-  const handleClick = (server: string, category: string) => {
-    dispatch(setServer(server));
+  const handleClick = (serverName: string, category: string) => {
+    dispatch(setServer(serverName));
     dispatch(setCategory(category));
   };
 
@@ -177,7 +188,7 @@ const MainPage = ({ params, query, episodeNumber }: MainPageProps) => {
                   {data?.sub.map((server) => (
                     <Button
                       size="sm"
-                      variant={category === "sub" ? "default"  : "outline" }
+                      variant={category === "sub" ? "default" : "outline"}
                       onClick={() => handleClick(server.serverName, "sub")}
                       key={server.serverName}
                     >
@@ -197,8 +208,8 @@ const MainPage = ({ params, query, episodeNumber }: MainPageProps) => {
                     {data?.dub.map((server) => (
                       <Button
                         size="sm"
-                        variant={category === "dub" ? "default"  : "outline" }
-                        onClick={() => handleClick("vidstreaming", "dub")}
+                        variant={category === "dub" ? "default" : "outline"}
+                        onClick={() => handleClick(server.serverName, "dub")}
                         key={server.serverName}
                       >
                         {server.serverName}
