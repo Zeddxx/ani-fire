@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import AppProvider from "@/providers/app-provider";
+import Banner from "@/components/banner/banner";
+import Navbar from "@/components/shared/navbar";
 
-const openSans = Roboto({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-open-sans",
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -21,7 +24,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${openSans.className} antialiased`}>{children}</body>
+      <body className={`${spaceGrotesk.className} antialiased dark:bg-black`}>
+        <AppProvider>
+          <div className="">
+            <Banner />
+          </div>
+          <Navbar />
+          <main>{children}</main>
+        </AppProvider>
+      </body>
     </html>
   );
 }
