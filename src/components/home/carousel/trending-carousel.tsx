@@ -23,15 +23,11 @@ const TrendingCarousel = ({ animes }: { animes: TrendingAnime[] }) => {
                   {name}
                 </Link>
                 <span className="block mx-auto w-fit text-xl text-primary font-semibold">
-                  {Number(rank) + 1 < 10
-                    ? `0${Number(rank) + 1}`
-                    : Number(rank) + 1}
+                  {Number(rank) < 10 ? `0${Number(rank)}` : Number(rank)}
                 </span>
               </div>
               <div className="md:hidden grid absolute top-0 left-0 place-items-center bg-primary h-10 text-xl w-10">
-                {Number(rank) + 1 < 10
-                  ? `0${Number(rank) + 1}`
-                  : Number(rank) + 1}
+                {Number(rank) < 10 ? `0${Number(rank)}` : Number(rank)}
               </div>
               <Link
                 href={`/${id}`}
