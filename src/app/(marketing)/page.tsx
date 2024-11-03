@@ -3,8 +3,6 @@
 import AnimeLibraryAutoScroller from "@/components/(marketing)/anime-library-auto-scroller";
 import GridPattern from "@/components/ui/grid-pattern";
 import { merge } from "@/lib/utils";
-import { ArrowUpFromDot } from "lucide-react";
-import { motion } from "framer-motion";
 import SpacingText from "@/components/ui/spacing-text";
 import AnimatedGradientText from "@/components/ui/animated-gradient-text";
 

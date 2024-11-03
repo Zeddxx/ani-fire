@@ -7,10 +7,14 @@ import Player from "./player";
 
 interface AniFirePlayerProps extends AnimeStreamingLinks {
   episodes: AnimeEpisodes;
-  episodeId: string
+  episodeId: string;
 }
 
-const AniFirePlayer = ({ episodes, episodeId, ...props }: AniFirePlayerProps) => {
+const AniFirePlayer = ({
+  episodes,
+  episodeId,
+  ...props
+}: AniFirePlayerProps) => {
   const playM3u8 = useCallback((video: any, url: string, art: Artplayer) => {
     if (Hls.isSupported()) {
       if (art.hls) art.hls.destror();
@@ -78,7 +82,7 @@ const AniFirePlayer = ({ episodes, episodeId, ...props }: AniFirePlayerProps) =>
       outro={props.outro}
       episodes={episodes}
       episodeId={episodeId}
-      className="art-container aspect-video basis-[60%] shrink-0"
+      className="art-container aspect-video w-full shrink-0"
     />
   );
 };

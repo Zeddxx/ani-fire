@@ -41,14 +41,14 @@ const NavbarMarket = () => {
         <div className="xl:hidden h-10 w-10 grid place-items-center">
           <Menu className="h-6 w-6" />
         </div>
-        <div className="xl:mr-8 mr-3">
+        <Link href="/home" className="xl:mr-8 mr-3">
           <Image
             src="/assets/anifire-logo.gif"
             alt="Anifire Logo"
             height={40}
             width={40}
           />
-        </div>
+        </Link>
 
         <ul className="hidden items-center gap-3 xl:flex">
           {NavbarLinks.map(({ href, name }) => (

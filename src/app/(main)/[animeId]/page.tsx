@@ -1,15 +1,14 @@
 "use client";
 
-import { getAnimeInfoByAnimeId } from "@/api/anime";
+import { getAnimeEpisodesById, getAnimeInfoByAnimeId } from "@/api/anime";
 import OtherInfos from "@/components/home/other-infos";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Separator from "@/components/ui/separator";
-import { AnimeStats } from "@/types/anime";
+import { QUERY_KEY } from "@/constants/query-key";
 import { useQuery } from "@tanstack/react-query";
 import { Play } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import Link from "next/link";
 
 const AnimeInfo = ({
   params: { animeId },
@@ -17,12 +16,19 @@ const AnimeInfo = ({
   params: { animeId: string };
 }) => {
   const { data, isLoading } = useQuery({
-    queryKey: ["ANIME_INFO", animeId],
+    queryKey: [QUERY_KEY.ANIME_INFO, animeId],
     queryFn: () => getAnimeInfoByAnimeId(animeId),
     enabled: !!animeId,
   });
 
+  const { data: animeEpisodes } = useQuery({
+    queryKey: [QUERY_KEY.ANIME_EPISODES_BY_ID, animeId],
+    queryFn: () => getAnimeEpisodesById(animeId),
+    enabled: !!animeId,
+  });
+
   if (isLoading) return <p>is info loading...</p>;
+
   if (!data) return <p>Something went wrong!</p>;
 
   const {
@@ -73,16 +79,20 @@ const AnimeInfo = ({
             </div>
 
             <div className="flex gap-3 items-center">
-              <Button className="flex items-center rounded-full text-white text-base shadow">
+              <Link
+                href={`/watch/${animeEpisodes?.episodes[0].episodeId}`}
+                className={buttonVariants({
+                  className:
+                    "flex items-center !rounded-full text-white text-base shadow",
+                })}
+              >
                 <Play className="h-4 w-4" />
-                Watch now
-              </Button>
+                Watch now - Ep 1
+              </Link>
             </div>
 
             <div className="">
-              <p className="line-clamp-4 text-sm">
-              {info.description}
-              </p>
+              <p className="line-clamp-4 text-sm">{info.description}</p>
             </div>
           </div>
         </div>

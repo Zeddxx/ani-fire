@@ -49,7 +49,12 @@ export const getAnimeStreamingLinksByEpisodeId = async (
   episodeId: string
 ): Promise<AnimeStreamingLinks> => {
   const res = (await fetch(
-    BASE_URL + "/episode/sources?animeEpisodeId=" + episodeId
+    BASE_URL + "/episode/sources?animeEpisodeId=" + episodeId,
+    {
+      headers: {
+        "Access-Control-Allow-Methods": "PUT, POST, PATCH, DELETE, GET",
+      },
+    }
   ).then((res) => res.json())) as ApiResponse<AnimeStreamingLinks>;
 
   if (!res.success) {
@@ -59,14 +64,16 @@ export const getAnimeStreamingLinksByEpisodeId = async (
   return res.data;
 };
 
-export const getAnimeEpisodeServers = async (episodeId: string): Promise<AnimeEpisodeServers> => {
+export const getAnimeEpisodeServers = async (
+  episodeId: string
+): Promise<AnimeEpisodeServers> => {
   const res = (await fetch(
     BASE_URL + "/episode/servers?animeEpisodeId=" + episodeId
   ).then((res) => res.json())) as ApiResponse<AnimeEpisodeServers>;
 
-  if(!res.success) {
-    throw new Error (res.message)
+  if (!res.success) {
+    throw new Error(res.message);
   }
 
   return res.data;
-}
+};

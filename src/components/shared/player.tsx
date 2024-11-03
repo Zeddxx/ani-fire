@@ -44,6 +44,7 @@ const Player = ({
   const artRef = useRef<HTMLDivElement | null>(null);
   const { autoNext, autoSkip, setAutoNext, setAutoSkip } = usePlayerStore();
 
+
   const isSkipActive = useMemo(() => autoSkip, [autoSkip]);
   const isAutoNextActive = useMemo(() => autoNext, [autoNext]);
 
@@ -171,7 +172,6 @@ const Player = ({
     art.on("video:timeupdate", () => {
       const currentTime = art.currentTime;
 
-      // TODO: to add the user wants to enable the autoSkip OP/ED to localStorage
       if (isSkipActive) {
         if (intro && currentTime >= intro.start && currentTime <= intro.end) {
           art.seek = intro.end + 1;
