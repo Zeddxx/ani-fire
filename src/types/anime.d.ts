@@ -326,3 +326,13 @@ export type AnimeEpisodeServers = {
     }
   ];
 };
+
+export type AnimeEntry = {
+  id: string;
+  title: string;
+  imgSrc: string;
+  type: string;
+  currentEp: number | undefined;
+  episodeId: string;
+  totalEpisodes: number;
+};

@@ -7,6 +7,7 @@ import {
   getAnimeStreamingLinksByEpisodeId,
 } from "@/api/anime";
 import AniFirePlayer from "@/components/shared/ani-fire-player";
+import EpisodeContainer from "@/components/shared/episode-container";
 import { QUERY_KEY } from "@/constants/query-key";
 import { useHistory } from "@/store/history";
 import { useQuery } from "@tanstack/react-query";
@@ -97,7 +98,9 @@ const WatchAnimePage = ({
   return (
     <div className="">
       <div className="wrapper-container px-4 flex 3xl:flex-row flex-col gap-6 w-full">
-        <div className="3xl:basis-[20%] w-full shrink-0 bg-white"></div>
+        <div className="">
+          <EpisodeContainer episodes={episodes} />
+        </div>
         <div className="3xl:basis-[60%] max-w-6xl mx-auto w-full shrink-0">
           <AniFirePlayer
             episodeId={encodedEpisodesId}
