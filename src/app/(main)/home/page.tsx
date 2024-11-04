@@ -5,6 +5,7 @@ import {
   AnimeSpotlightCarousel,
   TrendingCarousel,
 } from "@/components/home/carousel";
+import ContinueWatching from "@/components/home/continue-watching";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
@@ -30,6 +31,10 @@ export default function Home() {
         <div className="">
           <TrendingCarousel animes={data.trendingAnimes} />
         </div>
+      </div>
+
+      <div className="">
+        <ContinueWatching />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import { merge } from "@/lib/utils";
 import ArtPlayer from "artplayer";
-import { memo, useEffect, useMemo, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 import artPlayerPluginChromecast from "artplayer-plugin-chromecast";
 import { AnimeEpisodes } from "@/types/anime";
@@ -44,10 +44,6 @@ const Player = ({
   const artRef = useRef<HTMLDivElement | null>(null);
   const { autoNext, autoSkip, setAutoNext, setAutoSkip } = usePlayerStore();
 
-
-  const isSkipActive = useMemo(() => autoSkip, [autoSkip]);
-  const isAutoNextActive = useMemo(() => autoNext, [autoNext]);
-
   const skipTimeHighlight = () => {
     if (intro && outro) {
       const output = [];
@@ -82,6 +78,117 @@ const Player = ({
       return [];
     }
   };
+
+  const handleVideoUpdate = useCallback(
+    (art: ArtPlayer) => {
+      const currentTime = art.currentTime;
+      let isAutoSkip = false;
+
+      if (typeof window !== "undefined") {
+        const playerStore = localStorage.getItem("player_store");
+        if (playerStore) {
+          isAutoSkip = JSON.parse(playerStore).state.autoSkip;
+        }
+      }
+      if (isAutoSkip) {
+        if (intro && currentTime >= intro.start && currentTime <= intro.end) {
+          art.seek = intro.end + 1;
+          art.notice.show = "Skipped Opening";
+        } else if (
+          outro &&
+          currentTime >= outro.start &&
+          currentTime <= outro.end
+        ) {
+          art.seek = outro.end + 1;
+          art.notice.show = "Skipped ending";
+        } else {
+          return;
+        }
+      } else {
+        if (intro && currentTime >= intro.start && currentTime <= intro.end) {
+          if (!art.controls["opening"]) {
+            if (art.controls["ending"]) {
+              art.controls.remove("ending");
+            }
+
+            art.controls.add({
+              name: "opening",
+              position: "top",
+              html: '<button class="app-skip-button">Skip opening</button>',
+              click: function () {
+                art.seek = intro.end;
+                art.notice.show = "Skipped opening";
+              },
+            });
+          }
+        } else if (
+          outro &&
+          currentTime >= outro.start &&
+          currentTime <= outro.end
+        ) {
+          if (!art.controls["ending"]) {
+            if (art.controls["opening"]) {
+              art.controls.remove("opening");
+            }
+
+            art.controls.add({
+              name: "ending",
+              position: "top",
+              html: '<button class="app-skip-button">Skip ending</button>',
+              click: function () {
+                art.seek = outro.end;
+                art.notice.show = "Skipped ending";
+              },
+            });
+          }
+        } else {
+          if (art.controls["opening"]) {
+            art.controls.remove("opening");
+          }
+          if (art.controls["ending"]) {
+            art.controls.remove("ending");
+          }
+        }
+      }
+    },
+    [autoSkip]
+  );
+
+  const handleOnVideoEnd = useCallback(
+    (art: ArtPlayer) => {
+      let isAutoNext = false;
+
+      if (typeof window !== "undefined") {
+        const playerStore = localStorage.getItem("player_store");
+        if (playerStore) {
+          isAutoNext = JSON.parse(playerStore).state.autoNext;
+        }
+      }
+      if (isAutoNext) {
+        const currentEpisodeIndex = episodes.episodes.findIndex(
+          (episode) => episode.episodeId === episodeId
+        );
+
+        if (currentEpisodeIndex === -1) {
+          console.error("Episode not found");
+          return;
+        }
+
+        const isNextEpisodeExist =
+          Number(currentEpisodeIndex) + 1 !== episodes.totalEpisodes;
+
+        if (!isNextEpisodeExist) {
+          art.notice.show = "No more episode!";
+        } else {
+          const nextEpisode =
+            episodes.episodes[currentEpisodeIndex + 1].episodeId;
+          window.location.assign(`/watch/${nextEpisode}`);
+          art.notice.show = "Next episode >";
+        }
+      }
+    },
+    [autoNext]
+  );
 
   useEffect(() => {
     const art = new ArtPlayer({
@@ -169,95 +276,9 @@ const Player = ({
       },
     });
 
-    art.on("video:timeupdate", () => {
-      const currentTime = art.currentTime;
+    art.on("video:timeupdate", () => handleVideoUpdate(art));
 
-      if (isSkipActive) {
-        if (intro && currentTime >= intro.start && currentTime <= intro.end) {
-          art.seek = intro.end + 1;
-          art.notice.show = "Skipped Opening";
-        } else if (
-          outro &&
-          currentTime >= outro.start &&
-          currentTime <= outro.end
-        ) {
-          art.seek = outro.end + 1;
-          art.notice.show = "Skipped ending";
-        } else {
-          return;
-        }
-      } else {
-        if (intro && currentTime >= intro.start && currentTime <= intro.end) {
-          if (!art.controls["opening"]) {
-            if (art.controls["ending"]) {
-              art.controls.remove("ending");
-            }
-
-            art.controls.add({
-              name: "opening",
-              position: "top",
-              html: '<button class="app-skip-button">Skip opening</button>',
-              click: function () {
-                art.seek = intro.end;
-                art.notice.show = "Skipped opening";
-              },
-            });
-          }
-        } else if (
-          outro &&
-          currentTime >= outro.start &&
-          currentTime <= outro.end
-        ) {
-          if (!art.controls["ending"]) {
-            if (art.controls["opening"]) {
-              art.controls.remove("opening");
-            }
-
-            art.controls.add({
-              name: "ending",
-              position: "top",
-              html: '<button class="app-skip-button">Skip ending</button>',
-              click: function () {
-                art.seek = outro.end;
-                art.notice.show = "Skipped ending";
-              },
-            });
-          }
-        } else {
-          if (art.controls["opening"]) {
-            art.controls.remove("opening");
-          }
-          if (art.controls["ending"]) {
-            art.controls.remove("ending");
-          }
-        }
-      }
-    });
-
-    art.on("video:ended", () => {
-      if (isAutoNextActive) {
-        const currentEpisodeIndex = episodes.episodes.findIndex(
-          (episode) => episode.episodeId === episodeId
-        );
-
-        if (currentEpisodeIndex === -1) {
-          console.error("Episode not found");
-          return;
-        }
-
-        const isNextEpisodeExist =
-          Number(currentEpisodeIndex) + 1 !== episodes.totalEpisodes;
-
-        if (!isNextEpisodeExist) {
-          art.notice.show = "No more episode!";
-        } else {
-          const nextEpisode =
-            episodes.episodes[currentEpisodeIndex + 1].episodeId;
-          window.location.assign(`/watch/${nextEpisode}`);
-          art.notice.show = "Next episode >";
-        }
-      }
-    });
+    art.on("video:ended", () => handleOnVideoEnd(art));
 
     if (getInstance && typeof getInstance === "function") {
       getInstance(art);

@@ -1,20 +1,11 @@
+import { AnimeEntry } from "@/types/anime";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-type AnimeEntry = {
-  id: string;
-  title: string;
-  imgSrc: string;
-  type: string;
-  currentEp: number | undefined;
-  episodeId: string;
-  totalEpisodes: number;
-};
-
 type HistoryStoreState = {
   latestWatchedDate: number;
-  latestAnimeWatched: AnimeEntry | {}; // Change to allow AnimeEntry type
-  allAnimeWatched: AnimeEntry[]; // Use AnimeEntry type here
+  latestAnimeWatched: AnimeEntry | {};
+  allAnimeWatched: AnimeEntry[];
   setHistory: (state: {
     latestWatchedDate: number;
     latestAnimeWatched: AnimeEntry | {};
