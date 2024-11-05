@@ -35,7 +35,7 @@ const NavbarMarket = () => {
       exit="hidden"
       transition={{ duration: 0.6 }}
       variants={framerProps}
-      className="sticky top-0 inset-0 dark:bg-black bg-white z-20"
+      className="sticky top-0 inset-0 dark:bg-black bg-white z-[99999]"
     >
       <nav className="w-full flex px-4 py-3 items-center h-16 wrapper-container">
         <div className="xl:hidden h-10 w-10 grid place-items-center">
