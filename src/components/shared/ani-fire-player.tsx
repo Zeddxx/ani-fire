@@ -2,7 +2,7 @@ import { AnimeEpisodes, AnimeStreamingLinks } from "@/types/anime";
 import Artplayer from "artplayer";
 import Option from "artplayer/types/option";
 import Hls from "hls.js";
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 import Player from "./player";
 
 interface AniFirePlayerProps extends AnimeStreamingLinks {
@@ -87,4 +87,4 @@ const AniFirePlayer = ({
   );
 };
 
-export default memo(AniFirePlayer);
+export default AniFirePlayer;

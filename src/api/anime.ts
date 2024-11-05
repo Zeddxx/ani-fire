@@ -9,7 +9,7 @@ import {
 } from "@/types/anime";
 
 export const getAnimeHomePage = async (): Promise<HomePage> => {
-  const res = (await fetch(BASE_URL + "/home").then((res) =>
+  const res = (await fetch(BASE_URL() + "/home").then((res) =>
     res.json()
   )) as ApiResponse<HomePage>;
   if (!res.success) {
@@ -20,7 +20,7 @@ export const getAnimeHomePage = async (): Promise<HomePage> => {
 };
 
 export const getAnimeInfoByAnimeId = async (animeId: string) => {
-  const res = (await fetch(BASE_URL + "/anime/" + animeId).then((res) =>
+  const res = (await fetch(BASE_URL() + "/anime/" + animeId).then((res) =>
     res.json()
   )) as ApiResponse<AnimeInfo>;
 
@@ -34,7 +34,7 @@ export const getAnimeInfoByAnimeId = async (animeId: string) => {
 export const getAnimeEpisodesById = async (
   animeId: string
 ): Promise<AnimeEpisodes> => {
-  const res = (await fetch(BASE_URL + "/anime/" + animeId + "/episodes").then(
+  const res = (await fetch(BASE_URL() + "/anime/" + animeId + "/episodes").then(
     (res) => res.json()
   )) as ApiResponse<AnimeEpisodes>;
 
@@ -49,7 +49,7 @@ export const getAnimeStreamingLinksByEpisodeId = async (
   episodeId: string
 ): Promise<AnimeStreamingLinks> => {
   const res = (await fetch(
-    BASE_URL + "/episode/sources?animeEpisodeId=" + episodeId,
+    BASE_URL() + "/episode/sources?animeEpisodeId=" + episodeId,
     {
       headers: {
         "Access-Control-Allow-Methods": "PUT, POST, PATCH, DELETE, GET",
@@ -68,7 +68,7 @@ export const getAnimeEpisodeServers = async (
   episodeId: string
 ): Promise<AnimeEpisodeServers> => {
   const res = (await fetch(
-    BASE_URL + "/episode/servers?animeEpisodeId=" + episodeId
+    BASE_URL() + "/episode/servers?animeEpisodeId=" + episodeId
   ).then((res) => res.json())) as ApiResponse<AnimeEpisodeServers>;
 
   if (!res.success) {

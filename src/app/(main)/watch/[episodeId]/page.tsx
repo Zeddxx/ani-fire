@@ -11,6 +11,8 @@ import EpisodeContainer from "@/components/shared/episode-container";
 import { QUERY_KEY } from "@/constants/query-key";
 import { useHistory } from "@/store/history";
 import { useQuery } from "@tanstack/react-query";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { useEffect } from "react";
 
 const WatchAnimePage = ({
@@ -39,7 +41,7 @@ const WatchAnimePage = ({
   });
 
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEY.WATCH_ANIME_BY_EPISODE_ID, episodeId],
+    queryKey: [QUERY_KEY.WATCH_ANIME_BY_EPISODE_ID, encodedEpisodesId],
     queryFn: () =>
       getAnimeStreamingLinksByEpisodeId(
         encodedEpisodesId +
@@ -51,7 +53,7 @@ const WatchAnimePage = ({
               : "hd-1"
           }&category=${!servers?.sub.length ? "raw" : "sub"}`
       ),
-    enabled: !isServerLoading && !!encodedEpisodesId,
+      enabled: !!servers
   });
 
   useEffect(() => {
@@ -97,18 +99,40 @@ const WatchAnimePage = ({
 
   return (
     <div className="">
+      <div className="wrapper-container lg:flex items-center gap-x-4 w-full px-4 my-4 hidden">
+        <Link href="/home">Home</Link>
+        <ChevronRight className="h-5 w-5" />
+        <Link href={`/type/${animeInfo?.anime.info.stats.type}`}>
+          {animeInfo?.anime.info.stats.type}
+        </Link>
+        <ChevronRight className="h-5 w-5" />
+        <Link
+          href={`/${animeInfo?.anime.info.id}`}
+          className="text-muted-foreground"
+        >
+          {animeInfo?.anime.info.name}
+        </Link>
+      </div>
       <div className="wrapper-container px-4 flex 3xl:flex-row flex-col gap-6 w-full">
-        <div className="">
-          <EpisodeContainer episodes={episodes} />
+        <div className="3xl:basis-[20%] max-h-[590px] h-full max-w-7xl mx-auto w-full overflow-y-auto">
+          <h3 className="w-full px-4 h-12 flex items-center uppercase font-semibold sticky inset-0 bg-secondary-foreground border-primary/40 border-b">
+            Episodes: {episodes.totalEpisodes}
+          </h3>
+          <EpisodeContainer
+            currentEpisodeId={encodedEpisodesId}
+            episodes={episodes}
+          />
         </div>
-        <div className="3xl:basis-[60%] max-w-6xl mx-auto w-full shrink-0">
+        <div className="3xl:basis-[60%] max-w-7xl mx-auto 3xl:order-none order-first w-full shrink-0">
           <AniFirePlayer
             episodeId={encodedEpisodesId}
             episodes={episodes}
             {...data}
           />
+
+          <div className="h-36 w-full"></div>
         </div>
-        <div className="3xl:basis-[20%] w-full shrink-0 bg-white"></div>
+        <div className="3xl:basis-[20%] max-h-[590px] w-full shrink-0 bg-white"></div>
       </div>
     </div>
   );

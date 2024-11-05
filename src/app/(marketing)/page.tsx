@@ -22,7 +22,7 @@ export default function Marketing() {
         <SpacingText text="Last Updated - 22 Oct 2024" className="text-muted" />
         <SpacingText
           text="WATCH ANIME"
-          className="font-semibold leading-tight text-[clamp(3rem,13vw,12rem)] capitalize"
+          className="font-semibold leading-tight text-[clamp(2.8rem,10vw,12rem)] capitalize"
         />
         <AnimatedGradientText>
           🎉 <hr className="mx-2 h-4 w-px shrink-0 bg-gray-300" />{" "}
@@ -35,12 +35,12 @@ export default function Marketing() {
           </span>
         </AnimatedGradientText>
 
-        <div className="grid grid-cols-6 w-full max-w-screen-xl mx-auto my-36">
-          <div className="col-span-2 w-full">
+        <div className="grid md:grid-cols-6 w-full gap-y-5 max-w-screen-xl mx-auto my-36">
+          <div className="md:col-span-2 w-full">
             <h3 className="text-base text-muted">Whats on Anifire V2?</h3>
           </div>
 
-          <div className="col-span-4">
+          <div className="md:col-span-4">
             <h4 className="text-4xl leading-snug font-medium">
               The old version was way to simple and had some glitches so i
               thought of creating a new version of it.
