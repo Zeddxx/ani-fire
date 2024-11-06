@@ -1,12 +1,13 @@
 "use client";
 
-import { merge } from "@/lib/utils";
 import ArtPlayer from "artplayer";
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 import artPlayerPluginChromecast from "artplayer-plugin-chromecast";
 import { AnimeEpisodes } from "@/types/anime";
 import { usePlayerStore } from "@/store/player-store";
+import { merge } from "@/lib/utils/index";
+import { useRouter } from "next/navigation";
 
 interface PlayerProps {
   option: ArtPlayer["Option"];
@@ -42,6 +43,8 @@ const Player = ({
   episodes,
 }: PlayerProps) => {
   const artRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+
   const { autoNext, autoSkip, setAutoNext, setAutoSkip } = usePlayerStore();
 
   const skipTimeHighlight = () => {
@@ -182,7 +185,7 @@ const Player = ({
         } else {
           const nextEpisode =
             episodes.episodes[currentEpisodeIndex + 1].episodeId;
-          window.location.assign(`/watch/${nextEpisode}`);
+          router.push(`/watch/${nextEpisode}`);
           art.notice.show = "Next episode >";
         }
       }

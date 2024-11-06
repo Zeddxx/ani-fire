@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
+import { merge } from "@/lib/utils/index";
 
-import { merge } from "@/lib/utils";
 
 export function NumberTicker({
   value,

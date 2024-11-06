@@ -47,14 +47,14 @@ const AnimeSpotlightCarousel = ({
           >
             <div className="relative w-full h-full flex z-10">
               <div className="flex flex-col max-w-3xl h-full justify-end p-10">
-                <h4 className="text-lg font-semibold text-primary">
+                <h4 className="md:text-lg text-sm font-semibold text-primary">
                   #{anime.rank} Spotlight
                 </h4>
-                <h2 className="text-[clamp(2rem,6vw,4rem)] line-clamp-2 leading-tight font-bold">
+                <h2 className="text-[clamp(1.4rem,6vw,4rem)] line-clamp-2 leading-tight font-bold">
                   {anime.name}
                 </h2>
 
-                <div className="flex items-center gap-3 my-4 text-muted">
+                <div className="md:flex hidden items-center gap-3 my-4 text-muted-foreground">
                   <span className="inline-flex items-center gap-x-2">
                     <PlayCircle className="h-4 w-4" />
                     {anime.otherInfo[0]}
@@ -74,19 +74,19 @@ const AnimeSpotlightCarousel = ({
                     {anime.otherInfo[3]}
                   </span>
 
-                  <div className="flex gap-x-px rounded overflow-hidden text-sm font-bold">
+                  <div className="flex gap-x-px rounded overflow-hidden text-sm font-bold text-secondary-foreground">
                     <span className="inline-flex items-center gap-x-1 bg-primary px-1">
                       <Captions className="h-4 w-4" />
                       {anime.episodes.sub}
                     </span>
 
-                    <span className="inline-flex items-center gap-x-1 bg-primary-foreground text-secondary-foreground px-1">
+                    <span className="inline-flex items-center gap-x-1 bg-primary-foreground text-secondary px-1">
                       <Mic className="h-3 w-3" />
                       {anime.episodes.dub}
                     </span>
                   </div>
                 </div>
-                <p className="text-muted w-full lg:block hidden md:line-clamp-2 xl:!line-clamp-3">
+                <p className="text-muted-foreground w-full lg:block hidden md:line-clamp-2 xl:!line-clamp-3">
                   {anime.description}
                 </p>
 
@@ -94,7 +94,7 @@ const AnimeSpotlightCarousel = ({
                   <Link
                     href={`/watch/${results[idx].data?.episodes[0].episodeId}`}
                     className={buttonVariants({
-                      className: "flex items-center gap-x-3",
+                      className: "flex items-center gap-x-3 md:text-sm text-xs",
                     })}
                   >
                     <PlayCircle className="h-4 w-4 shrink-0" />
@@ -105,7 +105,7 @@ const AnimeSpotlightCarousel = ({
                     href={`/${anime.id}`}
                     className={buttonVariants({
                       variant: "secondary",
-                      className: "flex items-center gap-x-3",
+                      className: "flex items-center gap-x-3 md:text-sm text-xs",
                     })}
                   >
                     <Info className="h-4 w-4 shrink-0" />

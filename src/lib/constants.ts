@@ -1,5 +1,5 @@
 export const BASE_URL = () => {
-  if (true) {
+  if (process.env.NODE_ENV === "production") {
     if (!process.env.NEXT_PUBLIC_ANIME_BASE_URL) {
       throw new Error("Please add anime base url");
     }

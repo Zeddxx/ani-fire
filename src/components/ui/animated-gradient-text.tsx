@@ -1,4 +1,4 @@
-import { merge } from "@/lib/utils";
+import { merge } from "@/lib/utils/index";
 import { memo } from "react";
 
 const AnimatedGradientText = ({

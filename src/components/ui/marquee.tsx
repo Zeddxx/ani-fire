@@ -1,4 +1,4 @@
-import { merge } from "@/lib/utils";
+import { merge } from "@/lib/utils/index";
 
 interface MarqueeProps {
   className?: string;

@@ -2,9 +2,9 @@
 
 import AnimeLibraryAutoScroller from "@/components/(marketing)/anime-library-auto-scroller";
 import GridPattern from "@/components/ui/grid-pattern";
-import { merge } from "@/lib/utils";
 import SpacingText from "@/components/ui/spacing-text";
 import AnimatedGradientText from "@/components/ui/animated-gradient-text";
+import { merge } from "@/lib/utils/index";
 
 export default function Marketing() {
   return (
