@@ -1,7 +1,7 @@
 "use client";
 
+import { merge } from "@/lib/utils/index";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { merge } from "@/lib/utils";
 import { memo } from "react";
 
 interface SpacingTextProps {

@@ -1,5 +1,5 @@
+import { merge } from "@/lib/utils/index";
 import { useId } from "react";
-import { merge } from "@/lib/utils";
 
 interface GridPatternProps {
   width?: any;

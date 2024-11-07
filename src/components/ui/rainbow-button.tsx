@@ -1,6 +1,6 @@
+import { merge } from "@/lib/utils/index";
 import React from "react";
 
-import { merge } from "@/lib/utils";
 interface RainbowButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 

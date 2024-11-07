@@ -5,11 +5,10 @@ import { NumberTicker } from "@/components/ui/number-ticker";
 import { RainbowButton } from "@/components/ui/rainbow-button";
 import { NavbarLinks } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
-import { Menu } from "lucide-react";
+import { Github, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { memo, useMemo } from "react";
-import { motion, type Variants } from "framer-motion";
 
 const NavbarMarket = () => {
   const { data, isLoading } = useQuery({
@@ -23,20 +22,8 @@ const NavbarMarket = () => {
     [data]
   );
 
-  const framerProps = {
-    hidden: { y: "-200%" },
-    visible: { y: 0 },
-  } as Variants;
-
   return (
-    <motion.header
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-      transition={{ duration: 0.6 }}
-      variants={framerProps}
-      className="sticky top-0 inset-0 dark:bg-black bg-white z-[99999]"
-    >
+    <header className="sticky top-0 inset-0 z-[99999] bg-black">
       <nav className="w-full flex px-4 py-3 items-center h-16 wrapper-container">
         <div className="xl:hidden h-10 w-10 grid place-items-center">
           <Menu className="h-6 w-6" />
@@ -64,13 +51,17 @@ const NavbarMarket = () => {
 
           <div className="">Sign up</div>
 
-          <RainbowButton className="">
+          <Link
+            href="https://github.com/Zeddxx/ani-fire"
+            target="_blank"
+            className="rounded-full border-muted border px-4 py-2 text-sm"
+          >
             Github ⭐
-            <NumberTicker className="!text-black" value={repoStars} />
-          </RainbowButton>
+            <NumberTicker className="" value={repoStars} />
+          </Link>
         </div>
       </nav>
-    </motion.header>
+    </header>
   );
 };
 

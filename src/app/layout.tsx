@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import AppProvider from "@/providers/app-provider";
-import Banner from "@/components/banner/banner";
 import Navbar from "@/components/shared/navbar";
 
 const spaceGrotesk = Space_Grotesk({
@@ -23,12 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${spaceGrotesk.className} antialiased dark:bg-black`}>
+    <html lang="en" className="dark">
+      <body className={`${spaceGrotesk.className} antialiased`}>
         <AppProvider>
-          <div className="">
-            <Banner />
-          </div>
           <Navbar />
           <main>{children}</main>
         </AppProvider>

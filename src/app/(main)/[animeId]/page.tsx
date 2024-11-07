@@ -47,8 +47,8 @@ const AnimeInfo = ({
         />
         <div className="absolute h-full w-full bg-primary/15 backdrop-blur-lg" />
       </div>
-      <div className="max-w-screen-2xl w-full mx-auto flex xl:flex-row flex-col px-4">
-        <div className="xl:basis-[70%] py-14 flex lg:flex-row flex-col gap-8">
+      <div className="max-w-screen-2xl w-full mx-auto flex xl:flex-row flex-col px-4 ">
+        <div className="xl:basis-[70%] py-32 flex lg:flex-row flex-col gap-8">
           <div className="relative aspect-anime-image h-72 w-48 shrink-0 mx-auto rounded overflow-hidden shadow">
             <Image
               draggable={false}
@@ -97,10 +97,61 @@ const AnimeInfo = ({
           </div>
         </div>
 
-        <div className="xl:basis-[30%]"></div>
+        <div className="xl:basis-[30%] bg-primary-foreground/10 backdrop-blur-xl p-6 flex items-center">
+          <div className="space-y-4 w-full">
+            <AddionalInfo title="Japanese" desc={moreInfo.japanese} />
+            <AddionalInfo title="Synonyms" desc={moreInfo.synonyms} />
+            <AddionalInfo title="Aired" desc={moreInfo.aired} />
+            <AddionalInfo title="Premiered" desc={moreInfo.premiered} />
+            <AddionalInfo title="Duration" desc={moreInfo.duration} />
+            <AddionalInfo title="Status" desc={moreInfo.status} />
+            <AddionalInfo title="Mal Score" desc={moreInfo.malscore} />
+            <span className="block w-full h-px bg-muted-foreground/50" />
+
+            <div className="flex items-center gap-4">
+              <p>Genres:</p>
+              <div className="flex gap-1.5">
+                {moreInfo.genres.map((genre, idx) => (
+                  <span
+                    key={idx}
+                    className="h-7 rounded-full flex items-center px-3 border border-muted-foreground/30 text-xs"
+                  >
+                    {genre}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <span className="block w-full h-px bg-muted-foreground/50" />
+
+            <AddionalInfo title="Studios" desc={moreInfo.studios} />
+            <AddionalInfo title="Producers" desc={moreInfo.producers} />
+          </div>
+        </div>
       </div>
     </section>
   );
 };
 
 export default AnimeInfo;
+
+const AddionalInfo = ({
+  title,
+  desc,
+}: {
+  title: string;
+  desc: string | string[];
+}) => (
+  <div className="flex items-center gap-1 text-sm">
+    <p className="font-semibold">{title}:</p>
+    {typeof desc === "object" ? (
+      desc.map((producer, idx) => (
+        <p className="text-muted" key={idx}>
+          {producer}{" "}
+        </p>
+      ))
+    ) : (
+      <p className="text-muted">{desc}</p>
+    )}
+  </div>
+);

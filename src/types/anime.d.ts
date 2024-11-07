@@ -96,77 +96,6 @@ export type HomePage = {
   latestCompletedAnimes: SharedAnimeType[];
 };
 
-export type AnimeInfo = {
-  anime: {
-    info: {
-      id: string;
-      name: string;
-      poster: string;
-      description: string;
-      stats: AnimeStats;
-      promotionalVideos: PromotionalVideo[];
-      characterVoiceActor: CharacterVoiceActor[];
-    };
-    moreInfo: {
-      aired: string;
-      genres: string[];
-      status: string;
-      studios: string;
-      duration: string;
-    };
-  };
-  mostPopularAnimes: [
-    {
-      episodes: {
-        sub: number;
-        dub: number;
-      };
-      id: string;
-      jname: string;
-      name: string;
-      poster: string;
-      type: string;
-    }
-  ];
-  recommendedAnimes: [
-    {
-      id: string;
-      name: string;
-      poster: string;
-      duration: string;
-      type: string;
-      rating: string;
-      episodes: {
-        sub: number;
-        dub: number;
-      };
-    }
-  ];
-  relatedAnimes: [
-    {
-      id: string;
-      name: string;
-      poster: string;
-      duration: string;
-      type: string;
-      rating: string;
-      episodes: {
-        sub: number;
-        dub: number;
-      };
-    }
-  ];
-  seasons: [
-    {
-      id: string;
-      name: string;
-      title: string;
-      poster: string;
-      isCurrent: boolean;
-    }
-  ];
-};
-
 export type AnimeStats = {
   rating: string;
   quality: string;
@@ -205,13 +134,36 @@ export type VoiceActor = {
   cast: string;
 };
 
+export type Info = {
+  id: string;
+  name: string;
+  poster: string;
+  description: string;
+  stats: {
+    rating: string;
+    quality: string;
+    episodes: {
+      sub: number;
+      dub: number;
+    };
+    type: string;
+    duration: string;
+  };
+  promotionalVideos: PromotionalVideo[];
+  charactersVoiceActors: VoiceActor[];
+};
+
 export type MoreInfo = {
   aired: string;
   genres: string[];
   status: string;
   studios: string;
   duration: string;
-  // Add any additional fields as needed
+  japanese: string;
+  synonyms: string;
+  premiered: string;
+  producers: string[];
+  malscore: string;
 };
 
 export type PopularAnime = {
@@ -253,25 +205,25 @@ export type Season = {
 
 export type AnimeInfo = {
   anime: {
-    info: AnimeInfo;
+    info: Info;
     moreInfo: MoreInfo;
-  }[];
+  };
   mostPopularAnimes: PopularAnime[];
   recommendedAnimes: RecommendedAnime[];
   relatedAnimes: RelatedAnime[];
   seasons: Season[];
 };
 
+export type EpisodesDetails = {
+  number: number;
+  title: string;
+  episodeId: string;
+  isFiller: boolean;
+};
+
 export type AnimeEpisodes = {
   totalEpisodes: number;
-  episodes: [
-    {
-      number: number;
-      title: string;
-      episodeId: string;
-      isFiller: boolean;
-    }
-  ];
+  episodes: EpisodesDetails[];
 };
 
 export type AnimeStreamingLinks = {

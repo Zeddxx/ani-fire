@@ -2,8 +2,8 @@
 
 import { memo } from "react";
 import { Marquee } from "../ui/marquee";
-import { merge } from "@/lib/utils";
 import { motion, Variants } from "framer-motion";
+import { merge } from "@/lib/utils/index";
 
 const latestNews = [
   {
