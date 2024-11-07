@@ -9,6 +9,7 @@ import {
 import OtherInfos from "@/components/home/other-infos";
 import AniFirePlayer from "@/components/shared/ani-fire-player";
 import EpisodeContainer from "@/components/shared/episode-container";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -19,8 +20,9 @@ import {
 } from "@/components/ui/select";
 import { QUERY_KEY } from "@/constants/query-key";
 import { useHistory } from "@/store/history";
+import { usePlayerStore } from "@/store/player-store";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, FastForward } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -38,7 +40,9 @@ const WatchAnimePage = ({
   searchParams: { [key: string]: string };
 }) => {
   const encodedEpisodesId = episodeId + `?ep=${ep}`;
+
   const { setHistory, allAnimeWatched } = useHistory();
+  const { autoNext, autoSkip } = usePlayerStore();
 
   const [ranges, setRanges] = useState<Range>({
     start: 0,
@@ -159,7 +163,7 @@ const WatchAnimePage = ({
 
   return (
     <div className="">
-      <div className="wrapper-container flex items-center md:text-base text-sm gap-x-4 w-full px-4 my-4">
+      <div className="wrapper-container flex items-center md:text-base text-sm sm:gap-x-4 gap-x-2 w-full px-4 my-4">
         <Link href="/home">Home</Link>
         <ChevronRight className="md:h-5 md:w-5 h-4 w-4 text-muted-foreground" />
         <Link href={`/type/${animeInfo?.anime.info.stats.type}`}>
@@ -168,14 +172,14 @@ const WatchAnimePage = ({
         <ChevronRight className="md:h-5 md:w-5 h-4 w-4 text-muted-foreground" />
         <Link
           href={`/${animeInfo?.anime.info.id}`}
-          className="text-muted-foreground"
+          className="text-muted-foreground line-clamp-1"
         >
           {animeInfo?.anime.info.name}
         </Link>
       </div>
       <div className="wrapper-container flex 3xl:flex-row flex-col gap-1.5 w-full xl:bg-primary/15 xl:px-0 px-4">
         <div className="3xl:basis-[17%] h-full max-w-7xl mx-auto w-full overflow-y-scroll">
-          <div className="w-full px-4 min-h-12 flex items-center justify-between gap-3 sticky inset-0 border-primary/40 border-b text-sm bg-black">
+          <div className="w-full px-4 min-h-12 flex items-center justify-between gap-3 sticky inset-0 border-primary/40 border-b text-sm bg-black z-20">
             <div className="">
               <h3 className="flex items-center font-medium text-nowrap">
                 List of episodes:
@@ -235,7 +239,38 @@ const WatchAnimePage = ({
             {...data}
           />
 
-          <div className="h-36 w-full bg-primary/20"></div>
+          <div className="p-4 w-full flex justify-between items-center">
+            <div className="flex items-center gap-3 text-sm">
+              <p
+                // onClick={() => setAutoNext(!autoNext)}
+                className="flex items-center gap-1.5 font-normal"
+              >
+                Auto Next{" "}
+                <span className="text-yellow-500">
+                  {autoNext ? "On" : "Off"}
+                </span>
+              </p>
+
+              <p
+                // onClick={() => setAutoSkip(!autoSkip)}
+                className="flex items-center gap-1.5 font-normal"
+              >
+                Auto Skip Intro{" "}
+                <span className="text-yellow-500">
+                  {autoSkip ? "On" : "Off"}
+                </span>
+              </p>
+            </div>
+            <div className="flex gap-2 items-center text-sm">
+              <button className="flex items-center gap-1.5 hover:text-primary font-normal">
+                <FastForward className="h-3 w-3 rotate-180" /> Prev
+              </button>
+
+              <button className="flex items-center gap-1.5 hover:text-primary font-normal">
+                Next <FastForward className="h-3 w-3" />
+              </button>
+            </div>
+          </div>
         </div>
         <div className="3xl:basis-[20%] max-h-[590px] w-full shrink-0">
           <div className="flex flex-col gap-4 xl:pl-6 xl:pr-4 py-4">
