@@ -280,7 +280,6 @@ const Player = ({
     });
 
     art.on("video:timeupdate", () => handleVideoUpdate(art));
-
     art.on("video:ended", () => handleOnVideoEnd(art));
 
     if (getInstance && typeof getInstance === "function") {
