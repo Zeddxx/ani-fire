@@ -1,11 +1,9 @@
 "use client";
 
 import { getAnimeHomePage } from "@/api/anime";
-import {
-  AnimeSpotlightCarousel,
-  TrendingCarousel,
-} from "@/components/home/carousel";
-import ContinueWatching from "@/components/home/continue-watching";
+import AnimeSpotlightCarousel from "@/components/main/carousel/anime-spotlight-carousel";
+import TrendingCarousel from "@/components/main/carousel/trending-carousel";
+import ContinueWatching from "@/components/main/continue-watching";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {

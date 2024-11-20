@@ -19,7 +19,7 @@ export default function Marketing() {
       />
 
       <div className="wrapper-container text-wrap min-h-[calc(100dvh-80px)] z-10 py-20 h-full flex flex-col items-center">
-        <SpacingText text="Last Updated - 22 Oct 2024" className="text-muted" />
+        <SpacingText text="Last Updated - 22 Oct 2024" className="text-muted-foreground" />
         <SpacingText
           text="WATCH ANIME"
           className="font-semibold leading-tight text-[clamp(2.8rem,10vw,12rem)] capitalize"
@@ -37,7 +37,7 @@ export default function Marketing() {
 
         <div className="grid md:grid-cols-6 w-full gap-y-5 max-w-screen-xl mx-auto my-36">
           <div className="md:col-span-2 w-full">
-            <h3 className="text-base text-muted">Whats on Anifire V2?</h3>
+            <h3 className="text-base text-secondary-foreground">Whats on Anifire V2?</h3>
           </div>
 
           <div className="md:col-span-4">
