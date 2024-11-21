@@ -6,10 +6,9 @@ import {
   getAnimeInfoByAnimeId,
   getAnimeStreamingLinksByEpisodeId,
 } from "@/api/anime";
-import OtherInfos from "@/components/home/other-infos";
+import OtherInfos from "@/components/main/other-infos";
 import AniFirePlayer from "@/components/shared/ani-fire-player";
 import EpisodeContainer from "@/components/shared/episode-container";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -19,12 +18,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { QUERY_KEY } from "@/constants/query-key";
+import { getEpisodeNavigation } from "@/lib/utils";
 import { useHistory } from "@/store/history";
 import { usePlayerStore } from "@/store/player-store";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight, FastForward } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 type Range = {
@@ -40,6 +41,7 @@ const WatchAnimePage = ({
   searchParams: { [key: string]: string };
 }) => {
   const encodedEpisodesId = episodeId + `?ep=${ep}`;
+  const router = useRouter();
 
   const { setHistory, allAnimeWatched } = useHistory();
   const { autoNext, autoSkip } = usePlayerStore();
@@ -152,6 +154,11 @@ const WatchAnimePage = ({
     return animeEpisodes.slice(ranges.start, ranges.end);
   }, [episodes, ranges]);
 
+  const { next, prev } = getEpisodeNavigation(
+    episodes ?? { episodes: [], totalEpisodes: 0 },
+    encodedEpisodesId
+  );
+
   useEffect(() => {
     if (searchEpisode !== null) {
       findRangeForEpisode(searchEpisode);
@@ -177,7 +184,7 @@ const WatchAnimePage = ({
           {animeInfo?.anime.info.name}
         </Link>
       </div>
-      <div className="wrapper-container flex 3xl:flex-row flex-col gap-1.5 w-full xl:bg-primary/15 xl:px-0 px-4">
+      <div className="wrapper-container flex 3xl:flex-row flex-col gap-1.5 w-full xl:bg-secondary/15 xl:px-0 px-4">
         <div className="3xl:basis-[17%] h-full max-w-7xl mx-auto w-full overflow-y-scroll">
           <div className="w-full px-4 min-h-12 flex items-center justify-between gap-3 sticky inset-0 border-primary/40 border-b text-sm bg-black z-20">
             <div className="">
@@ -262,11 +269,19 @@ const WatchAnimePage = ({
               </p>
             </div>
             <div className="flex gap-2 items-center text-sm">
-              <button className="flex items-center gap-1.5 hover:text-primary font-normal">
+              <button
+                disabled={!prev}
+                onClick={() => router.push(`/watch/${prev}`)}
+                className="flex items-center gap-1.5 hover:text-primary font-normal"
+              >
                 <FastForward className="h-3 w-3 rotate-180" /> Prev
               </button>
 
-              <button className="flex items-center gap-1.5 hover:text-primary font-normal">
+              <button
+                disabled={!next}
+                onClick={() => router.push(`/watch/${next}`)}
+                className="flex items-center gap-1.5 hover:text-primary font-normal"
+              >
                 Next <FastForward className="h-3 w-3" />
               </button>
             </div>

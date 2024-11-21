@@ -86,7 +86,7 @@ const AnimeSpotlightCarousel = ({
                     </span>
                   </div>
                 </div>
-                <p className="text-muted-foreground w-full lg:block hidden md:line-clamp-2 xl:!line-clamp-3">
+                <p className="text-muted-foreground w-full lg:block hidden md:!line-clamp-2 xl:!line-clamp-3">
                   {anime.description}
                 </p>
 
