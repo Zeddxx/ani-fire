@@ -10,41 +10,42 @@ const ContinueWatching = () => {
 
   const watching = useMemo(
     () => latestAnimeWatched as AnimeEntry,
-    [latestAnimeWatched]
+    [latestAnimeWatched],
   );
 
+  if (!Object.keys(watching).length) return null;
+
   return (
-    <div className="wrapper-container px-4 my-6">
+    <div className="wrapper-container my-6 px-4">
       <h2 className="text-3xl font-semibold text-primary">Recently Watching</h2>
 
-      <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-4 xs:grid-cols-3 grid-cols-2 my-6 gap-4 w-full">
-        <div key={watching.id} className="flex flex-col w-auto relative">
-          <p className="bg-primary text-xs px-2 py-1 font-medium absolute rounded-md top-2 left-2 z-10 pointer-events-none">
+      <div className="my-6 flex w-full flex-wrap gap-4">
+        <div key={watching.id} className="relative flex w-auto flex-col">
+          <p className="pointer-events-none absolute left-2 top-2 z-10 rounded-md bg-primary px-2 py-1 text-xs font-medium">
             Episode: {watching.currentEp}
           </p>
           <a
             href={`/watch/${watching.episodeId}`}
-            className="rounded-md w-full h-[30vw] max-h-80 lg:max-h-80 min-h-72 overflow-hidden relative"
+            className="relative aspect-anime-image h-[30vw] max-h-72 min-h-72 w-full overflow-hidden rounded-md"
           >
             <Image
               src={watching.imgSrc}
-              loading="lazy"
               alt={watching.title}
               fill
-              className="h-full peer duration-150 hover:blur-md w-full object-cover"
+              className="peer h-full w-full object-cover duration-150 hover:blur-md"
             />
-            <div className="flex text-white dark:text-black z-20 absolute rounded-md overflow-hidden bottom-2 left-2">
-              <p className="bg-primary text-xs px-2 py-1 font-bold">
+            <div className="absolute bottom-2 left-2 z-20 flex overflow-hidden rounded-md text-white dark:text-black">
+              <p className="bg-primary px-2 py-1 text-xs font-bold">
                 CC: {watching.totalEpisodes || 0}
               </p>
-              <p className="text-xs flex bg-black dark:text-white px-2 items-center gap-x-1">
+              <p className="flex items-center gap-x-1 bg-black px-2 text-xs dark:text-white">
                 {watching.type || "TV"}
               </p>
             </div>
           </a>
           <a
             href={`/watch/${watching.episodeId}`}
-            className="mt-1.5 truncate w-full hover:text-primary"
+            className="mt-1.5 w-full truncate hover:text-primary"
           >
             {watching.title}
           </a>

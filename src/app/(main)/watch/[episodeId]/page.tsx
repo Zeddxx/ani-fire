@@ -78,7 +78,7 @@ const WatchAnimePage = ({
                 ? servers?.sub[0].serverName
                 : servers?.raw[0].serverName
               : "hd-1"
-          }&category=${!servers?.sub.length ? "raw" : "sub"}`
+          }&category=${!servers?.sub.length ? "raw" : "sub"}`,
       ),
     enabled: !!servers,
   });
@@ -88,7 +88,7 @@ const WatchAnimePage = ({
 
     const animeWatchedArray = allAnimeWatched || [];
     const currentEp = episodes?.episodes.find(
-      (anime) => anime.episodeId === encodedEpisodesId
+      (anime) => anime.episodeId === encodedEpisodesId,
     )?.number;
     const latestAnimeWatched = {
       id: episodeId,
@@ -101,7 +101,7 @@ const WatchAnimePage = ({
     };
 
     const existingAnimeIndex = animeWatchedArray.findIndex(
-      (anime: any) => anime.id === episodeId
+      (anime: any) => anime.id === episodeId,
     );
 
     if (existingAnimeIndex !== -1) {
@@ -138,7 +138,7 @@ const WatchAnimePage = ({
     if (!episodeNumber || !rangeOptions.length) return;
 
     const range = rangeOptions.find(
-      ({ start, end }) => episodeNumber >= start && episodeNumber < end
+      ({ start, end }) => episodeNumber >= start && episodeNumber < end,
     );
 
     if (range) {
@@ -156,7 +156,7 @@ const WatchAnimePage = ({
 
   const { next, prev } = getEpisodeNavigation(
     episodes ?? { episodes: [], totalEpisodes: 0 },
-    encodedEpisodesId
+    encodedEpisodesId,
   );
 
   useEffect(() => {
@@ -170,25 +170,25 @@ const WatchAnimePage = ({
 
   return (
     <div className="">
-      <div className="wrapper-container flex items-center md:text-base text-sm sm:gap-x-4 gap-x-2 w-full px-4 my-4">
+      <div className="wrapper-container my-4 flex w-full items-center gap-x-2 px-4 text-sm sm:gap-x-4 md:text-base">
         <Link href="/home">Home</Link>
-        <ChevronRight className="md:h-5 md:w-5 h-4 w-4 text-muted-foreground" />
+        <ChevronRight className="h-4 w-4 text-muted-foreground md:h-5 md:w-5" />
         <Link href={`/type/${animeInfo?.anime.info.stats.type}`}>
           {animeInfo?.anime.info.stats.type}
         </Link>
-        <ChevronRight className="md:h-5 md:w-5 h-4 w-4 text-muted-foreground" />
+        <ChevronRight className="h-4 w-4 text-muted-foreground md:h-5 md:w-5" />
         <Link
           href={`/${animeInfo?.anime.info.id}`}
-          className="text-muted-foreground line-clamp-1"
+          className="line-clamp-1 text-muted-foreground"
         >
           {animeInfo?.anime.info.name}
         </Link>
       </div>
-      <div className="wrapper-container flex 3xl:flex-row flex-col gap-1.5 w-full xl:bg-secondary/15 xl:px-0 px-4">
-        <div className="3xl:basis-[17%] h-full max-w-7xl mx-auto w-full overflow-y-scroll">
-          <div className="w-full px-4 min-h-12 flex items-center justify-between gap-3 sticky inset-0 border-primary/40 border-b text-sm bg-black z-20">
+      <div className="wrapper-container flex w-full flex-col gap-1.5 px-4 xl:bg-secondary/15 xl:px-0 3xl:flex-row">
+        <div className="mx-auto h-full w-full max-w-7xl overflow-y-scroll 3xl:basis-[17%]">
+          <div className="sticky inset-0 z-20 flex min-h-12 w-full items-center justify-between gap-3 border-b border-primary/40 bg-black px-4 text-sm">
             <div className="">
-              <h3 className="flex items-center font-medium text-nowrap">
+              <h3 className="flex items-center text-nowrap font-medium">
                 List of episodes:
               </h3>
 
@@ -239,14 +239,14 @@ const WatchAnimePage = ({
             searchedEpisodeNumber={searchEpisode}
           />
         </div>
-        <div className="3xl:basis-[63%] max-w-7xl mx-auto 3xl:order-none order-first w-full shrink-0">
+        <div className="order-first mx-auto w-full max-w-7xl shrink-0 3xl:order-none 3xl:basis-[63%]">
           <AniFirePlayer
             episodeId={encodedEpisodesId}
             episodes={episodes}
             {...data}
           />
 
-          <div className="p-4 w-full flex justify-between items-center">
+          <div className="flex w-full items-center justify-between p-4">
             <div className="flex items-center gap-3 text-sm">
               <p
                 // onClick={() => setAutoNext(!autoNext)}
@@ -268,11 +268,11 @@ const WatchAnimePage = ({
                 </span>
               </p>
             </div>
-            <div className="flex gap-2 items-center text-sm">
+            <div className="flex items-center gap-2 text-sm">
               <button
                 disabled={!prev}
                 onClick={() => router.push(`/watch/${prev}`)}
-                className="flex items-center gap-1.5 hover:text-primary font-normal"
+                className="flex items-center gap-1.5 font-normal hover:text-primary"
               >
                 <FastForward className="h-3 w-3 rotate-180" /> Prev
               </button>
@@ -280,15 +280,15 @@ const WatchAnimePage = ({
               <button
                 disabled={!next}
                 onClick={() => router.push(`/watch/${next}`)}
-                className="flex items-center gap-1.5 hover:text-primary font-normal"
+                className="flex items-center gap-1.5 font-normal hover:text-primary"
               >
                 Next <FastForward className="h-3 w-3" />
               </button>
             </div>
           </div>
         </div>
-        <div className="3xl:basis-[20%] max-h-[590px] w-full shrink-0">
-          <div className="flex flex-col gap-4 xl:pl-6 xl:pr-4 py-4">
+        <div className="max-h-[590px] w-full shrink-0 3xl:basis-[20%]">
+          <div className="flex flex-col gap-4 py-4 xl:pl-6 xl:pr-4">
             <div className="relative aspect-anime-image h-44 w-32 shrink-0 shadow">
               <Image
                 draggable={false}
@@ -307,7 +307,7 @@ const WatchAnimePage = ({
             </div>
 
             <div className="">
-              <p className="text-sm line-clamp-6 text-muted-foreground">
+              <p className="line-clamp-6 text-sm text-muted-foreground">
                 {animeInfo?.anime.info.description}
               </p>
             </div>

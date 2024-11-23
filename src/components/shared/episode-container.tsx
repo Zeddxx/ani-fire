@@ -1,7 +1,7 @@
 import { merge } from "@/lib/utils/index";
 import { EpisodesDetails } from "@/types/anime";
 import Link from "next/link";
-import { memo, useEffect, useRef } from "react";
+import { memo } from "react";
 
 interface EpisodeContainerProps {
   episodes: EpisodesDetails[];
@@ -18,7 +18,7 @@ const EpisodeContainer = ({
 }: EpisodeContainerProps) => {
   if (totalEpisodes > 24) {
     return (
-      <div className="w-full shrink-0 grid 3xl:grid-cols-5 lg:grid-cols-12 md:grid-cols-10 grid-cols-8 gap-1 py-3 max-h-[716px]">
+      <div className="grid max-h-[716px] w-full shrink-0 grid-cols-8 gap-1 py-3 md:grid-cols-10 lg:grid-cols-12 3xl:grid-cols-5">
         {episodes.slice(0, 100).map(({ isFiller, episodeId, number }) => {
           const isCurrentEp = episodeId === currentEpisodeId;
           return (
@@ -26,10 +26,10 @@ const EpisodeContainer = ({
               key={episodeId}
               href={`/watch/${episodeId}`}
               className={merge(
-                "h-8 w-full rounded-md bg-white/10 grid place-items-center",
+                "grid h-8 w-full place-items-center rounded-md bg-white/10",
                 isFiller && "bg-yellow-700/40",
                 isCurrentEp && "bg-primary",
-                searchedEpisodeNumber === number && "bg-muted-foreground/50"
+                searchedEpisodeNumber === number && "bg-muted-foreground/50",
               )}
             >
               <p className="text-xs">{number}</p>
@@ -41,7 +41,7 @@ const EpisodeContainer = ({
   }
 
   return (
-    <div className="w-full shrink-0 flex flex-col 3xl:max-h-[716px] lg:max-h-[590px] max-h-[376px]">
+    <div className="flex max-h-[376px] w-full shrink-0 flex-col lg:max-h-[590px] 3xl:max-h-[716px]">
       {episodes.map(({ episodeId, title, number }, idx) => {
         const isCurrentEp = episodeId === currentEpisodeId;
         return (
@@ -50,17 +50,17 @@ const EpisodeContainer = ({
             href={`/watch/${episodeId}`}
             passHref
             className={merge(
-              "h-12 w-full shrink-0 text-white/60 flex items-center relative px-4 gap-x-2 hover:bg-primary/20 text-sm",
+              "relative flex h-12 w-full shrink-0 items-center gap-x-2 px-4 text-sm text-white/60 hover:bg-primary/20",
               idx % 2 && "bg-primary/5",
               isCurrentEp &&
-                "text-primary text-white bg-primary/20 pointer-events-none",
-              searchedEpisodeNumber === number && "bg-white/30"
+                "pointer-events-none bg-primary/20 text-primary text-white",
+              searchedEpisodeNumber === number && "bg-white/30",
             )}
           >
-            <p className="font-semibold shrink-0">{number}</p>
+            <p className="shrink-0 font-semibold">{number}</p>
             <p className="line-clamp-1 font-light">{title}</p>
             {isCurrentEp && (
-              <span className="h-full w-1 bg-primary absolute left-0" />
+              <span className="absolute left-0 h-full w-1 bg-primary" />
             )}
           </Link>
         );

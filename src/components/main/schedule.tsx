@@ -1,0 +1,135 @@
+"use client";
+
+import { getAnimeScheduleByDate } from "@/api/anime";
+import { QUERY_KEY } from "@/constants/query-key";
+import {
+  formatDate,
+  getDayOfWeek,
+  getNextAndPrevSevenDates,
+} from "@/lib/utils";
+import { merge } from "@/lib/utils/index";
+import { ScheduledAnimes } from "@/types/anime";
+import { useQueries } from "@tanstack/react-query";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Skeleton } from "../ui/skeleton";
+
+interface Scheduled {
+  date: string;
+  scheduledAnimes: ScheduledAnimes[];
+}
+
+export default function Schedule() {
+  const { nextDates, prevDates } = getNextAndPrevSevenDates();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const currentDate = new Date();
+  const today = formatDate(currentDate);
+  const dates = useMemo(
+    () => [...prevDates.reverse(), today, ...nextDates],
+    [nextDates, today, prevDates],
+  );
+
+  const [selectedDate, setSelectedDate] = useState<string>(today);
+
+  const { data, isLoading } = useQueries({
+    queries: dates.map((date) => ({
+      queryKey: [QUERY_KEY.UPCOMING_SCHEDULE, date],
+      queryFn: () => getAnimeScheduleByDate(date),
+    })),
+    combine: (results) => {
+      return {
+        data: results.map((result, idx) => {
+          return {
+            date: dates[idx],
+            ...result.data,
+          } as Scheduled;
+        }),
+        isLoading: results.map((result) => result.isPending),
+      };
+    },
+  });
+
+  console.log(isLoading);
+
+  const { scheduledAnimes } = useMemo<Scheduled>(() => {
+    return data.filter((anime) => anime.date === selectedDate)[0];
+  }, [data, selectedDate]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const selectedElement = containerRef.current.querySelector(
+      `div[data-date="${selectedDate}"]`,
+    ) as HTMLElement;
+
+    if (selectedElement) {
+      const { offsetWidth: containerWidth } = containerRef.current;
+      const { offsetWidth: elementWidth, offsetLeft: elementPosition } =
+        selectedElement;
+      const offset = elementPosition - (containerWidth - elementWidth) / 2;
+
+      containerRef.current.scrollLeft = offset;
+    }
+  }, []);
+
+  return (
+    <>
+      <div
+        ref={containerRef}
+        className="my-7 flex w-full flex-nowrap items-center overflow-x-auto"
+      >
+        {dates.map((date, idx) => (
+          <div
+            key={date}
+            data-date={date}
+            onClick={() => setSelectedDate(date)}
+            className={merge(
+              "shrink-0 flex-grow cursor-pointer border border-muted px-10 py-2 text-secondary-foreground",
+              selectedDate === date &&
+                "border-none !bg-primary !text-secondary-foreground",
+              idx % 2 && "bg-muted text-muted-foreground",
+            )}
+          >
+            {date.split("-")[date.split("-").length - 1]} {getDayOfWeek(date)}
+          </div>
+        ))}
+      </div>
+      <div className="flex w-full flex-col gap-2">
+        {isLoading.find((value) => value === true)
+          ? Array.from({ length: 7 }).map((_, idx) => (
+              <Skeleton
+                className={merge(
+                  "h-12 w-full rounded-none bg-black",
+                  idx % 2 && "bg-muted",
+                )}
+                key={idx}
+              />
+            ))
+          : scheduledAnimes?.map(({ id, name, time, episode }, idx) => (
+              <Link
+                key={id}
+                href={`/${id}`}
+                className={merge(
+                  "group flex w-full items-center justify-between px-4 py-2 text-base duration-200 hover:!text-primary",
+                  idx % 2 && "bg-muted",
+                )}
+              >
+                <div className="flex gap-3">
+                  <h4 className="font-semibold text-muted-foreground duration-200 group-hover:text-primary">
+                    {time}
+                  </h4>
+                  <h4>{name}</h4>
+                </div>
+
+                <div className="flex gap-1 rounded px-4 py-2 text-sm duration-200 group-hover:bg-primary group-hover:text-secondary-foreground">
+                  <ChevronRight className="my-auto h-4 w-4" />
+                  <p>Episode {episode}</p>
+                </div>
+              </Link>
+            ))}
+      </div>
+    </>
+  );
+}

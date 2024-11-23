@@ -10,28 +10,28 @@ import { memo } from "react";
 
 const TrendingCarousel = ({ animes }: { animes: TrendingAnime[] }) => {
   return (
-    <Carousel opts={{ align: "start" }} className="w-full mt-6">
+    <Carousel opts={{ align: "start" }} className="mt-6 w-full">
       <CarouselContent className="-ml-4">
         {animes.map(({ id, name, poster, rank }) => (
           <CarouselItem key={id} className="basis-1/10 pl-4">
-            <div className="flex relative items-end">
+            <div className="relative flex items-end">
               <div className="hidden md:block">
                 <Link
                   href={`/${id}`}
-                  className="veritcal-text dark:text-white hover:text-primary dark:hover:text-primary text-secondary-foreground truncate h-52 text-base font-medium pr-0 pl-2"
+                  className="veritcal-text h-52 truncate pl-2 pr-0 text-base font-medium text-secondary-foreground hover:text-primary dark:text-white dark:hover:text-primary"
                 >
                   {name}
                 </Link>
-                <span className="block mx-auto w-fit text-xl text-primary font-semibold">
+                <span className="mx-auto block w-fit text-xl font-semibold text-primary">
                   {Number(rank) < 10 ? `0${Number(rank)}` : Number(rank)}
                 </span>
               </div>
-              <div className="md:hidden grid absolute top-0 left-0 place-items-center bg-primary h-10 text-xl w-10">
+              <div className="absolute left-0 top-0 grid h-10 w-10 place-items-center bg-primary text-xl md:hidden">
                 {Number(rank) < 10 ? `0${Number(rank)}` : Number(rank)}
               </div>
               <Link
                 href={`/${id}`}
-                className="sm:aspect-[12/16] w-52 aspect-[8/10] relative"
+                className="relative aspect-[8/10] w-52 sm:aspect-[12/16]"
               >
                 <Image src={poster} alt={name} fill objectFit="cover" />
               </Link>

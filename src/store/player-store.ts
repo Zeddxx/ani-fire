@@ -19,6 +19,6 @@ export const usePlayerStore = create<PlayerStoreState>()(
     {
       name: "player_store",
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );
