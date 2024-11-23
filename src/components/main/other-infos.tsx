@@ -1,18 +1,16 @@
+import { AnimeStats } from "@/types/anime";
 import { memo } from "react";
 import Separator from "../ui/separator";
-import { AnimeStats } from "@/types/anime";
 
 const OtherInfos = ({ ...props }: AnimeStats) => (
   <div className="flex items-center gap-2 text-sm">
-    <div className="flex gap-x-px rounded text-xs overflow-hidden">
-      <span className="px-2 py-px bg-primary">{props.rating}</span>
-      <span className="px-2 py-px bg-primary-foreground text-secondary">
+    <div className="flex gap-x-px overflow-hidden rounded text-xs">
+      <span className="bg-primary px-2 py-px">{props.rating}</span>
+      <span className="bg-primary-foreground px-2 py-px text-secondary">
         {props.quality}
       </span>
-      <span className="px-2 py-px bg-secondary">
-        {props.episodes.sub}
-      </span>
-      <span className="px-2 py-px bg-yellow-500">{props.episodes.dub}</span>
+      <span className="bg-secondary px-2 py-px">{props.episodes.sub}</span>
+      <span className="bg-yellow-500 px-2 py-px">{props.episodes.dub}</span>
     </div>
     <Separator />
     <span>{props.type}</span>

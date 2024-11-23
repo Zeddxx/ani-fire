@@ -1,13 +1,13 @@
 "use client";
 
-import ArtPlayer from "artplayer";
-import { memo, useCallback, useEffect, useMemo, useRef } from "react";
-import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
-import artPlayerPluginChromecast from "artplayer-plugin-chromecast";
-import { AnimeEpisodes } from "@/types/anime";
-import { usePlayerStore } from "@/store/player-store";
 import { merge } from "@/lib/utils/index";
+import { usePlayerStore } from "@/store/player-store";
+import { AnimeEpisodes } from "@/types/anime";
+import ArtPlayer from "artplayer";
+import artPlayerPluginChromecast from "artplayer-plugin-chromecast";
+import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 import { useRouter } from "next/navigation";
+import { memo, useCallback, useEffect, useRef } from "react";
 
 interface PlayerProps {
   option: ArtPlayer["Option"];
@@ -17,7 +17,7 @@ interface PlayerProps {
       file: string;
       kind: string;
       label: string;
-    }
+    },
   ];
   intro: {
     start: number;
@@ -154,7 +154,7 @@ const Player = ({
         }
       }
     },
-    [autoSkip]
+    [autoSkip],
   );
 
   const handleOnVideoEnd = useCallback(
@@ -169,7 +169,7 @@ const Player = ({
       }
       if (isAutoNext) {
         const currentEpisodeIndex = episodes.episodes.findIndex(
-          (episode) => episode.episodeId === episodeId
+          (episode) => episode.episodeId === episodeId,
         );
 
         if (currentEpisodeIndex === -1) {
@@ -190,7 +190,7 @@ const Player = ({
         }
       }
     },
-    [autoNext]
+    [autoNext],
   );
 
   useEffect(() => {

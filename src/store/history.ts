@@ -1,6 +1,6 @@
 import { AnimeEntry } from "@/types/anime";
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type HistoryStoreState = {
   latestWatchedDate: number;
@@ -24,6 +24,6 @@ export const useHistory = create<HistoryStoreState>()(
     {
       name: "site-watch",
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );

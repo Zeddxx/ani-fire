@@ -14,7 +14,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
           },
         },
       }),
-    []
+    [],
   );
   return (
     <QueryClientProvider client={queryClient}>

@@ -223,7 +223,7 @@ export type EpisodesDetails = {
 
 export type AnimeEpisodes = {
   totalEpisodes: number;
-  episodes: EpisodesDetails[];
+  episodes: Array<EpisodesDetails>;
 };
 
 export type AnimeStreamingLinks = {
@@ -235,14 +235,14 @@ export type AnimeStreamingLinks = {
     {
       url: string;
       type: string;
-    }
+    },
   ];
   tracks: [
     {
       file: string;
       kind: string;
       label: string;
-    }
+    },
   ];
   intro: {
     start: number;
@@ -263,19 +263,19 @@ export type AnimeEpisodeServers = {
     {
       serverId: number;
       serverName: string;
-    }
+    },
   ];
   dub: [
     {
       serverId: number;
       serverName: string;
-    }
+    },
   ];
   raw: [
     {
       serverId: number;
       serverName: string;
-    }
+    },
   ];
 };
 
@@ -287,4 +287,14 @@ export type AnimeEntry = {
   currentEp: number | undefined;
   episodeId: string;
   totalEpisodes: number;
+};
+
+export type ScheduledAnimes = {
+  id: string;
+  time: string;
+  name: string;
+  jname: string;
+  airingTimestamp: number;
+  secondsUntilAiring: number;
+  episode: number;
 };

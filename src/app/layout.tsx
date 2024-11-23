@@ -1,8 +1,8 @@
+import Navbar from "@/components/shared/navbar";
+import AppProvider from "@/providers/app-provider";
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import AppProvider from "@/providers/app-provider";
-import Navbar from "@/components/shared/navbar";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-open-sans",
