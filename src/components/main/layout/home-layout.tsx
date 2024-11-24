@@ -8,7 +8,7 @@ export default function HomeLayout({
   return (
     <>
       {heading && (
-        <h2 className="text-3xl font-semibold text-primary">{heading}</h2>
+        <h2 className="text-2xl font-semibold text-primary">{heading}</h2>
       )}
       <div className="">{children}</div>
     </>

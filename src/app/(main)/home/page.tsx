@@ -71,7 +71,7 @@ export default function Home() {
       </div>
 
       <div className="wrapper-container my-8 px-4">
-        <HomeLayout heading="Estimated Schedule">
+        <HomeLayout>
           <Schedule />
         </HomeLayout>
       </div>
