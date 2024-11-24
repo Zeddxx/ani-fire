@@ -1,8 +1,8 @@
-import CustomImage from "@/components/ui/image";
 import { SharedAnimeType } from "@/types/anime";
 import { CaptionsIcon, ChevronRight, Mic } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { CustomImage } from "../ui/image";
 
 export default function GenreAnime({
   animes,

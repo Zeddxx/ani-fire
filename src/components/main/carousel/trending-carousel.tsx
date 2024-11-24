@@ -3,7 +3,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import CustomImage from "@/components/ui/image";
+import { CustomImage } from "@/components/ui/image";
 import { TrendingAnime } from "@/types/anime";
 import Link from "next/link";
 import { memo } from "react";

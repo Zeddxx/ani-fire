@@ -19,4 +19,6 @@ const CustomImage = React.forwardRef<HTMLImageElement, CustomImageProps>(
   },
 );
 
-export default React.memo(CustomImage);
+CustomImage.displayName = "CustomImage";
+
+export { CustomImage };
