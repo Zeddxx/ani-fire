@@ -29,15 +29,12 @@ export default function LatestEpisodes({
   };
 
   return (
-    <div className="grid w-full grid-cols-4 gap-5">
+    <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
       {animes.map(({ name, poster, id }, idx) => (
-        <div
-          key={id}
-          className="flex flex-col gap-2 bg-black sm:aspect-[12/16]"
-        >
+        <div key={id} className="flex flex-col gap-2 bg-black">
           <Link
             href={`/watch/${getLatestEpisode(idx)?.episodeId}`}
-            className="relative aspect-[8/10] overflow-hidden rounded-lg sm:aspect-[12/16]"
+            className="relative aspect-[8/10] overflow-hidden sm:aspect-[12/16]"
           >
             <Image
               src={poster}

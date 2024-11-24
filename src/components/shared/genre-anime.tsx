@@ -1,7 +1,8 @@
+import CustomImage from "@/components/ui/image";
 import { SharedAnimeType } from "@/types/anime";
 import { CaptionsIcon, ChevronRight, Mic } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 export default function GenreAnime({
   animes,
@@ -12,18 +13,17 @@ export default function GenreAnime({
 }) {
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-3xl font-semibold text-primary">{title}</h2>
+      <h2 className="text-2xl font-semibold text-primary">{title}</h2>
       {animes.map((anime) => (
-        <>
-          <div key={anime.id} className="flex w-full gap-3">
-            <div className="relative h-32 w-20">
-              <Image
+        <React.Fragment key={anime.id}>
+          <div className="flex w-full gap-3">
+            <div className="relative h-28 w-20 shrink-0">
+              <CustomImage
                 src={anime.poster}
                 alt={anime.name}
                 loading="lazy"
                 fill
-                objectFit="cover"
-                className="shrink-0 overflow-hidden rounded-md"
+                className="overflow-hidden rounded-md object-cover"
               />
             </div>
 
@@ -50,7 +50,7 @@ export default function GenreAnime({
           </div>
 
           <div className="h-px w-full bg-muted" />
-        </>
+        </React.Fragment>
       ))}
 
       <Link

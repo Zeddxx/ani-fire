@@ -17,16 +17,19 @@ const ContinueWatching = () => {
 
   return (
     <div className="wrapper-container my-6 px-4">
-      <h2 className="text-3xl font-semibold text-primary">Recently Watching</h2>
+      <h2 className="text-2xl font-semibold text-primary">Recently Watching</h2>
 
       <div className="my-6 flex w-full flex-wrap gap-4">
-        <div key={watching.id} className="relative flex w-auto flex-col">
+        <div
+          key={watching.id}
+          className="relative flex w-auto max-w-52 flex-col"
+        >
           <p className="pointer-events-none absolute left-2 top-2 z-10 rounded-md bg-primary px-2 py-1 text-xs font-medium">
             Episode: {watching.currentEp}
           </p>
           <a
             href={`/watch/${watching.episodeId}`}
-            className="relative aspect-anime-image h-[30vw] max-h-72 min-h-72 w-full overflow-hidden rounded-md"
+            className="relative aspect-anime-image h-[30vw] max-h-72 min-h-72 w-full overflow-hidden"
           >
             <Image
               src={watching.imgSrc}

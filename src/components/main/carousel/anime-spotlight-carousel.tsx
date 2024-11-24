@@ -43,7 +43,7 @@ const AnimeSpotlightCarousel = ({
         {spotlightAnimes.map((anime, idx) => (
           <CarouselItem
             key={anime.id}
-            className="h-[60vw] max-h-[600px] min-h-44 w-full pl-0"
+            className="h-[64vw] max-h-[600px] min-h-60 w-full pl-0"
           >
             <div className="relative z-10 flex h-full w-full">
               <div className="flex h-full max-w-3xl flex-col justify-end p-10">

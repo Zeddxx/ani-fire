@@ -3,8 +3,8 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import CustomImage from "@/components/ui/image";
 import { TrendingAnime } from "@/types/anime";
-import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 
@@ -33,7 +33,7 @@ const TrendingCarousel = ({ animes }: { animes: TrendingAnime[] }) => {
                 href={`/${id}`}
                 className="relative aspect-[8/10] w-52 sm:aspect-[12/16]"
               >
-                <Image src={poster} alt={name} fill objectFit="cover" />
+                <CustomImage src={poster} alt={name} fill objectFit="cover" />
               </Link>
             </div>
           </CarouselItem>
