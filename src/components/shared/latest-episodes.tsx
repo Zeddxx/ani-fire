@@ -6,6 +6,7 @@ import { LatestEpisodeAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import HoveredContent from "./hovered-content";
 
 export default function LatestEpisodes({
   animes,
@@ -32,17 +33,19 @@ export default function LatestEpisodes({
     <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
       {animes.map(({ name, poster, id }, idx) => (
         <div key={id} className="flex flex-col gap-2 bg-black">
-          <Link
-            href={`/watch/${getLatestEpisode(idx)?.episodeId}`}
-            className="relative aspect-[8/10] overflow-hidden sm:aspect-[12/16]"
-          >
-            <Image
-              src={poster}
-              alt={`${name} poster`}
-              fill
-              className="h-full w-full object-cover"
-            />
-          </Link>
+          <HoveredContent animeId={id}>
+            <Link
+              href={`/watch/${getLatestEpisode(idx)?.episodeId}`}
+              className="relative aspect-[8/10] h-72 w-full overflow-hidden sm:aspect-[12/16]"
+            >
+              <Image
+                src={poster}
+                alt={`${name} poster`}
+                fill
+                className="h-full w-full object-cover"
+              />
+            </Link>
+          </HoveredContent>
           <Link
             href={`/watch/${getLatestEpisode(idx)?.episodeId}`}
             className="line-clamp-1 w-full text-ellipsis hover:text-primary"
