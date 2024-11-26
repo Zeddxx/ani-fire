@@ -1,3 +1,4 @@
+import HoveredContent from "@/components/shared/hovered-content";
 import {
   Carousel,
   CarouselContent,
@@ -29,12 +30,14 @@ const TrendingCarousel = ({ animes }: { animes: TrendingAnime[] }) => {
               <div className="absolute left-0 top-0 grid h-10 w-10 place-items-center bg-primary text-xl md:hidden">
                 {Number(rank) < 10 ? `0${Number(rank)}` : Number(rank)}
               </div>
-              <Link
-                href={`/${id}`}
-                className="relative aspect-[8/10] w-52 sm:aspect-[12/16]"
-              >
-                <CustomImage src={poster} alt={name} fill objectFit="cover" />
-              </Link>
+              <HoveredContent animeId={id}>
+                <Link
+                  href={`/${id}`}
+                  className="relative aspect-[8/10] h-full w-52 sm:aspect-[12/16]"
+                >
+                  <CustomImage src={poster} alt={name} fill />
+                </Link>
+              </HoveredContent>
             </div>
           </CarouselItem>
         ))}
