@@ -3,6 +3,7 @@ import { CaptionsIcon, ChevronRight, Mic } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { CustomImage } from "../ui/image";
+import HoveredContent from "./hovered-content";
 
 export default function GenreAnime({
   animes,
@@ -17,23 +18,27 @@ export default function GenreAnime({
       {animes.map((anime) => (
         <React.Fragment key={anime.id}>
           <div className="flex w-full gap-3">
-            <div className="relative h-28 w-20 shrink-0">
-              <CustomImage
-                src={anime.poster}
-                alt={anime.name}
-                loading="lazy"
-                fill
-                className="overflow-hidden rounded-md object-cover"
-              />
-            </div>
+            <HoveredContent animeId={anime.id}>
+              <div className="relative h-28 w-20 shrink-0">
+                <CustomImage
+                  src={anime.poster}
+                  alt={anime.name}
+                  loading="lazy"
+                  fill
+                  className="overflow-hidden rounded-md object-cover"
+                />
+              </div>
+            </HoveredContent>
 
             <div className="space-y-2">
-              <Link
-                href={`/${anime.id}`}
-                className="line-clamp-1 font-medium text-secondary-foreground hover:text-primary"
-              >
-                {anime.name}
-              </Link>
+              <HoveredContent animeId={anime.id}>
+                <Link
+                  href={`/${anime.id}`}
+                  className="line-clamp-1 font-medium text-secondary-foreground hover:text-primary"
+                >
+                  {anime.name}
+                </Link>
+              </HoveredContent>
 
               <div className="flex h-6 w-fit items-center gap-px overflow-hidden rounded-md text-xs">
                 <span className="flex h-full items-center gap-1 bg-primary px-2 text-white">

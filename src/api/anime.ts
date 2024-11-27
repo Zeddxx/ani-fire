@@ -7,7 +7,9 @@ import {
   ApiResponse,
   HomePage,
   ScheduledAnimes,
+  TopUpcomingAnime,
 } from "@/types/anime";
+import axios from "axios";
 
 export const getAnimeHomePage = async (): Promise<HomePage> => {
   const res = (await fetch(BASE_URL() + "/home").then((res) =>
@@ -95,4 +97,46 @@ export const getAnimeScheduleByDate = async (date: string) => {
   }
 
   return res.data;
+};
+
+/**
+ * Fetch function to fetch the searched anime by its title or name.
+ * @params query as String
+ * @returns SearchAnimeResults[]
+ */
+
+interface SearchAnimeByName {
+  keyword: string;
+  page?: number;
+  genres?: string;
+  type?: string;
+  sort?: string;
+  season?: string;
+  language?: string;
+  status?: string;
+  score?: string;
+}
+export const getSearchedAnimeByName = async ({
+  keyword,
+  page = 1,
+  ...props
+}: SearchAnimeByName) => {
+  const { data } = await axios.get(BASE_URL() + `/search`, {
+    params: {
+      q: keyword,
+      page,
+      ...props,
+    },
+  });
+
+  if (!data.success) {
+    throw new Error("Something went wrong!");
+  }
+
+  return data.data as {
+    animes: TopUpcomingAnime[];
+    currentPage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  };
 };

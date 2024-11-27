@@ -2,7 +2,8 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { memo, useMemo } from "react";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { memo, Suspense, useMemo } from "react";
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const queryClient = useMemo(
@@ -19,7 +20,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      {children}
+      <Suspense>
+        <NuqsAdapter>{children}</NuqsAdapter>
+      </Suspense>
     </QueryClientProvider>
   );
 };

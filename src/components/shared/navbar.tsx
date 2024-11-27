@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchGithubStars } from "@/api/github";
+import SearchInput from "@/components/main/forms/search-input";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { NavbarLinks } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
@@ -44,7 +45,9 @@ const NavbarMarket = () => {
           ))}
         </ul>
 
-        <div className="mx-0 h-full flex-1 rounded bg-black/30 dark:bg-white/30 xl:mx-8"></div>
+        <div className="mx-0 h-full flex-1 xl:mx-8">
+          <SearchInput />
+        </div>
         <div className="mx-3 hidden items-center gap-4 md:flex xl:mx-0">
           <div className="">Log in</div>
 
