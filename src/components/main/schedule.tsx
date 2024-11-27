@@ -101,7 +101,7 @@ export default function Schedule() {
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-center justify-between gap-y-3 md:flex-row">
         <h2 className="text-2xl font-semibold text-primary">
           Estimated Schedule
         </h2>
