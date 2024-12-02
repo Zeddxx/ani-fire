@@ -3,6 +3,7 @@
 import { getSearchedAnimeByName } from "@/api/anime";
 import HoveredContent from "@/components/shared/hovered-content";
 import { Button } from "@/components/ui/button";
+import { CustomImage } from "@/components/ui/image";
 import {
   Select,
   SelectContent,
@@ -13,18 +14,36 @@ import {
 import { QUERY_KEY } from "@/constants/query-key";
 import { FILTERS } from "@/lib/constants";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { parseAsString, useQueryState, useQueryStates } from "nuqs";
+import { useCallback, useEffect, useState } from "react";
 
 type FilterKey = keyof typeof FILTERS;
 
 export default function Page() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [keyword] = useQueryState("keyword", {
     defaultValue: "",
     clearOnDefault: true,
   });
-  const [{ ...filters }, setFilters] = useQueryStates(
+
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: [QUERY_KEY.SEARCHED_ANIMES, keyword],
+    queryFn: () => {
+      if (!keyword) return;
+      return getSearchedAnimeByName({ keyword, ...filter });
+    },
+  });
+
+  const [currentFilters, setCurrentFilters] = useState<{
+    [key: string]: string;
+  }>({});
+
+  const [{ ...filters }] = useQueryStates(
     {
       type: parseAsString.withDefault("all"),
       status: parseAsString.withDefault("all"),
@@ -39,27 +58,42 @@ export default function Page() {
     },
   );
 
+  useEffect(() => {
+    setCurrentFilters({ ...filters });
+  }, []);
+
   // handle the change of select value
   const handleFilterChange = (filterKey: string, value: string) => {
-    setFilters({ [filterKey]: value });
+    setCurrentFilters((prev) => ({ ...prev, [filterKey]: value }));
   };
 
   // filter out undefined filters
   const filter = Object.fromEntries(
-    Object.entries(filters).filter(
+    Object.entries(currentFilters).filter(
       ([_, v]) => v !== "all" && v !== "default" && v !== undefined,
     ),
   );
 
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: [QUERY_KEY.SEARCHED_ANIMES, keyword],
-    queryFn: () => {
-      if (!keyword) return;
+  const createQueryStrings = useCallback(
+    (filters: { [key: string]: string }) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-      // spreding the filter to send as query
-      return getSearchedAnimeByName({ keyword, ...filter });
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value === "all" || value === "default") {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
+
+      return params.toString();
     },
-  });
+    [searchParams],
+  );
+
+  const handleFilterClick = () => {
+    window.location.assign(pathname + "?" + createQueryStrings(currentFilters));
+  };
 
   if (isLoading) return <p>Searching Library for {keyword}</p>;
 
@@ -97,7 +131,7 @@ export default function Page() {
             ))}
           </div>
 
-          <Button onClick={() => refetch()}>Filter</Button>
+          <Button onClick={() => handleFilterClick()}>Filter</Button>
         </div>
       </div>
       <h1 className="my-8 text-2xl font-semibold text-primary">
@@ -112,7 +146,7 @@ export default function Page() {
                 href={`/${id}`}
                 className="relative aspect-[8/10] h-72 w-full overflow-hidden sm:aspect-[12/16]"
               >
-                <Image
+                <CustomImage
                   src={poster}
                   alt={`${name} poster`}
                   fill

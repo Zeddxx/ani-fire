@@ -146,3 +146,10 @@ export function getMonth(month: number) {
 
   return MONTHS[month - 1];
 }
+
+export const range = (start: number, end: number) => {
+  let length: number = end - start + 1;
+
+  // create an array of certain length and set the element withitn it from start value to end.
+  return Array.from({ length }, (_, idx) => idx + start);
+};
