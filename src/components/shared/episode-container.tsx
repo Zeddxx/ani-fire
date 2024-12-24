@@ -52,8 +52,7 @@ const EpisodeContainer = ({
             className={cn(
               "relative flex h-12 w-full shrink-0 items-center gap-x-2 px-4 text-sm text-white/60 hover:bg-primary/20",
               idx % 2 && "bg-primary/5",
-              isCurrentEp &&
-                "pointer-events-none bg-primary/20 text-primary text-white",
+              isCurrentEp && "pointer-events-none bg-primary/20 text-white",
               searchedEpisodeNumber === number && "bg-white/30",
             )}
           >
