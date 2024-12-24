@@ -16,8 +16,10 @@ const ContinueWatching = () => {
   if (!Object.keys(watching).length) return null;
 
   return (
-    <div className="wrapper-container my-6 px-4">
-      <h2 className="text-2xl font-semibold text-primary">Recently Watching</h2>
+    <div className="wrapper-container z-10 my-6 px-4">
+      <h2 className="text-2xl font-semibold text-secondary">
+        Recently Watching
+      </h2>
 
       <div className="my-6 flex w-full flex-wrap gap-4">
         <div

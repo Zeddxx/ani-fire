@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { QUERY_KEY } from "@/constants/query-key";
+import { QUERY_KEY } from "@/lib/query-key";
 import { getEpisodeNavigation } from "@/lib/utils";
 import { useHistory } from "@/store/history";
 import { usePlayerStore } from "@/store/player-store";
@@ -169,7 +169,7 @@ const WatchAnimePage = ({
   if (!data || !episodes) return null;
 
   return (
-    <div className="">
+    <div className="mt-20">
       <div className="wrapper-container my-4 flex w-full items-center gap-x-2 px-4 text-sm sm:gap-x-4 md:text-base">
         <Link href="/home">Home</Link>
         <ChevronRight className="h-4 w-4 text-muted-foreground md:h-5 md:w-5" />

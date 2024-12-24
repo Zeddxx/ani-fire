@@ -14,26 +14,26 @@ const TrendingCarousel = ({ animes }: { animes: TrendingAnime[] }) => {
     <Carousel opts={{ align: "start" }} className="mt-6 w-full">
       <CarouselContent className="-ml-4">
         {animes.map(({ id, name, poster, rank }) => (
-          <CarouselItem key={id} className="basis-1/10 pl-4">
+          <CarouselItem key={id} className="basis-1/10 z-[999] pl-4">
             <div className="relative flex items-end">
               <div className="hidden md:block">
                 <Link
                   href={`/${id}`}
-                  className="veritcal-text h-52 truncate pl-2 pr-0 text-base font-medium text-secondary-foreground hover:text-primary dark:text-white dark:hover:text-primary"
+                  className="veritcal-text h-52 truncate pl-2 pr-0 text-base font-medium text-secondary-foreground hover:text-secondary"
                 >
                   {name}
                 </Link>
-                <span className="mx-auto block w-fit text-xl font-semibold text-primary">
+                <span className="mx-auto block w-fit text-xl font-semibold text-secondary">
                   {Number(rank) < 10 ? `0${Number(rank)}` : Number(rank)}
                 </span>
               </div>
-              <div className="absolute left-0 top-0 grid h-10 w-10 place-items-center bg-primary text-xl md:hidden">
+              <div className="absolute left-0 top-0 z-10 grid h-8 w-8 place-items-center bg-white text-base text-primary md:hidden">
                 {Number(rank) < 10 ? `0${Number(rank)}` : Number(rank)}
               </div>
               <HoveredContent animeId={id}>
                 <Link
                   href={`/${id}`}
-                  className="relative aspect-[8/10] h-full w-52 sm:aspect-[12/16]"
+                  className="relative aspect-[8/10] h-full w-[16vw] min-w-44 max-w-52 sm:aspect-[12/16]"
                 >
                   <CustomImage src={poster} alt={name} fill />
                 </Link>

@@ -65,7 +65,7 @@ export default function Home() {
       </div>
 
       <div className="wrapper-container space-y-6 px-4">
-        <HomeLayout heading="Latest Episodes">
+        <HomeLayout heading="Latest Episode">
           <LatestEpisodes animes={latestEpisodeAnimes} />
         </HomeLayout>
       </div>

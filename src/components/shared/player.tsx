@@ -1,6 +1,6 @@
 "use client";
 
-import { merge } from "@/lib/utils/index";
+import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/store/player-store";
 import { AnimeEpisodes } from "@/types/anime";
 import ArtPlayer from "artplayer";
@@ -293,7 +293,7 @@ const Player = ({
     };
   }, []);
 
-  return <div ref={artRef} className={merge("", className)} />;
+  return <div ref={artRef} className={cn("", className)} />;
 };
 
 export default memo(Player);

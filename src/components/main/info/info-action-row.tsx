@@ -1,10 +1,10 @@
 import { getAnimeEpisodesById } from "@/api/anime";
 import { InfoActionRowSkeleton } from "@/components/skeleton/info-action-row.skeleton";
 import { buttonVariants } from "@/components/ui/button";
-import { QUERY_KEY } from "@/constants/query-key";
+import { QUERY_KEY } from "@/lib/query-key";
 import { useQuery } from "@tanstack/react-query";
-import { Play } from "lucide-react";
 import Link from "next/link";
+import { FaPlay } from "react-icons/fa6";
 
 export default function InfoActionRow({ animeId }: { animeId: string }) {
   const { data: animeEpisodes, isLoading } = useQuery({
@@ -20,10 +20,10 @@ export default function InfoActionRow({ animeId }: { animeId: string }) {
       <Link
         href={`/watch/${animeEpisodes?.episodes[0].episodeId}`}
         className={buttonVariants({
-          className: "flex items-center text-base text-white",
+          variant: "secondary",
         })}
       >
-        <Play className="h-4 w-4" />
+        <FaPlay className="h-4 w-4" />
         Watch now
       </Link>
     </div>

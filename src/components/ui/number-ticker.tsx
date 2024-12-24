@@ -1,6 +1,6 @@
 "use client";
 
-import { merge } from "@/lib/utils/index";
+import { cn } from "@/lib/utils";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
 
@@ -47,7 +47,7 @@ export function NumberTicker({
 
   return (
     <span
-      className={merge(
+      className={cn(
         "inline-block tabular-nums tracking-wider text-black dark:text-white",
         className,
       )}
