@@ -1,12 +1,14 @@
 "use client";
 
 import { getAnimeInfoByAnimeId } from "@/api/anime";
-import { QUERY_KEY } from "@/constants/query-key";
 import useMediaQueries from "@/hooks/use-media-queries";
+import { QUERY_KEY } from "@/lib/query-key";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa6";
+import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
   HoverCard,
@@ -52,7 +54,7 @@ export default function HoveredContent({
           align="start"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="w-72 border-none bg-secondary/70 backdrop-blur-lg"
+          className="w-72 border-none bg-primary/50 backdrop-blur-xl"
         >
           {isLoading ? (
             <div className="grid h-full w-full place-items-center">
@@ -61,11 +63,53 @@ export default function HoveredContent({
           ) : (
             <div className="flex flex-col gap-4">
               <h4 className="font-semibold">{data?.anime.info.name}</h4>
-              <p className="line-clamp-4 text-sm text-muted-foreground">
+              <div className="flex w-full items-center gap-3">
+                <div className="flex items-center">
+                  <span className="flex items-center gap-1 text-sm">
+                    <FaStar className="h-4 w-4 text-yellow-400" />
+                    {data?.anime.moreInfo.malscore}
+                  </span>
+                </div>
+
+                <Badge
+                  type={data?.anime.info.stats.type}
+                  episodes={data?.anime.info.stats.episodes}
+                />
+              </div>
+
+              <p className="line-clamp-4 text-xs text-muted-foreground">
                 {data?.anime.info.description}
               </p>
 
-              <Button asChild className="w-full">
+              <div className="w-full text-xs">
+                {data &&
+                  Object.entries(data?.anime.moreInfo).map(([title, value]) => {
+                    if (title === "malscore" || title === "duration")
+                      return null;
+
+                    if (typeof value === "object") {
+                      return (
+                        <div key={title} className="">
+                          <span className="font-normal">{title}: </span>
+                          {value.map((text) => (
+                            <span key={text} className="text-white/70">
+                              {text},{" "}
+                            </span>
+                          ))}
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div key={title}>
+                        <span className="font-normal">{title}: </span>
+                        <span className="text-wrap text-white/70">{value}</span>
+                      </div>
+                    );
+                  })}
+              </div>
+
+              <Button asChild variant="secondary" className="w-full">
                 <Link href={`/${data?.anime.info.id}`}>Watch Now</Link>
               </Button>
             </div>

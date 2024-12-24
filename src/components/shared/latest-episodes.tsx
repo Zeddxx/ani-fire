@@ -1,7 +1,7 @@
 "use client";
 
 import { getAnimeEpisodesById } from "@/api/anime";
-import { QUERY_KEY } from "@/constants/query-key";
+import { QUERY_KEY } from "@/lib/query-key";
 import { LatestEpisodeAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";
@@ -32,7 +32,7 @@ export default function LatestEpisodes({
   return (
     <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
       {animes.map(({ name, poster, id }, idx) => (
-        <div key={id} className="flex flex-col gap-2 bg-black">
+        <div key={id} className="flex flex-col gap-2">
           <HoveredContent animeId={id}>
             <Link
               href={`/watch/${getLatestEpisode(idx)?.episodeId}`}
@@ -48,7 +48,7 @@ export default function LatestEpisodes({
           </HoveredContent>
           <Link
             href={`/watch/${getLatestEpisode(idx)?.episodeId}`}
-            className="line-clamp-1 w-full text-ellipsis hover:text-primary"
+            className="line-clamp-1 w-full text-sm hover:text-secondary"
           >
             {name}
           </Link>

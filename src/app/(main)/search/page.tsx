@@ -11,8 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { QUERY_KEY } from "@/constants/query-key";
 import { FILTERS } from "@/lib/constants";
+import { QUERY_KEY } from "@/lib/query-key";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -98,7 +98,7 @@ export default function Page() {
   if (isLoading) return <p>Searching Library for {keyword}</p>;
 
   return (
-    <div className="wrapper-container px-4">
+    <div className="wrapper-container mt-20 px-4">
       <div className="my-8 w-full rounded-lg border border-muted bg-secondary/10 p-6">
         <div className="space-y-3">
           <h2 className="text-base font-semibold">Filter</h2>

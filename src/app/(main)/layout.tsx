@@ -1,6 +1,6 @@
 import Navbar from "./_components/shared/navbar";
 
-export default function MarketingRootLayout({
+export default function MainRootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ export default function MarketingRootLayout({
   return (
     <main>
       <Navbar />
-      <div className="">{children}</div>
+      {children}
     </main>
   );
 }

@@ -1,13 +1,12 @@
-import Navbar from "@/components/shared/navbar";
 import AppProvider from "@/providers/app-provider";
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-open-sans",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -23,9 +22,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${spaceGrotesk.className} antialiased`}>
+      <body className={`${poppins.className} antialiased`}>
         <AppProvider>
-          <Navbar />
           <main>{children}</main>
         </AppProvider>
       </body>

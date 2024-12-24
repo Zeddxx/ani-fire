@@ -17,18 +17,24 @@ const config: Config = {
         "color-4": "hsl(var(--color-4))",
         "color-5": "hsl(var(--color-5))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#201f31",
           foreground: "hsl(var(--primary-foreground))",
         },
         "primary-foreground": "hsl(var(--primary-foreground))",
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
+          DEFAULT: "#ffbade",
           foreground: "hsl(var(--secondary-foreground))",
         },
         "secondary-foreground": "hsl(var(--secondary-foreground))",
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
+        },
+        green: {
+          DEFAULT: "#b0e3af",
+        },
+        blue: {
+          DEFAULT: "#b9e7ff",
         },
         "muted-foreground": "hsl(var(--muted-foreground))",
         background: "hsl(var(--background))",
@@ -107,6 +113,7 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        card: "32px",
       },
     },
   },

@@ -72,6 +72,9 @@
   }
 }
 
+body {
+  @apply bg-primary;
+}
 
 .veritcal-text {
   writing-mode: vertical-lr;

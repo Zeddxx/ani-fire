@@ -1,6 +1,7 @@
 "use client";
 
 import { getAnimeEpisodesById } from "@/api/anime";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Carousel,
@@ -10,10 +11,11 @@ import {
 import { SpotlightAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
 import AutoPlay from "embla-carousel-autoplay";
-import { Calendar, Captions, Clock, Info, Mic, PlayCircle } from "lucide-react";
+import { Calendar, Clock, Info, PlayCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
+import { FaPlayCircle } from "react-icons/fa";
 
 const AnimeSpotlightCarousel = ({
   spotlightAnimes,
@@ -43,18 +45,18 @@ const AnimeSpotlightCarousel = ({
         {spotlightAnimes.map((anime, idx) => (
           <CarouselItem
             key={anime.id}
-            className="h-[64vw] max-h-[600px] min-h-60 w-full pl-0"
+            className="h-[80vw] max-h-[600px] min-h-80 w-full pl-0"
           >
             <div className="relative z-10 flex h-full w-full">
-              <div className="flex h-full max-w-3xl flex-col justify-end p-10">
-                <h4 className="text-sm font-semibold text-primary md:text-lg">
+              <div className="flex h-full max-w-4xl flex-col justify-end p-10">
+                <h4 className="text-sm font-normal text-secondary md:text-lg">
                   #{anime.rank} Spotlight
                 </h4>
-                <h2 className="line-clamp-2 text-[clamp(1.4rem,6vw,4rem)] font-bold leading-tight">
+                <h2 className="line-clamp-2 text-[clamp(1.4rem,6vw,3rem)] font-semibold leading-tight">
                   {anime.name}
                 </h2>
 
-                <div className="my-4 hidden items-center gap-3 text-muted-foreground md:flex">
+                <div className="my-4 hidden items-center gap-3 text-white md:flex">
                   <span className="inline-flex items-center gap-x-2">
                     <PlayCircle className="h-4 w-4" />
                     {anime.otherInfo[0]}
@@ -70,23 +72,13 @@ const AnimeSpotlightCarousel = ({
                     {anime.otherInfo[2]}
                   </span>
 
-                  <span className="inline-flex items-center gap-x-2 rounded bg-primary px-2 text-sm">
+                  <span className="inline-flex items-center gap-x-2 rounded bg-secondary px-2 text-sm text-primary">
                     {anime.otherInfo[3]}
                   </span>
 
-                  <div className="flex gap-x-px overflow-hidden rounded text-sm font-bold text-secondary-foreground">
-                    <span className="inline-flex items-center gap-x-1 bg-primary px-1">
-                      <Captions className="h-4 w-4" />
-                      {anime.episodes.sub}
-                    </span>
-
-                    <span className="inline-flex items-center gap-x-1 bg-primary-foreground px-1 text-secondary">
-                      <Mic className="h-3 w-3" />
-                      {anime.episodes.dub}
-                    </span>
-                  </div>
+                  <Badge episodes={anime.episodes} size="sm" />
                 </div>
-                <p className="hidden w-full text-muted-foreground md:!line-clamp-2 lg:block xl:!line-clamp-3">
+                <p className="hidden w-full leading-relaxed text-white md:!line-clamp-2 lg:block xl:!line-clamp-3">
                   {anime.description}
                 </p>
 
@@ -94,31 +86,33 @@ const AnimeSpotlightCarousel = ({
                   <Link
                     href={`/watch/${results[idx].data?.episodes[0].episodeId}`}
                     className={buttonVariants({
-                      className: "flex items-center gap-x-3 text-xs md:text-sm",
+                      variant: "secondary",
+                      className:
+                        "!rounded-full text-sm xl:!px-4 xl:!py-5 xl:!text-base",
                     })}
                   >
-                    <PlayCircle className="h-4 w-4 shrink-0" />
+                    <FaPlayCircle className="h-4 w-4 shrink-0" />
                     <p className="">Watch Now</p>
                   </Link>
 
                   <Link
                     href={`/${anime.id}`}
                     className={buttonVariants({
-                      variant: "secondary",
-                      className: "flex items-center gap-x-3 text-xs md:text-sm",
+                      className:
+                        "xl !rounded-full bg-primary font-normal xl:bg-white/5 xl:!px-4 xl:!py-5 xl:!text-base xl:hover:bg-white/10",
                     })}
                   >
                     <Info className="h-4 w-4 shrink-0" />
-                    Details
+                    Detail
                   </Link>
                 </div>
               </div>
-              <div className="absolute right-0 -z-10 h-full w-full self-end brightness-50 [mask-image:linear-gradient(90deg,transparent,white,transparent)] lg:w-[75%]">
+              <div className="absolute right-0 -z-10 h-full w-full self-end object-bottom brightness-50 [mask-image:linear-gradient(90deg,transparent,white,transparent)] lg:w-[75%]">
                 <Image
                   src={anime.poster}
                   alt={anime.name}
                   fill
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover object-top"
                 />
               </div>
             </div>

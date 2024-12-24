@@ -1,4 +1,4 @@
-import { merge } from "@/lib/utils/index";
+import { cn } from "@/lib/utils";
 import { memo } from "react";
 
 interface SeparatorProps {
@@ -10,14 +10,12 @@ const Separator = ({ type = "dot", className }: SeparatorProps) => {
   if (type === "dot") {
     return (
       <span
-        className={merge("h-1 w-1 rounded-full bg-muted-foreground", className)}
+        className={cn("h-1 w-1 rounded-full bg-muted-foreground", className)}
       />
     );
   }
 
-  return (
-    <span className={merge("h-1 w-full bg-muted-foreground", className)} />
-  );
+  return <span className={cn("h-1 w-full bg-muted-foreground", className)} />;
 };
 
 export default memo(Separator);

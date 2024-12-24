@@ -55,7 +55,7 @@ export const getAnimeStreamingLinksByEpisodeId = async (
     BASE_URL() + "/episode/sources?animeEpisodeId=" + episodeId,
     {
       headers: {
-        "Access-Control-Allow-Methods": "PUT, POST, PATCH, DELETE, GET",
+        "Content-Type": "application/json",
       },
     },
   ).then((res) => res.json())) as ApiResponse<AnimeStreamingLinks>;

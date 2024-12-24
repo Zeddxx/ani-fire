@@ -1,15 +1,15 @@
 "use client";
 
 import { getAnimeScheduleByDate } from "@/api/anime";
-import { QUERY_KEY } from "@/constants/query-key";
+import { QUERY_KEY } from "@/lib/query-key";
 import {
+  cn,
   formatDate,
   getDayOfWeek,
   getFormattedCurrentTime,
   getMonth,
   getNextAndPrevSevenDates,
 } from "@/lib/utils";
-import { merge } from "@/lib/utils/index";
 import { ScheduledAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -107,29 +107,36 @@ export default function Schedule() {
         </h2>
 
         <div className="">
-          <p className="rounded-full bg-secondary px-4 py-2 text-sm">
+          <p className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black">
             {currentTime}
           </p>
         </div>
       </div>
-      <div className="relative px-10">
+      <div className="relative px-4">
         <div
           ref={containerRef}
-          className="relative my-7 flex w-full flex-nowrap items-center gap-x-4 overflow-hidden"
+          className="relative my-7 flex w-full flex-nowrap items-center gap-x-4 overflow-hidden rounded-xl"
         >
           {dates.map((date) => (
             <div
               key={date}
               data-date={date}
               onClick={() => setSelectedDate(date)}
-              className={merge(
-                "shrink-0 flex-grow cursor-pointer rounded-xl bg-secondary/10 px-16 py-2 text-center text-secondary-foreground duration-200 hover:bg-secondary/30",
+              className={cn(
+                "shrink-0 flex-grow cursor-pointer rounded-xl bg-white/5 px-16 py-2 text-center text-secondary-foreground duration-200 hover:bg-white/10",
                 selectedDate === date &&
-                  "border-none !bg-primary !text-secondary-foreground",
+                  "border-none !bg-secondary !text-black",
               )}
             >
-              <p className="uppercase">{getDayOfWeek(date)}</p>
-              <p className="text-muted-foreground">
+              <p className="text-base font-semibold uppercase">
+                {getDayOfWeek(date)}
+              </p>
+              <p
+                className={cn(
+                  "text-sm text-white/60",
+                  selectedDate === date && "font-semibold text-black/70",
+                )}
+              >
                 {getMonth(Number(date.split("-")[date.split("-").length - 2]))}{" "}
                 {date.split("-")[date.split("-").length - 1]}
               </p>
@@ -140,14 +147,14 @@ export default function Schedule() {
         <Button
           size="icon"
           onClick={handlePrevClick}
-          className="absolute left-0 top-1/2 -translate-y-1/2"
+          className="absolute left-0 top-1/2 -translate-y-1/2 rounded-full bg-white text-black hover:bg-white/70"
         >
           <ChevronLeft />
         </Button>
         <Button
           size="icon"
           onClick={handleNextClick}
-          className="absolute right-0 top-1/2 -translate-y-1/2"
+          className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full bg-white text-black hover:bg-white/70"
         >
           <ChevronRight />
         </Button>
@@ -156,7 +163,7 @@ export default function Schedule() {
         {isLoading.find((value) => value === true)
           ? Array.from({ length: 7 }).map((_, idx) => (
               <Skeleton
-                className={merge(
+                className={cn(
                   "h-12 w-full rounded-none bg-black",
                   idx % 2 && "bg-muted",
                 )}
@@ -167,18 +174,18 @@ export default function Schedule() {
               <Link
                 key={id}
                 href={`/${id}`}
-                className={merge(
-                  "group flex w-full items-center justify-between py-2 text-base duration-200 hover:!text-primary",
+                className={cn(
+                  "group flex w-full items-center justify-between py-2 text-base duration-200 hover:!text-secondary",
                 )}
               >
                 <div className="flex gap-3">
-                  <h4 className="font-semibold text-muted-foreground duration-200 group-hover:text-primary">
+                  <h4 className="font-semibold text-muted-foreground duration-200 group-hover:text-secondary">
                     {time}
                   </h4>
-                  <h4 className="line-clamp-2">{name}</h4>
+                  <h4 className="line-clamp-2 hover:text-secondary">{name}</h4>
                 </div>
 
-                <div className="flex shrink-0 gap-1 rounded px-4 py-2 text-sm duration-200 group-hover:bg-primary group-hover:text-secondary-foreground">
+                <div className="flex shrink-0 gap-1 rounded px-4 py-2 text-sm duration-200 group-hover:bg-secondary group-hover:text-black">
                   <ChevronRight className="my-auto h-4 w-4" />
                   <p>Episode {episode}</p>
                 </div>
