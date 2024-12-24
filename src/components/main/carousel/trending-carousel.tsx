@@ -11,7 +11,7 @@ import { memo } from "react";
 
 const TrendingCarousel = ({ animes }: { animes: TrendingAnime[] }) => {
   return (
-    <Carousel opts={{ align: "start" }} className="mt-6 w-full">
+    <Carousel opts={{ align: "start" }} className="z-50 mt-6 w-full">
       <CarouselContent className="-ml-4">
         {animes.map(({ id, name, poster, rank }) => (
           <CarouselItem key={id} className="basis-1/10 z-[999] pl-4">
