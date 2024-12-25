@@ -9,6 +9,7 @@ import {
 import OtherInfos from "@/components/main/other-infos";
 import AniFirePlayer from "@/components/shared/ani-fire-player";
 import EpisodeContainer from "@/components/shared/episode-container";
+import Description from "@/components/ui/info/description";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -17,16 +18,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Separator from "@/components/ui/separator";
 import { QUERY_KEY } from "@/lib/query-key";
 import { getEpisodeNavigation } from "@/lib/utils";
 import { useHistory } from "@/store/history";
 import { usePlayerStore } from "@/store/player-store";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight, FastForward } from "lucide-react";
+import { FastForward } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { IoSearch } from "react-icons/io5";
 
 type Range = {
   start: number;
@@ -169,14 +172,23 @@ const WatchAnimePage = ({
   if (!data || !episodes) return null;
 
   return (
-    <div className="mt-20">
-      <div className="wrapper-container my-4 flex w-full items-center gap-x-2 px-4 text-sm sm:gap-x-4 md:text-base">
+    <div className="relative mt-16 py-2">
+      <div className="absolute top-0 -z-10 h-full w-full overflow-hidden bg-primary/10 brightness-50">
+        <Image
+          src={animeInfo?.anime.info.poster ?? ""}
+          alt={"anime poster"}
+          fill
+          objectFit="cover"
+          className="absolute opacity-35 mix-blend-multiply blur-lg"
+        />
+      </div>
+      <div className="wrapper-container my-4 flex w-full items-center gap-x-2 px-4 text-sm sm:gap-x-4 xl:px-0">
         <Link href="/home">Home</Link>
-        <ChevronRight className="h-4 w-4 text-muted-foreground md:h-5 md:w-5" />
+        <Separator type="dot" />
         <Link href={`/type/${animeInfo?.anime.info.stats.type}`}>
           {animeInfo?.anime.info.stats.type}
         </Link>
-        <ChevronRight className="h-4 w-4 text-muted-foreground md:h-5 md:w-5" />
+        <Separator type="dot" />
         <Link
           href={`/${animeInfo?.anime.info.id}`}
           className="line-clamp-1 text-muted-foreground"
@@ -184,11 +196,11 @@ const WatchAnimePage = ({
           {animeInfo?.anime.info.name}
         </Link>
       </div>
-      <div className="wrapper-container flex w-full flex-col gap-1.5 px-4 xl:bg-secondary/15 xl:px-0 3xl:flex-row">
+      <div className="wrapper-container flex w-full flex-col gap-1.5 px-4 xl:bg-primary-500 xl:px-0 3xl:flex-row">
         <div className="mx-auto h-full w-full max-w-7xl overflow-y-scroll 3xl:basis-[17%]">
-          <div className="sticky inset-0 z-20 flex min-h-12 w-full items-center justify-between gap-3 border-b border-primary/40 bg-black px-4 text-sm">
+          <div className="sticky inset-0 z-20 flex min-h-12 w-full items-center justify-between gap-3 border-b border-primary/40 bg-primary-600 px-4 text-sm">
             <div className="">
-              <h3 className="flex items-center text-nowrap font-medium">
+              <h3 className="flex items-center text-nowrap text-xs font-medium">
                 List of episodes:
               </h3>
 
@@ -224,12 +236,13 @@ const WatchAnimePage = ({
               )}
             </div>
 
-            <div className="">
+            <div className="relative w-full">
               <Input
                 onChange={(e) => setSearchEpisode(parseInt(e.target.value))}
                 placeholder="Number of Ep"
-                className=""
+                className="h-7 border border-white/20 bg-primary-600 pl-7 text-xs text-primary-100"
               />
+              <IoSearch className="absolute left-2 top-1/2 -translate-y-1/2" />
             </div>
           </div>
           <EpisodeContainer
@@ -306,11 +319,10 @@ const WatchAnimePage = ({
               <OtherInfos {...animeInfo?.anime.info.stats!} />
             </div>
 
-            <div className="">
-              <p className="line-clamp-6 text-sm text-muted-foreground">
-                {animeInfo?.anime.info.description}
-              </p>
-            </div>
+            <Description
+              description={animeInfo?.anime.info.description ?? ""}
+              className="text-[13px] !leading-tight text-white/80"
+            />
           </div>
         </div>
       </div>

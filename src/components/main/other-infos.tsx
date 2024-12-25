@@ -5,7 +5,7 @@ import Separator from "../ui/separator";
 
 const OtherInfos = ({ ...props }: AnimeStats) => (
   <div className="flex items-center gap-2 text-sm">
-    <div className="flex gap-x-px overflow-hidden rounded text-sm font-semibold">
+    <div className="flex gap-x-px overflow-hidden rounded !text-[12px] font-medium">
       <span className="bg-white px-2 py-px text-black">{props.rating}</span>
       <span className="bg-secondary px-2 py-px text-primary">
         {props.quality}

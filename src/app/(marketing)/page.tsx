@@ -10,9 +10,9 @@ import { FaCircleArrowRight } from "react-icons/fa6";
 
 export default function Marketing() {
   return (
-    <div className="w-full px-4">
-      <div className="relative mx-auto h-auto w-full max-w-[1360px] overflow-hidden rounded-card bg-white/5 backdrop-blur-md">
-        <div className="w-full max-w-[37.5rem] space-y-7 p-14 text-start xl:p-20">
+    <div className="w-full md:px-4">
+      <div className="relative mx-auto h-auto w-full max-w-[1360px] overflow-hidden bg-white/5 px-8 py-14 backdrop-blur-md md:rounded-card">
+        <div className="mx-auto w-full max-w-[37.5rem] space-y-7 text-center md:mx-0 md:p-14 md:text-start xl:p-20">
           <Link href="/home" className="text-4xl font-semibold text-white">
             AniFire
           </Link>
@@ -28,7 +28,7 @@ export default function Marketing() {
             </Button>
           </div>
 
-          <div className="text-sm leading-[1.885]">
+          <div className="text-start text-xs leading-[1.885] md:text-sm">
             <span className="font-semibold">Top search:</span>{" "}
             {TOP_SEARCHES.map((keyword, idx) => {
               const isLastIndex = idx === TOP_SEARCHES.length - 1;
@@ -50,7 +50,7 @@ export default function Marketing() {
             className={cn(
               buttonVariants({
                 variant: "secondary",
-                className: "!px-10 !py-7 text-xl font-medium",
+                className: "w-full !px-10 !py-7 text-xl font-medium md:w-max",
               }),
             )}
           >

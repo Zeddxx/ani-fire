@@ -77,7 +77,7 @@ export default function HoveredContent({
                 />
               </div>
 
-              <p className="line-clamp-4 text-xs text-muted-foreground">
+              <p className="line-clamp-3 text-xs text-muted-foreground">
                 {data?.anime.info.description}
               </p>
 
