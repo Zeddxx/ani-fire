@@ -16,11 +16,12 @@ export default function InfoActionRow({ animeId }: { animeId: string }) {
   if (isLoading) return <InfoActionRowSkeleton />;
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex h-auto items-center gap-3">
       <Link
         href={`/watch/${animeEpisodes?.episodes[0].episodeId}`}
         className={buttonVariants({
           variant: "secondary",
+          className: "!rounded-full",
         })}
       >
         <FaPlay className="h-4 w-4" />

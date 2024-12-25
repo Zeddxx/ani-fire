@@ -5,7 +5,7 @@ export const AddionalInfo = ({
   title: string;
   desc: string | string[];
 }) => (
-  <div className="flex flex-wrap items-center gap-1 text-sm capitalize">
+  <div className="flex flex-wrap items-center gap-1 text-[13px] capitalize">
     <p className="font-semibold">{title}:</p>
     {typeof desc === "object" ? (
       desc.map((producer, idx) => (

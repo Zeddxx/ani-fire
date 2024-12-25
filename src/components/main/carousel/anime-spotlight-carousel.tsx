@@ -7,6 +7,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { SpotlightAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
@@ -39,7 +41,7 @@ const AnimeSpotlightCarousel = ({
           delay: 5000,
         }),
       ]}
-      className="wrapper-container"
+      className="wrapper-container relative"
     >
       <CarouselContent className="">
         {spotlightAnimes.map((anime, idx) => (
@@ -48,8 +50,8 @@ const AnimeSpotlightCarousel = ({
             className="h-[80vw] max-h-[600px] min-h-80 w-full pl-0"
           >
             <div className="relative z-10 flex h-full w-full">
-              <div className="flex h-full max-w-4xl flex-col justify-end p-10">
-                <h4 className="text-sm font-normal text-secondary md:text-lg">
+              <div className="flex h-full max-w-3xl flex-col justify-end p-10">
+                <h4 className="text-sm font-semibold text-primary md:text-lg">
                   #{anime.rank} Spotlight
                 </h4>
                 <h2 className="line-clamp-2 text-[clamp(1.4rem,6vw,3rem)] font-semibold leading-tight">
@@ -78,7 +80,7 @@ const AnimeSpotlightCarousel = ({
 
                   <Badge episodes={anime.episodes} size="sm" />
                 </div>
-                <p className="hidden w-full leading-relaxed text-white md:!line-clamp-2 lg:block xl:!line-clamp-3">
+                <p className="hidden w-full text-sm leading-relaxed text-white md:!line-clamp-2 lg:block lg:text-base xl:!line-clamp-3">
                   {anime.description}
                 </p>
 
@@ -119,6 +121,11 @@ const AnimeSpotlightCarousel = ({
           </CarouselItem>
         ))}
       </CarouselContent>
+
+      <div className="absolute bottom-12 right-0 flex -translate-x-16 flex-col">
+        <CarouselNext className="h-10 w-10 rounded bg-white/20 text-white hover:bg-white/25" />
+        <CarouselPrevious className="h-10 w-10 rounded bg-white/20 text-white hover:bg-white/25" />
+      </div>
     </Carousel>
   );
 };

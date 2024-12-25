@@ -1,11 +1,14 @@
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 export default function Description({
   description,
   maxLength = 350,
+  className,
 }: {
   description: string;
   maxLength?: number;
+  className?: string;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -16,7 +19,7 @@ export default function Description({
 
   return (
     <div className="">
-      <span className="text-sm font-light leading-relaxed">
+      <span className={cn("text-sm font-light leading-relaxed", className)}>
         {isExpanded ? description : truncatedDescription}
       </span>
       {description.length > maxLength && (
