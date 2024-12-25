@@ -50,8 +50,8 @@ const AnimeSpotlightCarousel = ({
             className="h-[80vw] max-h-[600px] min-h-80 w-full pl-0"
           >
             <div className="relative z-10 flex h-full w-full">
-              <div className="flex h-full max-w-lg flex-col justify-end p-10 lg:max-w-4xl">
-                <h4 className="text-sm font-normal text-secondary md:text-lg">
+              <div className="flex h-full max-w-3xl flex-col justify-end p-10">
+                <h4 className="text-sm font-semibold text-primary md:text-lg">
                   #{anime.rank} Spotlight
                 </h4>
                 <h2 className="line-clamp-2 text-[clamp(1.4rem,6vw,3rem)] font-semibold leading-tight">

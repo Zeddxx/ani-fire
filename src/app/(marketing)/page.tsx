@@ -64,6 +64,11 @@ export default function Marketing() {
           alt="HiAnime image"
           className="absolute right-0 top-0 -z-10 hidden h-full w-full object-cover opacity-50 [mask-image:linear-gradient(90deg,transparent,#fff,#fff)] md:block lg:max-w-2xl"
         />
+        <img
+          src="https://hianime.to/images/anw-min.webp?v=0.1"
+          alt="HiAnime image"
+          className="absolute right-0 top-0 -z-10 hidden h-full w-full object-cover opacity-50 [mask-image:linear-gradient(90deg,transparent,#fff,#fff)] md:block lg:max-w-2xl"
+        />
       </div>
     </div>
   );
