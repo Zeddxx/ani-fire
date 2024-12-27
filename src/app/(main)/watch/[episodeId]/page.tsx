@@ -8,16 +8,9 @@ import {
 } from "@/api/anime";
 import OtherInfos from "@/components/main/other-infos";
 import AniFirePlayer from "@/components/shared/ani-fire-player";
-import EpisodeContainer from "@/components/shared/episode-container";
+import BeatLoader from "@/components/shared/loader";
 import Description from "@/components/ui/info/description";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import Separator from "@/components/ui/separator";
 import { QUERY_KEY } from "@/lib/query-key";
 import { getEpisodeNavigation } from "@/lib/utils";
@@ -28,13 +21,8 @@ import { FastForward } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { IoSearch } from "react-icons/io5";
-
-type Range = {
-  start: number;
-  end: number;
-};
+import { useEffect } from "react";
+import Episodes from "../_components/episode-container";
 
 const WatchAnimePage = ({
   params: { episodeId },
@@ -49,13 +37,7 @@ const WatchAnimePage = ({
   const { setHistory, allAnimeWatched } = useHistory();
   const { autoNext, autoSkip } = usePlayerStore();
 
-  const [ranges, setRanges] = useState<Range>({
-    start: 0,
-    end: 100,
-  });
-  const [searchEpisode, setSearchEpisode] = useState<number | null>(null);
-
-  const { data: servers, isLoading: isServerLoading } = useQuery({
+  const { data: servers } = useQuery({
     queryKey: ["ANIME_EPISODE_SERVERS", episodeId],
     queryFn: () => getAnimeEpisodeServers(encodedEpisodesId),
   });
@@ -65,7 +47,7 @@ const WatchAnimePage = ({
     queryFn: () => getAnimeInfoByAnimeId(episodeId),
   });
 
-  const { data: episodes } = useQuery({
+  const { data: episodes, isLoading: isEpisodesLoading } = useQuery({
     queryKey: [QUERY_KEY.ANIME_EPISODES_BY_ID, episodeId],
     queryFn: () => getAnimeEpisodesById(episodeId),
   });
@@ -123,57 +105,14 @@ const WatchAnimePage = ({
     });
   }, [animeInfo, episodes]);
 
-  const rangeOptions = useMemo<Range[]>(() => {
-    if (!episodes) return [];
-
-    const { totalEpisodes } = episodes;
-    const options: Range[] = [];
-    for (let i = 0; i < totalEpisodes; i += 100) {
-      const start = i;
-      const end = Math.min(i + 100, totalEpisodes);
-      options.push({ start, end });
-    }
-
-    return options;
-  }, [episodes]);
-
-  const findRangeForEpisode = (episodeNumber: number) => {
-    if (!episodeNumber || !rangeOptions.length) return;
-
-    const range = rangeOptions.find(
-      ({ start, end }) => episodeNumber >= start && episodeNumber < end,
-    );
-
-    if (range) {
-      setRanges(range);
-    }
-  };
-
-  const handleSliceArray = useMemo(() => {
-    if (!episodes) return;
-
-    const { episodes: animeEpisodes } = episodes;
-
-    return animeEpisodes.slice(ranges.start, ranges.end);
-  }, [episodes, ranges]);
-
   const { next, prev } = getEpisodeNavigation(
     episodes ?? { episodes: [], totalEpisodes: 0 },
     encodedEpisodesId,
   );
 
-  useEffect(() => {
-    if (searchEpisode !== null) {
-      findRangeForEpisode(searchEpisode);
-    }
-  }, [searchEpisode]);
-  if (isLoading) return <p>Is episodes streaming loading...</p>;
-
-  if (!data || !episodes) return null;
-
   return (
     <div className="relative mt-16 py-2">
-      <div className="absolute top-0 -z-10 h-full w-full overflow-hidden bg-primary/10 brightness-50">
+      <div className="absolute top-0 -z-10 hidden h-full w-full overflow-hidden bg-primary/10 brightness-50 2xl:block">
         <Image
           src={animeInfo?.anime.info.poster ?? ""}
           alt={"anime poster"}
@@ -182,7 +121,7 @@ const WatchAnimePage = ({
           className="absolute opacity-35 mix-blend-multiply blur-lg"
         />
       </div>
-      <div className="wrapper-container my-4 flex w-full items-center gap-x-2 px-4 text-sm sm:gap-x-4 xl:px-0">
+      <div className="wrapper-container hidden w-full items-center gap-x-2 px-4 text-sm sm:gap-x-4 xl:px-0 2xl:my-4 2xl:flex">
         <Link href="/home">Home</Link>
         <Separator type="dot" />
         <Link href={`/type/${animeInfo?.anime.info.stats.type}`}>
@@ -196,68 +135,29 @@ const WatchAnimePage = ({
           {animeInfo?.anime.info.name}
         </Link>
       </div>
-      <div className="wrapper-container flex w-full flex-col gap-1.5 px-4 xl:bg-primary-500 xl:px-0 3xl:flex-row">
+      <div className="wrapper-container flex w-full flex-col gap-1.5 bg-primary-500 sm:px-4 xl:px-0 3xl:flex-row">
         <div className="mx-auto h-full w-full max-w-7xl overflow-y-scroll 3xl:basis-[17%]">
-          <div className="sticky inset-0 z-20 flex min-h-12 w-full items-center justify-between gap-3 border-b border-primary/40 bg-primary-600 px-4 text-sm">
-            <div className="">
-              <h3 className="flex items-center text-nowrap text-xs font-medium">
-                List of episodes:
-              </h3>
-
-              {episodes.totalEpisodes > 24 && (
-                <div className="flex items-center gap-2">
-                  <Select
-                    onValueChange={(value) => {
-                      const [start, end] = value.split(",").map(Number);
-
-                      setRanges({ start, end });
-                    }}
-                  >
-                    <SelectTrigger>
-                      <SelectValue
-                        placeholder={`${ranges.start} - ${ranges.end}`}
-                      />
-                    </SelectTrigger>
-
-                    <SelectContent id="episode" className="z-[999]">
-                      {rangeOptions.map((range, idx) => {
-                        return (
-                          <SelectItem
-                            key={idx}
-                            value={`${range.start},${range.end}`}
-                          >
-                            {range.start} - {range.end}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
+          {isEpisodesLoading || !episodes ? (
+            <div className="grid h-full min-h-[376px] w-full shrink-0 flex-col place-items-center lg:min-h-[590px] 3xl:min-h-[716px]">
+              <BeatLoader childClassName="h-3.5 w-3.5" />
             </div>
-
-            <div className="relative w-full">
-              <Input
-                onChange={(e) => setSearchEpisode(parseInt(e.target.value))}
-                placeholder="Number of Ep"
-                className="h-7 border border-white/20 bg-primary-600 pl-7 text-xs text-primary-100"
-              />
-              <IoSearch className="absolute left-2 top-1/2 -translate-y-1/2" />
-            </div>
-          </div>
-          <EpisodeContainer
-            currentEpisodeId={encodedEpisodesId}
-            episodes={handleSliceArray!}
-            totalEpisodes={episodes.totalEpisodes}
-            searchedEpisodeNumber={searchEpisode}
-          />
+          ) : (
+            <Episodes episodes={episodes} episodeId={encodedEpisodesId} />
+          )}
         </div>
+
         <div className="order-first mx-auto w-full max-w-7xl shrink-0 3xl:order-none 3xl:basis-[63%]">
-          <AniFirePlayer
-            episodeId={encodedEpisodesId}
-            episodes={episodes}
-            {...data}
-          />
+          {isLoading || !episodes || !data ? (
+            <div className="grid aspect-video h-max w-full place-items-center bg-black">
+              <BeatLoader childClassName="h-3.5 w-3.5" />
+            </div>
+          ) : (
+            <AniFirePlayer
+              episodeId={encodedEpisodesId}
+              episodes={episodes}
+              {...data}
+            />
+          )}
 
           <div className="flex w-full items-center justify-between p-4">
             <div className="flex items-center gap-3 text-sm">
@@ -300,30 +200,38 @@ const WatchAnimePage = ({
             </div>
           </div>
         </div>
-        <div className="max-h-[590px] w-full shrink-0 3xl:basis-[20%]">
-          <div className="flex flex-col gap-4 py-4 xl:pl-6 xl:pr-4">
-            <div className="relative aspect-anime-image h-44 w-32 shrink-0 shadow">
-              <Image
-                draggable={false}
-                src={animeInfo?.anime.info.poster!}
-                alt={animeInfo?.anime.info.name!}
-                fill
-                className="h-full w-full object-cover"
-              />
+        <div className="max-h-[590px] w-full shrink-0 px-4 sm:px-0 3xl:basis-[20%]">
+          {isInfoLoading ? (
+            <div className="grid h-full w-full place-items-center">
+              <BeatLoader childClassName="h-3 w-3" />
             </div>
+          ) : (
+            <div className="flex flex-col gap-4 py-4 xl:pl-6 xl:pr-4">
+              <div className="relative aspect-anime-image h-44 w-32 shrink-0 shadow">
+                <Image
+                  draggable={false}
+                  src={animeInfo?.anime.info.poster!}
+                  alt={animeInfo?.anime.info.name!}
+                  fill
+                  className="h-full w-full object-cover"
+                />
+              </div>
 
-            <h3 className="text-2xl font-semibold">
-              {animeInfo?.anime.info.name}
-            </h3>
-            <div className="">
-              <OtherInfos {...animeInfo?.anime.info.stats!} />
+              <h3 className="text-2xl font-semibold">
+                {animeInfo?.anime.info.name}
+              </h3>
+              <div className="">
+                <OtherInfos {...animeInfo?.anime.info.stats!} />
+              </div>
+
+              <div className="max-h-60 w-full overflow-y-auto">
+                <Description
+                  description={animeInfo?.anime.info.description ?? ""}
+                  className="text-[13px] !leading-tight text-white/80"
+                />
+              </div>
             </div>
-
-            <Description
-              description={animeInfo?.anime.info.description ?? ""}
-              className="text-[13px] !leading-tight text-white/80"
-            />
-          </div>
+          )}
         </div>
       </div>
     </div>

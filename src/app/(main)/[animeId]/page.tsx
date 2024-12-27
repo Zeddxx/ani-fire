@@ -53,8 +53,8 @@ const AnimeInfo = ({
             className="absolute opacity-55 blur-lg grayscale"
           />
         </div>
-        <div className="z-20 mx-auto flex w-full max-w-screen-3xl flex-col gap-8 lg:px-8 xl:flex-row xl:pl-24">
-          <div className="flex flex-col gap-x-6 gap-y-6 px-8 py-12 md:flex-row lg:gap-x-16 lg:px-0 lg:py-32 xl:basis-[70%]">
+        <div className="z-20 mx-auto flex w-full max-w-screen-3xl flex-col gap-8 xl:flex-row xl:px-8 xl:pl-24">
+          <div className="flex flex-col gap-x-6 gap-y-6 px-8 py-12 md:flex-row lg:gap-x-16 lg:py-32 xl:basis-[70%] xl:px-0">
             <div className="relative mx-auto aspect-anime-image h-64 w-44 shrink-0 overflow-hidden shadow">
               <Image
                 draggable={false}
@@ -135,10 +135,10 @@ const AnimeInfo = ({
           </div>
         </div>
       </section>
-      <div className="wrapper-container flex gap-x-9 px-4">
-        <div className="w-full basis-[75%] py-10">
+      <div className="wrapper-container flex flex-col gap-9 px-4 xl:flex-row">
+        <div className="w-full py-10 xl:basis-[75%]">
           <HomeLayout heading="Recommended for you">
-            <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6">
+            <div className="mt-6 grid grid-cols-2 gap-4 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
               {recommendedAnimes.map((anime) => (
                 <AnimeCard key={anime.id} {...anime} />
               ))}
@@ -146,11 +146,11 @@ const AnimeInfo = ({
           </HomeLayout>
         </div>
 
-        <div className="basis-[25%] space-y-6 py-10">
-          <h4 className="text-2xl font-medium text-secondary">Most Popular</h4>
+        <div className="space-y-6 py-10 xl:basis-[25%]">
+          <h4 className="text-2xl font-medium text-secondary">Related Anime</h4>
 
           <div className="space-y-4 bg-primary-100 px-4 py-6">
-            {relatedAnimes.map((anime) => (
+            {relatedAnimes.slice(0, 6).map((anime) => (
               <div
                 key={anime.id}
                 className="flex w-full items-center gap-x-4 border-b border-white/10 pb-4 last:border-0"

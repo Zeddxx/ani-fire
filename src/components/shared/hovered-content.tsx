@@ -4,9 +4,9 @@ import { getAnimeInfoByAnimeId } from "@/api/anime";
 import useMediaQueries from "@/hooks/use-media-queries";
 import { QUERY_KEY } from "@/lib/query-key";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaPlayCircle } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -15,15 +15,18 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
+import BeatLoader from "./loader";
 
 interface HoveredCardProps {
   children: React.ReactNode;
   animeId: string;
+  to?: string;
 }
 
 export default function HoveredContent({
   children,
   animeId,
+  to,
 }: HoveredCardProps) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const showPopupInfo = useMediaQueries("(min-width: 1280px)");
@@ -58,7 +61,7 @@ export default function HoveredContent({
         >
           {isLoading ? (
             <div className="grid h-full w-full place-items-center">
-              <Loader className="h-6 w-6 animate-spin" />
+              <BeatLoader />
             </div>
           ) : (
             <div className="flex flex-col gap-4">
@@ -110,7 +113,13 @@ export default function HoveredContent({
               </div>
 
               <Button asChild variant="secondary" className="w-full">
-                <Link href={`/${data?.anime.info.id}`}>Watch Now</Link>
+                <Link
+                  href={!to ? `/${data?.anime.info.id}` : to}
+                  className="flex items-center justify-center"
+                >
+                  <FaPlayCircle className="h-4 w-4 shrink-0" />
+                  Watch Now
+                </Link>
               </Button>
             </div>
           )}

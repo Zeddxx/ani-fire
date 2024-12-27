@@ -21,10 +21,10 @@ export default function InfoActionRow({ animeId }: { animeId: string }) {
         href={`/watch/${animeEpisodes?.episodes[0].episodeId}`}
         className={buttonVariants({
           variant: "secondary",
-          className: "!rounded-full",
+          className: "!rounded-full px-4 xl:px-7 xl:py-3",
         })}
       >
-        <FaPlay className="h-4 w-4" />
+        <FaPlay className="h-3 w-3 xl:h-4 xl:w-4" />
         Watch now
       </Link>
     </div>
