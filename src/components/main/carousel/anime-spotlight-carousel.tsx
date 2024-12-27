@@ -51,7 +51,7 @@ const AnimeSpotlightCarousel = ({
           >
             <div className="relative z-10 flex h-full w-full">
               <div className="flex h-full max-w-3xl flex-col justify-end p-10">
-                <h4 className="text-sm font-semibold text-primary md:text-lg">
+                <h4 className="text-sm font-semibold text-secondary md:text-lg">
                   #{anime.rank} Spotlight
                 </h4>
                 <h2 className="line-clamp-2 text-[clamp(1.4rem,6vw,3rem)] font-semibold leading-tight">
@@ -90,7 +90,7 @@ const AnimeSpotlightCarousel = ({
                     className={buttonVariants({
                       variant: "secondary",
                       className:
-                        "!rounded-full text-sm xl:!px-4 xl:!py-5 xl:!text-base",
+                        "!rounded-full text-sm xl:!px-5 xl:!py-5 xl:!text-base",
                     })}
                   >
                     <FaPlayCircle className="h-4 w-4 shrink-0" />

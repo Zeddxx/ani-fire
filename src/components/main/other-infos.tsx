@@ -20,22 +20,10 @@ const OtherInfos = ({ ...props }: AnimeStats) => (
           {props.episodes.dub}
         </span>
       )}
-      <span className="flex items-center bg-green px-2 py-px text-black">
-        <FaClosedCaptioning className="mr-1 h-3 w-3" />
-        {props.episodes.sub}
-      </span>
-      {props.episodes.dub && (
-        <span className="flex items-center bg-blue px-2 py-px text-black">
-          <FaMicrophone className="mr-1" />
-          {props.episodes.dub}
-        </span>
-      )}
     </div>
     <Separator />
     <span className="text-white/80">{props.type}</span>
-    <span className="text-white/80">{props.type}</span>
     <Separator />
-    <span className="text-white/80">{props.duration}</span>
     <span className="text-white/80">{props.duration}</span>
   </div>
 );

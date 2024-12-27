@@ -6,6 +6,7 @@ import { LatestEpisodeAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "../ui/badge";
 import HoveredContent from "./hovered-content";
 
 export default function LatestEpisodes({
@@ -31,9 +32,12 @@ export default function LatestEpisodes({
 
   return (
     <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
-      {animes.map(({ name, poster, id }, idx) => (
+      {animes.map(({ name, poster, id, episodes }, idx) => (
         <div key={id} className="flex flex-col gap-2">
-          <HoveredContent animeId={id}>
+          <HoveredContent
+            animeId={id}
+            to={`/watch/${getLatestEpisode(idx)?.episodeId}`}
+          >
             <Link
               href={`/watch/${getLatestEpisode(idx)?.episodeId}`}
               className="relative aspect-[8/10] h-72 w-full overflow-hidden sm:aspect-[12/16]"
@@ -42,8 +46,11 @@ export default function LatestEpisodes({
                 src={poster}
                 alt={`${name} poster`}
                 fill
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover [mask-image:linear-gradient(180deg,#fff,#fff,#fff,transparent)]"
               />
+              <div className="absolute bottom-2 left-2">
+                <Badge episodes={episodes} />
+              </div>
             </Link>
           </HoveredContent>
           <Link

@@ -1,15 +1,19 @@
 import HoveredContent from "@/components/shared/hovered-content";
+import { Badge } from "@/components/ui/badge";
 import Separator from "@/components/ui/separator";
 import { LatestEpisodeAnimes, RecommendedAnime } from "@/types/anime";
 import Image from "next/image";
 import Link from "next/link";
+import { FaPlay } from "react-icons/fa6";
 
 interface AnimeCardProps extends LatestEpisodeAnimes, RecommendedAnime {
   showDurationAndType?: boolean;
+  showEpisodes?: boolean;
 }
 
 export default function AnimeCard({
   showDurationAndType = false,
+  showEpisodes = true,
   ...props
 }: AnimeCardProps) {
   const { id, episodes, name, poster, type, duration } = props;
@@ -18,14 +22,20 @@ export default function AnimeCard({
       <HoveredContent animeId={id}>
         <Link
           href={`/${id}`}
-          className="relative aspect-[8/10] h-72 w-full overflow-hidden sm:aspect-[12/16]"
+          className="group relative aspect-[10/12] w-full overflow-hidden sm:aspect-[12/16]"
         >
           <Image
             src={poster}
             alt={`${name} poster`}
             fill
-            className="h-full w-full object-cover [mask-image:linear-gradient(180deg,#fff,#fff,#fff,transparent)]"
+            className="h-full w-full object-cover duration-200 [mask-image:linear-gradient(180deg,#fff,#fff,#fff,transparent)] group-hover:blur-md"
           />
+          {showEpisodes && (
+            <div className="absolute bottom-2 left-2 z-10">
+              <Badge episodes={episodes} />
+            </div>
+          )}
+          <FaPlay className="invisible absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 group-hover:visible" />
         </Link>
       </HoveredContent>
       <Link
