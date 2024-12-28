@@ -1,3 +1,4 @@
+import MainWrapper from "./_components/shared/layout/main-wrapper";
 import Navbar from "./_components/shared/navbar";
 
 export default function MainRootLayout({
@@ -6,9 +7,9 @@ export default function MainRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main>
+    <MainWrapper>
       <Navbar />
       {children}
-    </main>
+    </MainWrapper>
   );
 }

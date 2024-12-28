@@ -1,6 +1,7 @@
 import { AnimeEpisodes } from "@/types/anime";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { COLORS } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -153,3 +154,12 @@ export const range = (start: number, end: number) => {
   // create an array of certain length and set the element withitn it from start value to end.
   return Array.from({ length }, (_, idx) => idx + start);
 };
+
+/**
+ * This function will return random colors by taking index
+ * @param idx typof number
+ */
+
+export function generateRandomColor(idx: number) {
+  return COLORS[idx % COLORS.length];
+}
