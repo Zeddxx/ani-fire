@@ -51,14 +51,14 @@ export default function Home() {
       </div>
 
       <div className="wrapper-container my-8 grid w-full grid-cols-1 gap-6 px-4 md:grid-cols-2 xl:grid-cols-4">
+        {/* Most Favorite */}
+        <GenreAnime title="Most Favorite" animes={mostFavoriteAnimes} />
+
         {/* Completed anime */}
         <GenreAnime title="Completed Anime" animes={latestCompletedAnimes} />
 
         {/* Most Popular */}
         <GenreAnime title="Most Popular" animes={mostPopularAnimes} />
-
-        {/* Most Favorite */}
-        <GenreAnime title="Most Favorite" animes={mostFavoriteAnimes} />
 
         {/* Top Airing */}
         <GenreAnime title="Top Airing" animes={topAiringAnimes.slice(0, 5)} />

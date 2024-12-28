@@ -103,3 +103,82 @@ export const LANDING_NAV_ITEMS = [
     href: "/top-airing",
   },
 ];
+
+export const SidebarItems: Array<{ title: string; href: string }> = [
+  {
+    title: "Home",
+    href: "/home",
+  },
+  {
+    title: "Subbed Anime",
+    href: "/subbed-anime",
+  },
+  {
+    title: "Dubbed Anime",
+    href: "/dubbed-anime",
+  },
+  {
+    title: "most-popular",
+    href: "/subbed-anime",
+  },
+  {
+    title: "TV Series",
+    href: "/tv",
+  },
+  {
+    title: "OVAs",
+    href: "/ova",
+  },
+  {
+    title: "ONAs",
+    href: "/ona",
+  },
+  {
+    title: "Specials",
+    href: "/specials",
+  },
+];
+
+export const GENRES: string[] = [
+  "action",
+  "adventure",
+  "cars",
+  "comedy",
+  "dementia",
+  "demons",
+  "drama",
+  "ecchi",
+  "fantasy",
+  "game",
+  "harem",
+  "historical",
+  "horror",
+  "isekai",
+  "josei",
+  "kids",
+  "magic",
+  "martial-arts",
+  "mecha",
+  "military",
+  "music",
+  "mystery",
+  "parody",
+  "police",
+  "psycological",
+  "romance",
+  "samurai",
+  "school",
+  "sci-fi",
+  "seinen",
+  "shoujo",
+  "shoujo-ai",
+  "shounen",
+  "shounen-api",
+  "slice-of-life",
+  "space",
+  "sports",
+  "super-power",
+  "supernatural",
+  "thriller",
+  "vampire",
+] as const;

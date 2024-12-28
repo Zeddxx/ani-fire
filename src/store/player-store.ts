@@ -11,9 +11,9 @@ type PlayerStoreState = {
 export const usePlayerStore = create<PlayerStoreState>()(
   persist(
     (set) => ({
-      autoNext: false,
+      autoNext: true,
       setAutoNext: (value) => set({ autoNext: value }),
-      autoSkip: false,
+      autoSkip: true,
       setAutoSkip: (value) => set({ autoSkip: value }),
     }),
     {

@@ -10,8 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { CustomImage } from "@/components/ui/image";
 import Description from "@/components/ui/info/description";
 import Separator from "@/components/ui/separator";
-import { COLORS } from "@/lib/constants";
 import { QUERY_KEY } from "@/lib/query-key";
+import { generateRandomColor } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
@@ -118,7 +118,7 @@ const AnimeInfo = ({
                       key={idx}
                       className="flex h-7 items-center rounded-full border border-muted-foreground/30 px-3 text-xs"
                       style={{
-                        color: COLORS[Number(idx) % COLORS.length],
+                        color: generateRandomColor(idx),
                       }}
                     >
                       {genre}
