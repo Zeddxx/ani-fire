@@ -1,11 +1,13 @@
 "use client";
 
 import { getAnimeInfoByAnimeId } from "@/api/anime";
-import { AddionalInfo } from "@/components/main/info/additional-info";
-import InfoActionRow from "@/components/main/info/info-action-row";
-import HomeLayout from "@/components/main/layout/home-layout";
-import OtherInfos from "@/components/main/other-infos";
+
+import { AddionalInfo } from "@/app/(main)/[animeId]/_components/additional-info";
+import InfoActionRow from "@/app/(main)/[animeId]/_components/info-action-row";
+import AnimeCard from "@/app/(main)/_components/shared/anime-card";
+import HomeLayout from "@/app/(main)/_components/shared/layout/home-layout";
 import HoveredContent from "@/components/shared/hovered-content";
+import OtherInfos from "@/components/shared/other-infos";
 import { Badge } from "@/components/ui/badge";
 import { CustomImage } from "@/components/ui/image";
 import Description from "@/components/ui/info/description";
@@ -15,7 +17,6 @@ import { generateRandomColor } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import AnimeCard from "../_components/shared/anime-card";
 
 const AnimeInfo = ({
   params: { animeId },
@@ -43,7 +44,7 @@ const AnimeInfo = ({
 
   return (
     <>
-      <section className="relative mt-16 h-auto">
+      <section className="relative h-auto xl:mt-16">
         <div className="absolute -z-10 h-full w-full overflow-hidden brightness-50">
           <Image
             src={poster}

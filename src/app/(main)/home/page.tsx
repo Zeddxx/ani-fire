@@ -1,14 +1,21 @@
 "use client";
 
+// Api functions
 import { getAnimeHomePage } from "@/api/anime";
-import AnimeSpotlightCarousel from "@/components/main/carousel/anime-spotlight-carousel";
-import TrendingCarousel from "@/components/main/carousel/trending-carousel";
-import ContinueWatching from "@/components/main/continue-watching";
-import HomeLayout from "@/components/main/layout/home-layout";
-import Schedule from "@/components/main/schedule";
+
+// Shared Components imports
 import GenreAnime from "@/components/shared/genre-anime";
 import LatestEpisodes from "@/components/shared/latest-episodes";
+
+// Utilities function imports
 import { useQuery } from "@tanstack/react-query";
+
+// Component Imports
+import HomeLayout from "@/app/(main)/_components/shared/layout/home-layout";
+import AnimeSpotlightCarousel from "@/app/(main)/home/_components/carousel/spotlight";
+import TrendingCarousel from "@/app/(main)/home/_components/carousel/trending";
+import ContinueWatching from "@/app/(main)/home/_components/continue-watching";
+import Schedule from "@/app/(main)/home/_components/schedule";
 
 export default function Home() {
   const { data: animes, isLoading } = useQuery({
@@ -17,8 +24,10 @@ export default function Home() {
     refetchOnMount: false,
   });
 
+  // TODO: Adding a home skeleton
   if (isLoading) return <p>Is loading...</p>;
 
+  // TODO: Error handleling
   if (!animes) return <p>Something went wrong!</p>;
 
   const {

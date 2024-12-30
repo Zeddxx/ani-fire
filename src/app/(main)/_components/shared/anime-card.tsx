@@ -40,12 +40,12 @@ export default function AnimeCard({
       </HoveredContent>
       <Link
         href={`/${id}`}
-        className="line-clamp-1 w-full text-base font-medium hover:text-secondary"
+        className="line-clamp-1 w-full text-sm font-medium hover:text-secondary sm:text-base"
       >
         {name}
       </Link>
 
-      <p className="flex w-full items-center gap-2.5 text-sm font-light text-white/70">
+      <p className="flex w-full items-center gap-2.5 text-xs font-light text-white/70 sm:text-sm">
         <span className="capitalize">{type}</span>
         <Separator type="dot" />
         <span>{duration}</span>

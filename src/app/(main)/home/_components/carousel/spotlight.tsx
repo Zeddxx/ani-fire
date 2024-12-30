@@ -47,14 +47,14 @@ const AnimeSpotlightCarousel = ({
         {spotlightAnimes.map((anime, idx) => (
           <CarouselItem
             key={anime.id}
-            className="h-[80vw] max-h-[600px] min-h-96 w-full pl-0"
+            className="h-[70vw] max-h-[600px] min-h-80 w-full pl-0"
           >
             <div className="relative z-10 flex h-full w-full">
               <div className="flex h-full max-w-3xl flex-col justify-end p-10">
-                <h4 className="text-sm font-semibold text-secondary md:text-lg">
+                <h4 className="text-xs text-secondary sm:text-sm sm:font-semibold md:text-lg">
                   #{anime.rank} Spotlight
                 </h4>
-                <h2 className="line-clamp-2 text-[clamp(1.4rem,6vw,3rem)] font-semibold leading-tight">
+                <h2 className="mt-3 line-clamp-2 text-lg font-semibold leading-tight sm:text-[clamp(1.2rem,6vw,3rem)]">
                   {anime.name}
                 </h2>
 
@@ -109,12 +109,12 @@ const AnimeSpotlightCarousel = ({
                   </Link>
                 </div>
               </div>
-              <div className="absolute right-0 -z-10 h-full w-full self-end object-bottom brightness-50 [mask-image:linear-gradient(90deg,transparent,white,transparent)] lg:w-[75%]">
+              <div className="absolute right-0 -z-10 h-full w-full self-end object-bottom brightness-50 [mask-image:linear-gradient(180deg,white,transparent)] md:[mask-image:radial-gradient(ellipse,white,transparent_85%,transparent_80%)] lg:w-[75%]">
                 <Image
                   src={anime.poster}
                   alt={anime.name}
                   fill
-                  className="h-full w-full object-cover object-top"
+                  className="h-full w-full object-cover object-top [mask-image:linear-gradient(90deg,transparent,white,transparent)]"
                 />
               </div>
             </div>

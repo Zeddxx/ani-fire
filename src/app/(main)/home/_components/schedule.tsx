@@ -1,6 +1,8 @@
 "use client";
 
 import { getAnimeScheduleByDate } from "@/api/anime";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { QUERY_KEY } from "@/lib/query-key";
 import {
   cn,
@@ -15,8 +17,6 @@ import { useQueries } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "../ui/button";
-import { Skeleton } from "../ui/skeleton";
 
 interface Scheduled {
   date: string;
