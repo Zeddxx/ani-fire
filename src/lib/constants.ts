@@ -73,12 +73,13 @@ export const NavbarLinks = [
 ] as const;
 
 export const COLORS = [
-  "#77a759",
-  "#ff7f00",
-  "#ba00ff",
-  "#ff0000",
-  "##ffff00",
-  "#d1cfaf",
+  "#c4d89d",
+  "#efafd2",
+  "#df7c73",
+  "#bc9eca",
+  "#99b5c1",
+  "#c1a29f",
+  "#79c6b8",
 ];
 
 export const LANDING_NAV_ITEMS = [

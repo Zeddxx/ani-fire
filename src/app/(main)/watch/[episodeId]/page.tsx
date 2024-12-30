@@ -1,28 +1,37 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+// important libraries imports
+import { useQuery } from "@tanstack/react-query";
+import { FastForward } from "lucide-react";
+
+// APIs functions imports
 import {
   getAnimeEpisodesById,
   getAnimeEpisodeServers,
   getAnimeInfoByAnimeId,
   getAnimeStreamingLinksByEpisodeId,
 } from "@/api/anime";
-import OtherInfos from "@/components/main/other-infos";
-import AniFirePlayer from "@/components/shared/ani-fire-player";
-import BeatLoader from "@/components/shared/loader";
-import Description from "@/components/ui/info/description";
 
-import Separator from "@/components/ui/separator";
+// constants import
 import { QUERY_KEY } from "@/lib/query-key";
 import { getEpisodeNavigation } from "@/lib/utils";
+
+// store imports
 import { useHistory } from "@/store/history";
 import { usePlayerStore } from "@/store/player-store";
-import { useQuery } from "@tanstack/react-query";
-import { FastForward } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import Episodes from "../_components/episode-container";
+
+// components imports
+import Episodes from "@/app/(main)/watch/_components/episodes";
+import AniFirePlayer from "@/app/(main)/watch/_components/player/anifire-player";
+import BeatLoader from "@/components/shared/loader";
+import OtherInfos from "@/components/shared/other-infos";
+import Description from "@/components/ui/info/description";
+import Separator from "@/components/ui/separator";
 
 const WatchAnimePage = ({
   params: { episodeId },
@@ -31,6 +40,7 @@ const WatchAnimePage = ({
   params: { episodeId: string };
   searchParams: { [key: string]: string };
 }) => {
+  // to create an full url /animeId?ep=episode_id
   const encodedEpisodesId = episodeId + `?ep=${ep}`;
   const router = useRouter();
 
@@ -102,6 +112,7 @@ const WatchAnimePage = ({
       latestAnimeWatched: latestAnimeWatched,
       latestWatchedDate: Date.now(),
       allAnimeWatched: animeWatchedArray,
+      currentTime: 0,
     });
   }, [animeInfo, episodes]);
 
@@ -111,7 +122,7 @@ const WatchAnimePage = ({
   );
 
   return (
-    <div className="relative mt-16 py-2">
+    <div className="relative xl:mt-16 xl:py-2">
       <div className="absolute top-0 -z-10 hidden h-full w-full overflow-hidden bg-primary/10 brightness-50 2xl:block">
         <Image
           src={animeInfo?.anime.info.poster ?? ""}

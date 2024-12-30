@@ -6,10 +6,12 @@ type HistoryStoreState = {
   latestWatchedDate: number;
   latestAnimeWatched: AnimeEntry | {};
   allAnimeWatched: AnimeEntry[];
+  currentTime: number;
   setHistory: (state: {
     latestWatchedDate: number;
     latestAnimeWatched: AnimeEntry | {};
     allAnimeWatched: AnimeEntry[];
+    currentTime: number;
   }) => void;
 };
 
@@ -19,6 +21,7 @@ export const useHistory = create<HistoryStoreState>()(
       latestAnimeWatched: {},
       latestWatchedDate: 0,
       allAnimeWatched: [],
+      currentTime: 0,
       setHistory: (state) => set(state),
     }),
     {

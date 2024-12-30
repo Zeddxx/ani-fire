@@ -1,127 +1,76 @@
-import EpisodeContainer from "@/components/shared/episode-container";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { AnimeEpisodes } from "@/types/anime";
-import { useEffect, useMemo, useState } from "react";
-import { IoSearch } from "react-icons/io5";
+import { cn } from "@/lib/utils";
+import { EpisodesDetails } from "@/types/anime";
+import Link from "next/link";
+import { memo } from "react";
+import { IoIosPlayCircle } from "react-icons/io";
 
-type Range = {
-  start: number;
-  end: number;
-};
-
-interface EpisodesProps {
-  episodes: AnimeEpisodes;
-  episodeId: string;
+interface EpisodeContainerProps {
+  episodes: EpisodesDetails[];
+  totalEpisodes: number;
+  currentEpisodeId: string;
+  searchedEpisodeNumber: number | null;
 }
 
-export default function Episodes({ episodes, episodeId }: EpisodesProps) {
-  const [ranges, setRanges] = useState<Range>({
-    start: 0,
-    end: 100,
-  });
-  const [searchEpisode, setSearchEpisode] = useState<number | null>(null);
-  const rangeOptions = useMemo<Range[]>(() => {
-    if (!episodes) return [];
-
-    const { totalEpisodes } = episodes;
-    const options: Range[] = [];
-    for (let i = 0; i < totalEpisodes; i += 100) {
-      const start = i;
-      const end = Math.min(i + 100, totalEpisodes);
-      options.push({ start, end });
-    }
-
-    return options;
-  }, [episodes]);
-
-  const findRangeForEpisode = (episodeNumber: number) => {
-    if (!episodeNumber || !rangeOptions.length) return;
-
-    const range = rangeOptions.find(
-      ({ start, end }) => episodeNumber >= start && episodeNumber < end,
+const EpisodeContainer = ({
+  currentEpisodeId,
+  episodes,
+  totalEpisodes,
+  searchedEpisodeNumber,
+}: EpisodeContainerProps) => {
+  if (totalEpisodes > 24) {
+    return (
+      <div className="grid max-h-[716px] w-full shrink-0 grid-cols-8 gap-1 py-3 md:grid-cols-10 lg:grid-cols-12 3xl:grid-cols-5">
+        {episodes.slice(0, 100).map(({ isFiller, episodeId, number }) => {
+          const isCurrentEp = episodeId === currentEpisodeId;
+          return (
+            <Link
+              key={episodeId}
+              href={`/watch/${episodeId}`}
+              className={cn(
+                "grid h-8 w-full place-items-center rounded-md bg-white/10",
+                isFiller && "bg-yellow-700/40",
+                isCurrentEp && "bg-primary",
+                searchedEpisodeNumber === number && "bg-muted-foreground/50",
+              )}
+            >
+              <p className="text-xs">{number}</p>
+            </Link>
+          );
+        })}
+      </div>
     );
-
-    if (range) {
-      setRanges(range);
-    }
-  };
-
-  const handleSliceArray = useMemo(() => {
-    if (!episodes) return;
-
-    const { episodes: animeEpisodes } = episodes;
-
-    return animeEpisodes.slice(ranges.start, ranges.end);
-  }, [episodes, ranges]);
-
-  useEffect(() => {
-    if (searchEpisode !== null) {
-      findRangeForEpisode(searchEpisode);
-    }
-  }, [searchEpisode]);
+  }
 
   return (
-    <>
-      <div className="sticky inset-0 z-20 flex min-h-12 w-full items-center justify-between gap-3 border-b border-primary/40 bg-primary-600 px-4 text-sm">
-        <div className="">
-          <h3 className="flex items-center text-nowrap text-xs font-medium">
-            List of episodes:
-          </h3>
-
-          {episodes.totalEpisodes > 24 && (
-            <div className="flex items-center gap-2">
-              <Select
-                onValueChange={(value) => {
-                  const [start, end] = value.split(",").map(Number);
-
-                  setRanges({ start, end });
-                }}
-              >
-                <SelectTrigger>
-                  <SelectValue
-                    placeholder={`${ranges.start} - ${ranges.end}`}
-                  />
-                </SelectTrigger>
-
-                <SelectContent id="episode" className="z-[999]">
-                  {rangeOptions.map((range, idx) => {
-                    return (
-                      <SelectItem
-                        key={idx}
-                        value={`${range.start},${range.end}`}
-                      >
-                        {range.start} - {range.end}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-        </div>
-
-        <div className="relative w-full">
-          <Input
-            onChange={(e) => setSearchEpisode(parseInt(e.target.value))}
-            placeholder="Number of Ep"
-            className="h-7 border border-white/20 bg-primary-600 pl-7 text-xs text-primary-100"
-          />
-          <IoSearch className="absolute left-2 top-1/2 -translate-y-1/2" />
-        </div>
-      </div>
-      <EpisodeContainer
-        currentEpisodeId={episodeId}
-        episodes={handleSliceArray!}
-        totalEpisodes={episodes.totalEpisodes}
-        searchedEpisodeNumber={searchEpisode}
-      />
-    </>
+    <div className="flex max-h-[376px] w-full shrink-0 flex-col lg:max-h-[590px] 3xl:max-h-[716px]">
+      {episodes.map(({ episodeId, title, number }, idx) => {
+        const isCurrentEp = episodeId === currentEpisodeId;
+        return (
+          <Link
+            key={episodeId}
+            href={`/watch/${episodeId}`}
+            passHref
+            className={cn(
+              "relative flex h-11 w-full shrink-0 items-center gap-x-2 bg-primary-100/70 px-4 text-sm text-white/60 hover:bg-primary/20",
+              idx % 2 && "bg-primary",
+              isCurrentEp &&
+                "pointer-events-none bg-primary-100 text-secondary",
+              searchedEpisodeNumber === number && "bg-white/30",
+            )}
+          >
+            <p className="shrink-0 font-semibold">{number}</p>
+            <p className="line-clamp-1 pr-9 font-light">{title}</p>
+            {isCurrentEp && (
+              <span className="absolute left-0 h-full w-1 bg-secondary" />
+            )}
+            {isCurrentEp && (
+              <IoIosPlayCircle className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-secondary" />
+            )}
+          </Link>
+        );
+      })}
+    </div>
   );
-}
+};
+
+export default memo(EpisodeContainer);
