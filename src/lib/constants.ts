@@ -89,19 +89,19 @@ export const LANDING_NAV_ITEMS = [
   },
   {
     name: "Movies",
-    href: "/movies",
+    href: "/category/movies",
   },
   {
     name: "TV Shows",
-    href: "/tv",
+    href: "/category/tv",
   },
   {
     name: "Most Popular",
-    href: "/most-popular",
+    href: "/category/most-popular",
   },
   {
     name: "Top Airing",
-    href: "/top-airing",
+    href: "/category/top-airing",
   },
 ];
 
@@ -112,31 +112,31 @@ export const SidebarItems: Array<{ title: string; href: string }> = [
   },
   {
     title: "Subbed Anime",
-    href: "/subbed-anime",
+    href: "/category/subbed-anime",
   },
   {
     title: "Dubbed Anime",
-    href: "/dubbed-anime",
+    href: "/category/dubbed-anime",
   },
   {
     title: "most-popular",
-    href: "/subbed-anime",
+    href: "/category/subbed-anime",
   },
   {
     title: "TV Series",
-    href: "/tv",
+    href: "/category/tv",
   },
   {
     title: "OVAs",
-    href: "/ova",
+    href: "/category/ova",
   },
   {
     title: "ONAs",
-    href: "/ona",
+    href: "/category/ona",
   },
   {
     title: "Specials",
-    href: "/specials",
+    href: "/category/special",
   },
 ];
 
@@ -182,4 +182,21 @@ export const GENRES: string[] = [
   "supernatural",
   "thriller",
   "vampire",
+] as const;
+
+export const catagories: string[] = [
+  "most-favorite",
+  "most-popular",
+  "subbed-anime",
+  "dubbed-anime",
+  "recently-updated",
+  "recently-added",
+  "top-upcoming",
+  "top-airing",
+  "movie",
+  "special",
+  "ova",
+  "ona",
+  "tv",
+  "completed",
 ] as const;
