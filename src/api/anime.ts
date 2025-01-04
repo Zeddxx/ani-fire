@@ -7,6 +7,7 @@ import {
   ApiResponse,
   HomePage,
   ScheduledAnimes,
+  Top10Animes,
   TopUpcomingAnime,
 } from "@/types/anime";
 import axios from "axios";
@@ -139,4 +140,29 @@ export const getSearchedAnimeByName = async ({
     totalPages: number;
     hasNextPage: boolean;
   };
+};
+
+export const getAnimeByCategories = async (category: string, page: number) => {
+  const res = (await fetch(
+    BASE_URL() + `/category/${category}?page=${page ?? 1}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  ).then((res) => res.json())) as ApiResponse<{
+    category: string;
+    animes: TopUpcomingAnime[];
+    genres: string[];
+    top10Animes: Top10Animes;
+    currentPage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  }>;
+
+  if (!res.success) {
+    throw new Error(res.message);
+  }
+
+  return res.data;
 };

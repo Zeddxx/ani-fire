@@ -1,76 +1,40 @@
-/**
- * A pagination hook to get the range by calculating totalPages, pageSize, siblingCount, currentPage;
- * @params totalCount, pageSize, siblingCount, currentPage
- * returns pagination range.
- */
+"use client";
 
-import { range } from "@/lib/utils";
 import { useMemo } from "react";
 
-interface Props {
-  totalCount: number;
-  pageSize: number;
-  siblingCount?: number;
+interface PaginationProps {
   currentPage: number;
+  totalPages: number;
+  hasNextPage: boolean;
 }
 
-export const usePagination = ({
+const usePagination = ({
   currentPage,
-  pageSize,
-  totalCount,
-  siblingCount = 1,
-}: Props) => {
-  const DOTS = "...";
-  const pagination = useMemo(() => {
-    const totalPageCount = Math.ceil(totalCount / pageSize);
+  hasNextPage,
+  totalPages,
+}: PaginationProps) => {
+  return useMemo(() => {
+    const pagesToShow = 4;
 
-    // pages count is determined as siblingCount + firstPage + lastPage + 2*DOTS
-    const totalPageNumbers = siblingCount + 5;
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, currentPage + 2);
 
-    // case 1 -> if the number is less than the page numbers we want to show in our pagination component, we return the range [1..totalPageCount]
-    if (totalPageNumbers >= totalPageCount) {
-      return range(1, totalPageCount);
+    if (endPage - startPage < pagesToShow) {
+      if (startPage === 1) {
+        endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+      } else {
+        startPage = Math.max(1, endPage - pagesToShow + 1);
+      }
     }
 
-    // Calculate left and right sibling index and make sure they are within range 1 and totalPageCount
-    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-    const rightSiblingIndex = Math.min(
-      currentPage + siblingCount,
-      totalPageCount,
-    );
+    const pageNumbers = [];
 
-    /*
-      We do not show dots just when there is just one page number to be inserted between the extremes of sibling and the page limits i.e 1 and totalPageCount. Hence we are using leftSiblingIndex > 2 and rightSiblingIndex < totalPageCount - 2
-    */
-    const shouldShowLeftDots: boolean = leftSiblingIndex > 2;
-    const shouldShowRightDots: boolean = rightSiblingIndex < totalPageCount - 2;
-
-    const firstPageIndex: number = 1;
-    const lastPageIndex: number = totalPageCount;
-
-    //  Case 2: No left dots to show, but rights dots to be shown
-    if (!shouldShowLeftDots && shouldShowRightDots) {
-      let leftItemCount = 3 + 2 * siblingCount;
-      let leftRange = range(1, leftItemCount);
-
-      return [...leftRange, DOTS, totalPageCount];
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
     }
 
-    if (shouldShowLeftDots && !shouldShowRightDots) {
-      let rightItemCount = 3 + 2 * siblingCount;
-      let rightRange = range(
-        totalPageCount - rightItemCount + 1,
-        totalPageCount,
-      );
-
-      return [firstPageIndex, DOTS, ...rightRange];
-    }
-
-    if (shouldShowLeftDots && shouldShowRightDots) {
-      let middleRange = range(leftSiblingIndex, rightSiblingIndex);
-      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
-    }
-  }, [currentPage, totalCount, pageSize, siblingCount]);
-
-  return { pagination, DOTS };
+    return pageNumbers;
+  }, [currentPage, hasNextPage, totalPages]);
 };
+
+export default usePagination;
