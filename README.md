@@ -1,7 +1,7 @@
 > [!NOTE]
-> Migrating Ani-Fire into v2.
+> This is AniFire V2.
 
-> This project is for educational purpose only and i am not making any revenew from this website.
+> This project is under development 🪙.
 
 <img src="/public/ani-fire-cover.png" alt="banner image"/>
 
