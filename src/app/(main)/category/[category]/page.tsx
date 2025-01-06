@@ -1,6 +1,8 @@
 "use client";
 
 import { getAnimeByCategories } from "@/api/anime";
+import AnimeCard from "@/components/shared/anime-card";
+import AnimeLists from "@/components/shared/anime-list";
 import usePagination from "@/hooks/use-pagination";
 import { catagories, GENRES } from "@/lib/constants";
 import { generateRandomColor } from "@/lib/utils";
@@ -15,9 +17,7 @@ import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
-import AnimeCard from "../../_components/shared/anime-card";
 import HomeLayout from "../../_components/shared/layout/home-layout";
-import Top10Animes from "../../_components/shared/layout/top-animes";
 
 export default function Page({
   params: { category },
@@ -121,7 +121,11 @@ export default function Page({
         </div>
 
         <div className="xl:basis-[25%]">
-          <Top10Animes animes={data?.top10Animes!} />
+          <AnimeLists
+            heading="Top 10"
+            type="top10Animes"
+            animes={data?.top10Animes!}
+          />
 
           <div className="mt-12 w-full space-y-5">
             <h3 className="text-2xl font-semibold text-secondary">Genres</h3>

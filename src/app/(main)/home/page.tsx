@@ -16,6 +16,7 @@ import AnimeSpotlightCarousel from "@/app/(main)/home/_components/carousel/spotl
 import TrendingCarousel from "@/app/(main)/home/_components/carousel/trending";
 import ContinueWatching from "@/app/(main)/home/_components/continue-watching";
 import Schedule from "@/app/(main)/home/_components/schedule";
+import HomeSkeleton from "@/components/skeleton/home-skeleton";
 
 export default function Home() {
   const { data: animes, isLoading } = useQuery({
@@ -24,11 +25,7 @@ export default function Home() {
     refetchOnMount: false,
   });
 
-  // TODO: Adding a home skeleton
-  if (isLoading) return <p>Is loading...</p>;
-
-  // TODO: Error handleling
-  if (!animes) return <p>Something went wrong!</p>;
+  if (isLoading || !animes) return <HomeSkeleton />;
 
   const {
     spotlightAnimes,

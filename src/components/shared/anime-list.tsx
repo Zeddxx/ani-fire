@@ -1,15 +1,77 @@
 import HoveredContent from "@/components/shared/hovered-content";
 import { Badge } from "@/components/ui/badge";
 import { CustomImage } from "@/components/ui/image";
-import { Top10Animes as Top10AnimesTypes } from "@/types/anime";
+import {
+  SharedAnimeType,
+  Top10Animes as Top10AnimesTypes,
+} from "@/types/anime";
 import Link from "next/link";
 import { useState } from "react";
 
 const selectTypes = ["today", "week", "month"] as const;
 
-export default function Top10Animes({ animes }: { animes: Top10AnimesTypes }) {
+interface BaseAnimeProps {
+  heading: string;
+}
+
+type Top10AnimesProps = {
+  animes: Top10AnimesTypes;
+  type: "top10Animes";
+} & BaseAnimeProps;
+
+type RegularAnimesProps = {
+  animes: SharedAnimeType[];
+  type: "regular";
+} & BaseAnimeProps;
+
+type AnimeProps = Top10AnimesProps | RegularAnimesProps;
+
+export default function AnimeLists({ animes, type, heading }: AnimeProps) {
   const [selectedType, setSelectedType] =
     useState<(typeof selectTypes)[number]>("today");
+
+  if (type === "regular") {
+    return (
+      <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full justify-between">
+          <h3 className="text-2xl font-semibold text-secondary">{heading}</h3>
+        </div>
+
+        <div className="w-full bg-white/5 px-4 py-8">
+          <div className="flex flex-col gap-6">
+            {animes.map((anime) => (
+              <div key={anime.id} className="flex w-full items-center gap-4">
+                <div className="flex w-full grow gap-4">
+                  <HoveredContent animeId={anime.id}>
+                    <div className="relative h-[4.8rem] w-14 shrink-0">
+                      <CustomImage
+                        src={anime.poster}
+                        alt={anime.name}
+                        loading="lazy"
+                        fill
+                        className="overflow-hidden rounded-md object-cover"
+                      />
+                    </div>
+                  </HoveredContent>
+
+                  <div className="flex w-full flex-col justify-center space-y-1.5 border-b border-white/10 py-4">
+                    <Link
+                      href={`/${anime.id}`}
+                      className="line-clamp-1 text-sm font-medium text-secondary-foreground hover:text-secondary"
+                    >
+                      {anime.name}
+                    </Link>
+
+                    <Badge episodes={anime.episodes} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex w-full flex-col gap-4">

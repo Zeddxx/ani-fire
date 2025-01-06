@@ -1,8 +1,8 @@
 "use client";
 
 import { getAnimeScheduleByDate } from "@/api/anime";
+import BeatLoader from "@/components/shared/loader";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { QUERY_KEY } from "@/lib/query-key";
 import {
   cn,
@@ -162,15 +162,14 @@ export default function Schedule() {
       <div className="flex w-full flex-col gap-2">
         {isLoading.find((value) => value === true)
           ? Array.from({ length: 7 }).map((_, idx) => (
-              <Skeleton
-                className={cn(
-                  "h-12 w-full rounded-none bg-black",
-                  idx % 2 && "bg-muted",
-                )}
+              <div
                 key={idx}
-              />
+                className="grid h-20 w-full animate-pulse place-items-center bg-primary-500"
+              >
+                <BeatLoader />
+              </div>
             ))
-          : scheduledAnimes?.map(({ id, name, time, episode }, idx) => (
+          : scheduledAnimes?.map(({ id, name, time, episode }) => (
               <Link
                 key={id}
                 href={`/${id}`}
