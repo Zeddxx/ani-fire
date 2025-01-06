@@ -7,6 +7,7 @@ import {
   ApiResponse,
   HomePage,
   ScheduledAnimes,
+  SharedAnimeType,
   Top10Animes,
   TopUpcomingAnime,
 } from "@/types/anime";
@@ -139,6 +140,7 @@ export const getSearchedAnimeByName = async ({
     currentPage: number;
     totalPages: number;
     hasNextPage: boolean;
+    mostPopularAnimes: SharedAnimeType[];
   };
 };
 

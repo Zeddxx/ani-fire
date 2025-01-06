@@ -120,7 +120,7 @@ export const SidebarItems: Array<{ title: string; href: string }> = [
   },
   {
     title: "most-popular",
-    href: "/category/subbed-anime",
+    href: "/category/most-popular",
   },
   {
     title: "TV Series",

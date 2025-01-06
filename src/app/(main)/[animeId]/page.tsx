@@ -4,10 +4,11 @@ import { getAnimeInfoByAnimeId } from "@/api/anime";
 
 import { AddionalInfo } from "@/app/(main)/[animeId]/_components/additional-info";
 import InfoActionRow from "@/app/(main)/[animeId]/_components/info-action-row";
-import AnimeCard from "@/app/(main)/_components/shared/anime-card";
 import HomeLayout from "@/app/(main)/_components/shared/layout/home-layout";
+import AnimeCard from "@/components/shared/anime-card";
 import HoveredContent from "@/components/shared/hovered-content";
 import OtherInfos from "@/components/shared/other-infos";
+import AnimeInfoSkeleton from "@/components/skeleton/anime-info-skeleton";
 import { Badge } from "@/components/ui/badge";
 import { CustomImage } from "@/components/ui/image";
 import Description from "@/components/ui/info/description";
@@ -23,15 +24,17 @@ const AnimeInfo = ({
 }: {
   params: { animeId: string };
 }) => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEY.ANIME_INFO, animeId],
     queryFn: () => getAnimeInfoByAnimeId(animeId),
     enabled: !!animeId,
   });
 
-  if (isLoading) return <p>is info loading...</p>;
+  if (isLoading) return <AnimeInfoSkeleton />;
 
-  if (!data) return <p>Something went wrong!</p>;
+  if (isError || !data) {
+    throw new Error("Invalid Anime ID!");
+  }
 
   const {
     anime: {
@@ -76,7 +79,7 @@ const AnimeInfo = ({
               </div>
 
               <div className="">
-                <h1 className="line-clamp-2 text-center text-3xl font-medium !leading-tight lg:text-start xl:text-5xl">
+                <h1 className="line-clamp-2 text-center text-3xl font-medium !leading-tight md:text-start xl:text-5xl">
                   {name}
                 </h1>
               </div>
@@ -112,7 +115,7 @@ const AnimeInfo = ({
               <span className="block h-px w-full bg-muted-foreground/50" />
 
               <div className="flex items-start gap-4">
-                <p>Genres:</p>
+                <p className="text-[13px] font-medium">Genres:</p>
                 <div className="flex flex-wrap gap-1.5">
                   {moreInfo.genres.map((genre, idx) => (
                     <span
