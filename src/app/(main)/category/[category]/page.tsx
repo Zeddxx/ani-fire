@@ -3,12 +3,13 @@
 import { getAnimeByCategories } from "@/api/anime";
 import AnimeCard from "@/components/shared/anime-card";
 import AnimeLists from "@/components/shared/anime-list";
+import CategorySkeleton from "@/components/skeleton/category-skeleton";
 import usePagination from "@/hooks/use-pagination";
 import { catagories, GENRES } from "@/lib/constants";
 import { generateRandomColor } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
 import {
@@ -24,7 +25,6 @@ export default function Page({
 }: {
   params: { category: string };
 }) {
-  const router = useRouter();
   const [showAllGenre, setShowAllGenre] = useState<boolean>(false);
 
   const [currentPage] = useQueryState("page", {
@@ -51,15 +51,15 @@ export default function Page({
   });
 
   if (!catagories.includes(category)) {
-    router.replace("/404");
+    notFound();
   }
 
   if (isLoading) {
-    return (
-      <div className="">
-        <p>Loading...</p>
-      </div>
-    );
+    return <CategorySkeleton category={category} />;
+  }
+
+  if (!data) {
+    throw new Error("Something went wrong!");
   }
 
   return (

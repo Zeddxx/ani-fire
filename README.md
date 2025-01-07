@@ -31,8 +31,6 @@
   🎉 Dive into the captivating world of anime without interruptions! Our website provides a seamless streaming experience, free from distracting advertisements. Enjoy your favorite anime series and movies with ease.
 </p>
 
-
-
 <details>
   <summary>
     Some screenshot here or can say the demo is here!
@@ -60,24 +58,26 @@
   - Watching History
     - User can easily dive into the recents episodes they were watching
 
-
 ## For local development
+
 > [!CAUTION]
 > If you want to self-host this app, please note that it is only allowed for personal use. Commercial use is not permitted, and including ads on your self-hosted site may result in actions such as site takedown.
 
 - Clone the repository.
+
   ```bash
   git clone https://github.com/Zeddxx/ani-fire.git
   ```
 
 - Install the npm or yarn or pnpm.
+
   ```bash
   npm install or yarn add
   ```
 
 - Add the `.env` on root directory.
-> [!TIP]
-> path: root to anifire outside the app directory
+  > [!TIP]
+  > path: root to anifire outside the app directory
 
 ```bash
 ## This should be a aniwatch api of ritesh repo (without last slash /)
@@ -95,6 +95,7 @@ AUTH_SECRET=
 ```
 
 ## TODO'S
+
 - [ ] Add Dashboard
 - [x] User authentication.
 - [x] Add commenting feature

@@ -38,7 +38,7 @@ const AnimeSpotlightCarousel = ({
       }}
       plugins={[
         AutoPlay({
-          delay: 5000,
+          delay: 8000,
         }),
       ]}
       className="wrapper-container relative"

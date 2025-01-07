@@ -10,7 +10,7 @@ export default function HomeLayout({
   return (
     <>
       {heading && (
-        <h2 className="text-2xl font-semibold text-secondary">
+        <h2 className="text-2xl font-semibold capitalize text-secondary">
           {heading} <i>{italic}</i>
         </h2>
       )}
