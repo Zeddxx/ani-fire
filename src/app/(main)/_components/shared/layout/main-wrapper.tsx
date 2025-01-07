@@ -80,7 +80,7 @@ export default function MainWrapper({
               (genre, idx) => (
                 <Link
                   key={genre}
-                  href={`/${genre}`}
+                  href={`/genre/${genre}`}
                   onClick={() => setIsSidebarOpen(false)}
                   style={{
                     color: generateRandomColor(idx),

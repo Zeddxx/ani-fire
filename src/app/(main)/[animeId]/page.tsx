@@ -43,6 +43,7 @@ const AnimeInfo = ({
     },
     recommendedAnimes,
     relatedAnimes,
+    seasons,
   } = data;
 
   return (
@@ -114,7 +115,7 @@ const AnimeInfo = ({
 
               <span className="block h-px w-full bg-muted-foreground/50" />
 
-              <div className="flex items-start gap-4">
+              <div className="flex items-center gap-4">
                 <p className="text-[13px] font-medium">Genres:</p>
                 <div className="flex flex-wrap gap-1.5">
                   {moreInfo.genres.map((genre, idx) => (
@@ -139,6 +140,35 @@ const AnimeInfo = ({
           </div>
         </div>
       </section>
+      {(!!seasons.length as boolean) && (
+        <div className="wrapper-container mt-12 w-full space-y-4 px-4">
+          <HomeLayout heading="More Seasons">
+            <div className="grid w-full grid-cols-5 gap-3 lg:grid-cols-7">
+              {seasons.map((anime, idx) => (
+                <Link
+                  key={anime.id}
+                  href={`/${anime.id}`}
+                  data-current={anime.isCurrent as boolean}
+                  className="relative grid h-16 w-full place-items-center overflow-hidden rounded-xl data-[current=true]:border data-[current=true]:border-secondary"
+                >
+                  <Image
+                    src={anime.poster}
+                    alt={anime.name + idx}
+                    fill
+                    className="-z-10 h-full w-full object-cover blur-sm brightness-50"
+                  />
+                  <h6
+                    data-current={anime.isCurrent as boolean}
+                    className="text-sm font-semibold data-[current=true]:text-secondary"
+                  >
+                    {anime.title}
+                  </h6>
+                </Link>
+              ))}
+            </div>
+          </HomeLayout>
+        </div>
+      )}
       <div className="wrapper-container flex flex-col gap-9 px-4 xl:flex-row">
         <div className="w-full py-10 xl:basis-[75%]">
           <HomeLayout heading="Recommended for you">

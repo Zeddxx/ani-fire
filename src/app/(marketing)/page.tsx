@@ -4,11 +4,33 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TOP_SEARCHES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { SearchValidateSchema } from "@/lib/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Search } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { FaCircleArrowRight } from "react-icons/fa6";
+import { z } from "zod";
 
 export default function Marketing() {
+  const router = useRouter();
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+  } = useForm<z.infer<typeof SearchValidateSchema>>({
+    resolver: zodResolver(SearchValidateSchema),
+    defaultValues: {
+      query: "",
+    },
+  });
+
+  // function to redirect user to search page:
+  const onSubmit = handleSubmit(({ query }) => {
+    router.push(`/search?keyword=${query}`);
+  });
+
   return (
     <div className="w-full md:px-4">
       <div className="relative mx-auto h-auto w-full max-w-[1360px] overflow-hidden bg-white/5 px-8 py-14 backdrop-blur-md md:rounded-card">
@@ -17,16 +39,18 @@ export default function Marketing() {
             AniFire
           </Link>
 
-          <div className="flex items-center gap-3">
+          <form onSubmit={onSubmit} className="flex items-center gap-3">
             <Input
               type="text"
+              data-error={!!errors.query as boolean}
               placeholder="Search Anime..."
-              className="h-12 rounded-xl text-base"
+              className="h-12 rounded-xl text-base data-[error=true]:bg-red-100 data-[error=true]:text-red-500 data-[error=true]:outline-red-500"
+              {...register("query")}
             />
-            <Button variant="secondary" className="h-12 w-12">
+            <Button type="submit" variant="secondary" className="h-12 w-12">
               <Search className="!h-6 !w-6 text-black" />
             </Button>
-          </div>
+          </form>
 
           <div className="text-start text-sm leading-[1.885]">
             <span className="font-semibold">Top search:</span>{" "}
@@ -59,11 +83,6 @@ export default function Marketing() {
           </Link>
         </div>
 
-        <img
-          src="https://hianime.to/images/anw-min.webp?v=0.1"
-          alt="HiAnime image"
-          className="absolute right-0 top-0 -z-10 hidden h-full w-full object-cover opacity-50 [mask-image:linear-gradient(90deg,transparent,#fff,#fff)] md:block lg:max-w-2xl"
-        />
         <img
           src="https://hianime.to/images/anw-min.webp?v=0.1"
           alt="HiAnime image"

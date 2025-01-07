@@ -12,7 +12,7 @@ export default function manifest(): MetadataRoute.Manifest {
     icons: [
       {
         src: "/anifire-icon.png",
-        sizes: "any",
+        sizes: "68",
         type: "image/png",
         purpose: "maskable",
       },
