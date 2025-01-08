@@ -1,12 +1,5 @@
-> [!NOTE]
-> This is AniFire V2.
-
-> This project is under development 🪙.
-
-<img src="/public/ani-fire-cover.png" alt="banner image"/>
-
 <h1 align="center">
-  <img src="/public/assets/nav.gif" alt="anifire logo" width="66" /> </br>
+  <img align="center" src="/public/anifire-icon.png" alt="anifire logo" width="66" /> </br>
   Anifire: Anime streaming website
 </h1>
 
@@ -28,35 +21,22 @@
 </h2>
 <p align="center">
   Welcome to the Awesome Anime Website, your go-to destination for watching anime without any annoying ads. This project is created for educational purposes only.</br >
-  🎉 Dive into the captivating world of anime without interruptions! Our website provides a seamless streaming experience, free from distracting advertisements. Enjoy your favorite anime series and movies with ease.
+  🎉 Dive into the captivating world of anime without interruptions! This website provides a seamless streaming experience, free from distracting advertisements. Enjoy your favorite anime series and movies with ease.
 </p>
-
-<details>
-  <summary>
-    Some screenshot here or can say the demo is here!
-  </summary>
-  <img src="/public/cover.png" alt="intro image" />
-</details>
 
 ## Features
 
 - General
-  - Free ad-supported streaming service
-  - User-friendly interface
-  - Mobile responsive
-  - Fast page load
-  - Authentication
-  - Profile picture uploader
-  - update account
-  - Toggle the theme mode (currently its only `Light`, `Dark` and `System`)
-  - Toggle between sub and dub anime.
+  - [x] Free ad-supported streaming service.
+  - [x] User-friendly interface.
+  - [x] Mobile responsive.
+  - [ ] Toggle between sub and dub anime.
 - Watch Page
   - Player
-    - Hold and drag to forward or backward the video.
-    - Quality setting
-    - Hold to fast forward video by 3.0x speed
+    - [x] Quality setting
+    - [x] Hold to fast forward video by 3.0x speed
   - Watching History
-    - User can easily dive into the recents episodes they were watching
+    - [x] User can easily dive into the recents episodes they were watching
 
 ## For local development
 
@@ -72,7 +52,7 @@
 - Install the npm or yarn or pnpm.
 
   ```bash
-  npm install or yarn add
+  npm install or yarn add or pnpm install
   ```
 
 - Add the `.env` on root directory.
@@ -81,28 +61,18 @@
 
 ```bash
 ## This should be a aniwatch api of ritesh repo (without last slash /)
-NEXT_PUBLIC_ANIME_URL=
-
-## Goto uploadthing signin and create an project and you will get.
-UPLOADTHING_SECRET=
-UPLOADTHING_APP_ID=
-
-## database should any postgresSql (prefered: supabase)
-DATABASE_URL=
-
-## Generate authsecret online or by using the ssl.
-AUTH_SECRET=
+NEXT_PUBLIC_BASE_ANIME_URL=
 ```
 
 ## TODO'S
 
 - [ ] Add Dashboard
-- [x] User authentication.
-- [x] Add commenting feature
+- [ ] User authentication.
+- [ ] Add commenting feature
   - [ ] Add nested comments.
 - [ ] Implement admin dashboard functionality.
 - [ ] Share buttons.
-- [x] Added Dub functionality.
+- [ ] Added Dub functionality.
 - [x] Episode next and previous button.
   - [ ] Theater mode
   - [ ] Focus mode.
