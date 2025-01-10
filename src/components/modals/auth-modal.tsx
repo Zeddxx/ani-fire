@@ -239,7 +239,7 @@ export default function AuthModal() {
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="secondary" className="px-7 font-medium">
+        <Button variant="secondary" disabled className="px-7 font-medium">
           Login
         </Button>
       </DialogTrigger>
