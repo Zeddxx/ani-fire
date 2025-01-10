@@ -60,10 +60,15 @@ const WatchAnimePage = ({
   const { data: episodes, isLoading: isEpisodesLoading } = useQuery({
     queryKey: [QUERY_KEY.ANIME_EPISODES_BY_ID, episodeId],
     queryFn: () => getAnimeEpisodesById(episodeId),
+    enabled: !!episodeId,
   });
 
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEY.WATCH_ANIME_BY_EPISODE_ID, encodedEpisodesId],
+    queryKey: [
+      QUERY_KEY.WATCH_ANIME_BY_EPISODE_ID,
+      encodedEpisodesId,
+      episodeId,
+    ],
     queryFn: () =>
       getAnimeStreamingLinksByEpisodeId(
         encodedEpisodesId +
@@ -75,16 +80,19 @@ const WatchAnimePage = ({
               : "hd-1"
           }&category=${!servers?.sub.length ? "raw" : "sub"}`,
       ),
-    enabled: !!servers,
+    enabled: !!servers && !!encodedEpisodesId,
   });
 
   useEffect(() => {
     if (!animeInfo || !episodes) return;
 
-    const animeWatchedArray = allAnimeWatched || [];
+    const animeWatchedArray = [...(allAnimeWatched || [])];
+
+    // Find current episode number
     const currentEp = episodes?.episodes.find(
       (anime) => anime.episodeId === encodedEpisodesId,
     )?.number;
+
     const latestAnimeWatched = {
       id: episodeId,
       title: animeInfo?.anime.info.name!,
@@ -93,28 +101,38 @@ const WatchAnimePage = ({
       currentEp: currentEp,
       episodeId: encodedEpisodesId,
       totalEpisodes: episodes?.totalEpisodes!,
+      currentTime: 0,
+      duration: 0,
+      date: Date.now(),
     };
 
     const existingAnimeIndex = animeWatchedArray.findIndex(
       (anime: any) => anime.id === episodeId,
     );
 
+    // If the anime is already in the array, update it
     if (existingAnimeIndex !== -1) {
       animeWatchedArray[existingAnimeIndex] = {
         ...allAnimeWatched[existingAnimeIndex],
         currentEp: latestAnimeWatched.currentEp,
         episodeId: latestAnimeWatched.episodeId,
+        currentTime: latestAnimeWatched.currentTime,
+        duration: latestAnimeWatched.duration,
+        date: Date.now(),
       };
+
+      const [updatedAnime] = animeWatchedArray.splice(existingAnimeIndex, 1);
+      animeWatchedArray.unshift(updatedAnime);
     } else {
-      animeWatchedArray.push(latestAnimeWatched);
+      // If its a new anime, add to the beginning of the array
+      animeWatchedArray.unshift(latestAnimeWatched);
     }
     setHistory({
       latestAnimeWatched: latestAnimeWatched,
       latestWatchedDate: Date.now(),
       allAnimeWatched: animeWatchedArray,
-      currentTime: 0,
     });
-  }, [animeInfo, episodes]);
+  }, [episodeId, encodedEpisodesId]);
 
   const { next, prev } = getEpisodeNavigation(
     episodes ?? { episodes: [], totalEpisodes: 0 },
@@ -196,7 +214,7 @@ const WatchAnimePage = ({
               <button
                 disabled={!prev}
                 onClick={() => router.push(`/watch/${prev}`)}
-                className="flex items-center gap-1.5 font-normal hover:text-primary"
+                className="flex items-center gap-1.5 font-normal hover:text-secondary"
               >
                 <FastForward className="h-3 w-3 rotate-180" /> Prev
               </button>
@@ -204,7 +222,7 @@ const WatchAnimePage = ({
               <button
                 disabled={!next}
                 onClick={() => router.push(`/watch/${next}`)}
-                className="flex items-center gap-1.5 font-normal hover:text-primary"
+                className="flex items-center gap-1.5 font-normal hover:text-secondary"
               >
                 Next <FastForward className="h-3 w-3" />
               </button>

@@ -9,19 +9,5 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#201f31",
     theme_color: "#201f31",
-    icons: [
-      {
-        src: "/anifire-icon.png",
-        sizes: "68",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/anifire-icon.png",
-        sizes: "any",
-        type: "image/png",
-        purpose: "any",
-      },
-    ],
   };
 }

@@ -13,6 +13,10 @@ export default function GenreAnime({
   animes: SharedAnimeType[];
   title: string;
 }) {
+  const encodedTitle = title
+    .replace(" ", "-")
+    .toLowerCase()
+    .replace("-anime", "");
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-medium text-secondary">{title}</h2>
@@ -48,8 +52,8 @@ export default function GenreAnime({
       ))}
 
       <Link
-        href={`/`}
-        className="flex w-fit items-center gap-1 text-sm text-white"
+        href={`/category/${encodedTitle}`}
+        className="flex w-fit items-center gap-1 text-sm text-white duration-200 hover:text-secondary"
       >
         View more <ChevronRight className="h-5 w-5" />
       </Link>

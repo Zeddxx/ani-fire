@@ -4,6 +4,7 @@ import { getSearchedAnimeByName } from "@/api/anime";
 
 import AnimeCard from "@/components/shared/anime-card";
 import AnimeLists from "@/components/shared/anime-list";
+import CategorySkeleton from "@/components/skeleton/category-skeleton";
 import usePagination from "@/hooks/use-pagination";
 import { GENRES } from "@/lib/constants";
 import { QUERY_KEY } from "@/lib/query-key";
@@ -48,7 +49,9 @@ export default function Page() {
     hasNextPage: data?.hasNextPage as boolean,
   });
 
-  if (isLoading) return <p>Searching Library for {keyword}</p>;
+  if (isLoading) {
+    return <CategorySkeleton category={`Search Results For: ${keyword}`} />;
+  }
 
   return (
     <div className="wrapper-container flex flex-col gap-7 px-4 py-4 xl:mt-14 xl:flex-row">

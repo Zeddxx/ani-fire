@@ -143,23 +143,23 @@ const AnimeInfo = ({
       {(!!seasons.length as boolean) && (
         <div className="wrapper-container mt-12 w-full space-y-4 px-4">
           <HomeLayout heading="More Seasons">
-            <div className="grid w-full grid-cols-5 gap-3 lg:grid-cols-7">
+            <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7 xl:grid-cols-5">
               {seasons.map((anime, idx) => (
                 <Link
                   key={anime.id}
                   href={`/${anime.id}`}
                   data-current={anime.isCurrent as boolean}
-                  className="relative grid h-16 w-full place-items-center overflow-hidden rounded-xl data-[current=true]:border data-[current=true]:border-secondary"
+                  className="relative grid h-16 w-full place-items-center overflow-hidden rounded-xl px-4 data-[current=true]:border-2 data-[current=true]:border-secondary"
                 >
                   <Image
                     src={anime.poster}
                     alt={anime.name + idx}
                     fill
-                    className="-z-10 h-full w-full object-cover blur-sm brightness-50"
+                    className="-z-10 h-full w-full object-cover blur-sm brightness-[.3]"
                   />
                   <h6
                     data-current={anime.isCurrent as boolean}
-                    className="text-sm font-semibold data-[current=true]:text-secondary"
+                    className="line-clamp-1 text-sm font-medium data-[current=true]:text-secondary"
                   >
                     {anime.title}
                   </h6>

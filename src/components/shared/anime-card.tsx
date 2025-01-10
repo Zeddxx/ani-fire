@@ -16,7 +16,7 @@ export default function AnimeCard({
   showEpisodes = true,
   ...props
 }: AnimeCardProps) {
-  const { id, episodes, name, poster, type, duration } = props;
+  const { id, episodes, name, poster, type, duration, rating } = props;
   return (
     <div key={id} className="flex flex-col gap-1">
       <HoveredContent animeId={id}>
@@ -33,6 +33,12 @@ export default function AnimeCard({
           {showEpisodes && (
             <div className="absolute bottom-2 left-2 z-10">
               <Badge episodes={episodes} />
+            </div>
+          )}
+
+          {rating && (
+            <div className="absolute left-2 top-2 z-10 rounded bg-orange-600 px-2 py-1 text-xs font-medium">
+              {rating}
             </div>
           )}
           <FaPlay className="invisible absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 group-hover:visible" />
