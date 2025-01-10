@@ -10,6 +10,10 @@ import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearch } from "react-icons/io5";
 
+import { logout } from "@/actions/logout";
+import SignedIn from "@/components/auth/signed-in";
+import SignedOut from "@/components/auth/signed-out";
+import AuthModal from "@/components/modals/auth-modal";
 import { SearchValidateSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -22,10 +26,12 @@ export default function Navbar() {
     useSiteStore();
 
   const { isScrolled } = useScroll();
+
   const [query] = useQueryState("keyword", {
     defaultValue: "",
     clearOnDefault: true,
   });
+
   const router = useRouter();
 
   const {
@@ -35,7 +41,7 @@ export default function Navbar() {
   } = useForm<z.infer<typeof SearchValidateSchema>>({
     resolver: zodResolver(SearchValidateSchema),
     defaultValues: {
-      query: query,
+      query: query ?? "",
     },
   });
 
@@ -47,10 +53,10 @@ export default function Navbar() {
   return (
     <nav
       data-scrolled={isScrolled}
-      className="relative inset-x-0 top-0 z-[9999] w-full bg-primary-100 px-4 py-2 md:h-16 xl:fixed xl:bg-transparent xl:data-[scrolled=true]:bg-primary/80 xl:data-[scrolled=true]:backdrop-blur-md"
+      className="relative inset-x-0 top-0 z-[999] w-full bg-primary-100 px-4 py-2 md:h-16 xl:fixed xl:bg-transparent xl:data-[scrolled=true]:bg-primary/80 xl:data-[scrolled=true]:backdrop-blur-md"
     >
       <div className="mx-auto flex h-full max-w-screen-3xl items-center justify-between">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 md:gap-6">
           <button
             onClick={() => setIsSidebarOpen(true)}
             className="mt-1.5 text-white"
@@ -60,13 +66,12 @@ export default function Navbar() {
 
           <Link
             href="/"
-            className="text-xl font-semibold text-white xl:shrink-0"
+            className="relative h-8 w-24 text-xl font-semibold text-white sm:w-32 xl:shrink-0"
           >
             <Image
               src="/assets/logo/an!fire.png"
               alt="Anifire logo"
-              width={140}
-              height={30}
+              fill
               className="object-contain"
             />
           </Link>
@@ -103,9 +108,16 @@ export default function Navbar() {
             />
           </Button>
 
-          <Button variant="secondary" className="px-7 font-medium">
-            Login
-          </Button>
+          <SignedOut>
+            <AuthModal />
+          </SignedOut>
+
+          <SignedIn>
+            <div
+              onClick={() => logout()}
+              className="h-8 w-8 rounded-full bg-white"
+            ></div>
+          </SignedIn>
         </div>
       </div>
 

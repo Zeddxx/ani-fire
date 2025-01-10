@@ -1,13 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useHistory } from "@/store/history";
 import { usePlayerStore } from "@/store/player-store";
 import { AnimeEpisodes } from "@/types/anime";
 import ArtPlayer from "artplayer";
 import artPlayerPluginChromecast from "artplayer-plugin-chromecast";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 import { useRouter } from "next/navigation";
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 
 interface PlayerProps {
   option: ArtPlayer["Option"];
@@ -32,6 +33,8 @@ interface PlayerProps {
   episodeId: string;
 }
 
+ArtPlayer.LOG_VERSION = false;
+
 const Player = ({
   option,
   getInstance,
@@ -46,6 +49,14 @@ const Player = ({
   const router = useRouter();
 
   const { autoNext, autoSkip, setAutoNext, setAutoSkip } = usePlayerStore();
+  const { setCurrentTime, allAnimeWatched } = useHistory();
+
+  const time = useMemo(() => {
+    return (
+      allAnimeWatched.find((anime) => anime.episodeId === episodeId)
+        ?.currentTime ?? 0
+    );
+  }, [allAnimeWatched]);
 
   const skipTimeHighlight = () => {
     if (intro && outro) {
@@ -81,6 +92,14 @@ const Player = ({
       return [];
     }
   };
+
+  const handleTimeUpdate = useCallback(
+    (art: ArtPlayer) => {
+      const currentTime = art.currentTime;
+      setCurrentTime(episodeId, currentTime, art.duration);
+    },
+    [setCurrentTime, episodeId],
+  );
 
   const handleVideoUpdate = useCallback(
     (art: ArtPlayer) => {
@@ -279,8 +298,16 @@ const Player = ({
       },
     });
 
+    art.on("ready", () => {
+      art.seek = time;
+    });
+
     art.on("video:timeupdate", () => handleVideoUpdate(art));
     art.on("video:ended", () => handleOnVideoEnd(art));
+
+    art.on("video:progress", () => {
+      handleTimeUpdate(art);
+    });
 
     if (getInstance && typeof getInstance === "function") {
       getInstance(art);

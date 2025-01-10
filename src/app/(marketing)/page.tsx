@@ -2,7 +2,7 @@
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { TOP_SEARCHES } from "@/lib/constants";
+import { LOGS, TOP_SEARCHES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { SearchValidateSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +47,11 @@ export default function Marketing() {
               className="h-12 rounded-xl text-base data-[error=true]:bg-red-100 data-[error=true]:text-red-500 data-[error=true]:outline-red-500"
               {...register("query")}
             />
-            <Button type="submit" variant="secondary" className="h-12 w-12">
+            <Button
+              type="submit"
+              variant="secondary"
+              className="aspect-square !h-12"
+            >
               <Search className="!h-6 !w-6 text-black" />
             </Button>
           </form>
@@ -88,6 +92,44 @@ export default function Marketing() {
           alt="HiAnime image"
           className="absolute right-0 top-0 -z-10 hidden h-full w-full object-cover opacity-50 [mask-image:linear-gradient(90deg,transparent,#fff,#fff)] md:block lg:max-w-2xl"
         />
+      </div>
+
+      <div className="mx-auto my-8 max-w-[1360px]">
+        <h2 className="mb-6 text-2xl font-semibold text-secondary">
+          Change Logs:
+        </h2>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-secondary">
+            Added Features:
+          </h3>
+          <ul className="list-disc pl-8">
+            {LOGS.filter(({ type }) => type === "add").map(
+              ({ feature }, idx) => (
+                <li key={idx}>{feature}</li>
+              ),
+            )}
+          </ul>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-secondary">Fixes:</h3>
+          <ul className="list-disc pl-8">
+            {LOGS.filter(({ type }) => type === "fix").map(
+              ({ feature }, idx) => (
+                <li key={idx}>{feature}</li>
+              ),
+            )}
+          </ul>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-secondary">Changes:</h3>
+          <ul className="list-disc pl-8">
+            {LOGS.filter(({ type }) => type === "change").map(
+              ({ feature }, idx) => (
+                <li key={idx}>{feature}</li>
+              ),
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -200,3 +200,37 @@ export const catagories: string[] = [
   "tv",
   "completed",
 ] as const;
+
+export const LOGS: Array<{ type: "fix" | "add" | "change"; feature: string }> =
+  [
+    {
+      type: "add",
+      feature:
+        "Added history for the latest watched anime by resuming from where you left off.",
+    },
+    {
+      type: "add",
+      feature: "Loading skeleton for several pages.",
+    },
+    {
+      type: "add",
+      feature: "Auth functionality (still in the development phase).",
+    },
+    {
+      type: "fix",
+      feature: "Fixed the size of the Navbar anifire logo for mobile.",
+    },
+    {
+      type: "fix",
+      feature: "Fixed the height of the main landing page search button.",
+    },
+    {
+      type: "change",
+      feature:
+        "Changed the 'Latest Watching' section to show all watched shows.",
+    },
+    {
+      type: "change",
+      feature: "Changed the speed of the anime spotlight carousel.",
+    },
+  ];
