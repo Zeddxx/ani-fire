@@ -5,8 +5,10 @@ import { MdArrowBackIos } from "react-icons/md";
 
 import { useSiteStore } from "@/store/site";
 
+import useScroll from "@/hooks/use-scroll";
 import { GENRES, SidebarItems } from "@/lib/constants";
 import { cn, generateRandomColor } from "@/lib/utils";
+import { IoIosArrowUp } from "react-icons/io";
 
 export default function MainWrapper({
   children,
@@ -16,6 +18,8 @@ export default function MainWrapper({
   const { isSidebarOpen, setIsSidebarOpen } = useSiteStore();
   const sidebarRef = useRef<React.ElementRef<"aside">>(null);
   const [isShowAllGenre, setIsShowAllGenre] = useState(false);
+
+  const { isScrolled } = useScroll();
 
   useEffect(() => {
     if (!sidebarRef.current) return;
@@ -107,6 +111,17 @@ export default function MainWrapper({
         <div className="fixed inset-0 z-[9999] h-[100svh] w-screen bg-primary/30 backdrop-blur-sm" />
       )}
       {children}
+
+      {isScrolled && (
+        <button
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="fixed bottom-6 right-6 z-[999] grid h-14 w-14 place-items-center rounded-full bg-secondary text-black"
+        >
+          <IoIosArrowUp className="h-7 w-7" />
+        </button>
+      )}
     </main>
   );
 }
