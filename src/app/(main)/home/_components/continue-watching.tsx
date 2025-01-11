@@ -1,15 +1,43 @@
 "use client";
 
-import { useHistory } from "@/store/history";
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useMemo } from "react";
+
 import { FaPlay } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa6";
+
+import { useHistory } from "@/store/history";
+
+import { Button } from "@/components/ui/button";
 
 const ContinueWatching = () => {
-  const { allAnimeWatched } = useHistory();
+  const { allAnimeWatched, setHistory } = useHistory();
 
   // sorting anime by its latest watch date in descending order.
-  const sortedAnime = allAnimeWatched.sort((a, b) => b.date - a.date);
+  const sortedAnime = useMemo(
+    () => allAnimeWatched.sort((a, b) => b.date - a.date),
+    [allAnimeWatched],
+  );
+
+  // simple callback function to remove watch history
+  const handleDeleteHistory = useCallback(
+    (animeId: string) => {
+      // returns all animes whose ids will not match the given animeid.
+      const updateAnimeList = allAnimeWatched.filter(
+        (anime) => anime.id !== animeId,
+      );
+
+      // adding the updated anime list
+      setHistory({
+        allAnimeWatched: updateAnimeList,
+      });
+    },
+    [allAnimeWatched],
+  );
+
+  // if the watch history is empty return nothing...
+  if (!allAnimeWatched.length) return null;
 
   return (
     <div className="wrapper-container z-10 my-6 px-4">
@@ -22,15 +50,16 @@ const ContinueWatching = () => {
           const progress =
             Number((anime.currentTime / anime.duration).toFixed(2)) * 100;
           return (
-            <div key={anime.id} className="flex flex-col gap-2">
+            <div key={anime.id} className="relative flex flex-col gap-2">
               <Link
                 href={`/watch/${anime.episodeId}`}
-                className="group relative aspect-[10/12] w-full overflow-hidden sm:aspect-[12/16]"
+                className="group peer relative z-10 aspect-[10/12] w-full overflow-hidden sm:aspect-[12/16]"
               >
                 <Image
                   src={anime.imgSrc}
                   alt={`${anime.title} poster`}
                   fill
+                  priority
                   className="h-full w-full object-cover duration-200 [mask-image:linear-gradient(180deg,#fff,#fff,#fff,transparent)] group-hover:blur-md"
                 />
 
@@ -55,6 +84,16 @@ const ContinueWatching = () => {
               >
                 {anime.title}
               </Link>
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteHistory(anime.id);
+                }}
+                variant="outline"
+                className="invisible absolute right-2 top-2 z-20 h-8 w-8 rounded hover:visible peer-hover:visible"
+              >
+                <FaTrash className="h-5 w-5" />
+              </Button>
             </div>
           );
         })}

@@ -128,11 +128,9 @@ const WatchAnimePage = ({
       animeWatchedArray.unshift(latestAnimeWatched);
     }
     setHistory({
-      latestAnimeWatched: latestAnimeWatched,
-      latestWatchedDate: Date.now(),
       allAnimeWatched: animeWatchedArray,
     });
-  }, [episodeId, encodedEpisodesId]);
+  }, [episodeId, animeInfo, episodes]);
 
   const { next, prev } = getEpisodeNavigation(
     episodes ?? { episodes: [], totalEpisodes: 0 },
@@ -147,6 +145,7 @@ const WatchAnimePage = ({
           alt={"anime poster"}
           fill
           objectFit="cover"
+          loading="lazy"
           className="absolute opacity-35 mix-blend-multiply blur-lg"
         />
       </div>
