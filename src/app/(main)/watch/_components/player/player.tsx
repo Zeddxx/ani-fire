@@ -299,6 +299,7 @@ const Player = ({
     });
 
     art.on("ready", () => {
+      // seet to the previous time...
       art.seek = time;
     });
 

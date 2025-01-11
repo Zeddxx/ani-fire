@@ -114,6 +114,7 @@ const AnimeSpotlightCarousel = ({
                   src={anime.poster}
                   alt={anime.name}
                   fill
+                  priority
                   className="h-full w-full object-cover object-top [mask-image:linear-gradient(90deg,transparent,white,transparent)]"
                 />
               </div>

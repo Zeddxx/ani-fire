@@ -28,7 +28,7 @@ export default function GenreAnime({
                 <CustomImage
                   src={anime.poster}
                   alt={anime.name}
-                  loading="lazy"
+                  priority
                   fill
                   className="overflow-hidden rounded-md object-cover"
                 />

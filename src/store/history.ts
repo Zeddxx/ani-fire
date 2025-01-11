@@ -9,22 +9,14 @@ interface AnimeWatchHistory extends AnimeEntry {
 }
 
 type HistoryStoreState = {
-  latestWatchedDate: number;
-  latestAnimeWatched: AnimeWatchHistory | {};
   allAnimeWatched: AnimeWatchHistory[];
-  setHistory: (state: {
-    latestWatchedDate: number;
-    latestAnimeWatched: AnimeWatchHistory | {};
-    allAnimeWatched: AnimeWatchHistory[];
-  }) => void;
+  setHistory: (state: { allAnimeWatched: AnimeWatchHistory[] }) => void;
   setCurrentTime: (episodeId: string, value: number, duration: number) => void;
 };
 
 export const useHistory = create<HistoryStoreState>()(
   persist(
     (set) => ({
-      latestAnimeWatched: {},
-      latestWatchedDate: 0,
       allAnimeWatched: [],
       setHistory: (state) => set(state),
       setCurrentTime: (episodeId, value, duration) =>

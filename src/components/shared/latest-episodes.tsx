@@ -46,6 +46,7 @@ export default function LatestEpisodes({
                 src={poster}
                 alt={`${name} poster`}
                 fill
+                priority
                 className="h-full w-full object-cover [mask-image:linear-gradient(180deg,#fff,#fff,#fff,transparent)]"
               />
               <div className="absolute bottom-2 left-2">

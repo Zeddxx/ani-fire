@@ -35,7 +35,7 @@ const TrendingCarousel = ({ animes }: { animes: TrendingAnime[] }) => {
                   href={`/${id}`}
                   className="relative aspect-[8/10] h-full w-[16vw] min-w-44 max-w-52 sm:aspect-[12/16]"
                 >
-                  <CustomImage src={poster} alt={name} fill />
+                  <CustomImage priority src={poster} alt={name} fill />
                 </Link>
               </HoveredContent>
             </div>
