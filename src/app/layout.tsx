@@ -1,4 +1,5 @@
 import AppProvider from "@/providers/app-provider";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={`${poppins.className} antialiased`}>
         <AppProvider>
           <main>{children}</main>
+          <Analytics />
         </AppProvider>
       </body>
     </html>
