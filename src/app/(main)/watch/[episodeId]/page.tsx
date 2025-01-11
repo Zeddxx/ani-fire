@@ -84,7 +84,7 @@ const WatchAnimePage = ({
   });
 
   useEffect(() => {
-    if (!animeInfo || !episodes) return;
+    if (!animeInfo || !episodes || !encodedEpisodesId) return;
 
     const animeWatchedArray = [...(allAnimeWatched || [])];
 
@@ -130,7 +130,7 @@ const WatchAnimePage = ({
     setHistory({
       allAnimeWatched: animeWatchedArray,
     });
-  }, [episodeId, animeInfo, episodes]);
+  }, [episodeId, animeInfo, episodes, encodedEpisodesId]);
 
   const { next, prev } = getEpisodeNavigation(
     episodes ?? { episodes: [], totalEpisodes: 0 },
