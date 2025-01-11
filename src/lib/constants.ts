@@ -89,7 +89,7 @@ export const LANDING_NAV_ITEMS = [
   },
   {
     name: "Movies",
-    href: "/category/movies",
+    href: "/category/movie",
   },
   {
     name: "TV Shows",
@@ -125,6 +125,10 @@ export const SidebarItems: Array<{ title: string; href: string }> = [
   {
     title: "TV Series",
     href: "/category/tv",
+  },
+  {
+    title: "Movies",
+    href: "/category/movie",
   },
   {
     title: "OVAs",
