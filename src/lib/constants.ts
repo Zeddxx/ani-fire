@@ -10,6 +10,11 @@ export const BASE_URL = () => {
   }
 };
 
+export const URI =
+  process.env.NODE_ENV !== "production"
+    ? "http://localhost:3000"
+    : "https://ani-fire.vercel.app";
+
 export const FILTERS = {
   type: ["all", "movies", "tv", "ova"],
   status: ["all", "finished-airing", "currently-airing", "not-yet-aired"],

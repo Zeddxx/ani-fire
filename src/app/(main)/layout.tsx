@@ -1,6 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import MainWrapper from "./_components/shared/layout/main-wrapper";
 import Navbar from "./_components/shared/navbar";
+
+export const metadata: Metadata = {
+  title: "Home | AniFire",
+  description:
+    "Explore the trending anime, spotlight anime, latest anime & many more.",
+  metadataBase: new URL("https://ani-fire.vercel.app/home"),
+  keywords: [
+    "anifire",
+    "anime streaming website",
+    "trending anime",
+    "latest anime",
+    "popular anime",
+  ],
+};
 
 export default function MainRootLayout({
   children,
