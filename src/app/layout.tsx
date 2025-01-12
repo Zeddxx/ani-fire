@@ -15,6 +15,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("http://ani-fire.vercel.app"),
   title: "AniFire | Watch your favorite anime",
   description: "Watch your favorite anime for free without any ads & popups.",
+  openGraph: {
+    images: "/og-image.png",
+  },
+  applicationName: "AniFire",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+  },
 };
 
 export default function RootLayout({
