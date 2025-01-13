@@ -61,7 +61,7 @@
 
 ```bash
 ## This should be a aniwatch api of ritesh repo (without last slash /)
-NEXT_PUBLIC_BASE_ANIME_URL=
+NEXT_PUBLIC_BASE_ANIME_URL=E.G -> base_url/api/v2/hianime
 ```
 
 ## TODO'S
