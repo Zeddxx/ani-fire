@@ -9,6 +9,7 @@ import {
   ScheduledAnimes,
   SharedAnimeType,
   Top10Animes,
+  TopAiringAnime,
   TopUpcomingAnime,
 } from "@/types/anime";
 import axios from "axios";
@@ -160,6 +161,28 @@ export const getAnimeByCategories = async (category: string, page: number) => {
     currentPage: number;
     totalPages: number;
     hasNextPage: boolean;
+  }>;
+
+  if (!res.success) {
+    throw new Error(res.message);
+  }
+
+  return res.data;
+};
+
+export const getAnimeByGenre = async (genre: string, page: number) => {
+  const res = (await fetch(BASE_URL() + `/genre/${genre}?page=${page}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json())) as ApiResponse<{
+    genreName: string;
+    animes: TopUpcomingAnime[];
+    genres: string[];
+    topAiringAnimes: TopAiringAnime[];
+    totalPages: number;
+    hasNextPage: boolean;
+    currentPage: number;
   }>;
 
   if (!res.success) {

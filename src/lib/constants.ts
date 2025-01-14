@@ -183,7 +183,7 @@ export const GENRES: string[] = [
   "shoujo",
   "shoujo-ai",
   "shounen",
-  "shounen-api",
+  "shounen-ai",
   "slice-of-life",
   "space",
   "sports",

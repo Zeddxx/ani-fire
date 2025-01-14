@@ -163,3 +163,17 @@ export const range = (start: number, end: number) => {
 export function generateRandomColor(idx: number) {
   return COLORS[idx % COLORS.length];
 }
+
+/**
+ * Function which takes a string and return capatalize strings
+ * @param { value: string }
+ * @return String
+ */
+export function capitalize(value: string): string {
+  const splittedStrings: Array<string> = value.split(" "); // returns 'string is here' --> ["string", "is", "here"]
+  const datas = splittedStrings.map(
+    (val) => val.slice(0, 1).toUpperCase() + val.slice(1, val.length),
+  );
+
+  return datas.join(" ");
+}
