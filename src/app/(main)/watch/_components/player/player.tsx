@@ -8,7 +8,7 @@ import ArtPlayer from "artplayer";
 import artPlayerPluginChromecast from "artplayer-plugin-chromecast";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 import { useRouter } from "next/navigation";
-import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 interface PlayerProps {
   option: ArtPlayer["Option"];
@@ -48,7 +48,7 @@ const Player = ({
   const artRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
 
-  const { autoNext, autoSkip, setAutoNext, setAutoSkip } = usePlayerStore();
+  const { autoNext, autoSkip } = usePlayerStore();
   const { setCurrentTime, allAnimeWatched } = useHistory();
 
   const time = useMemo(() => {
@@ -56,7 +56,7 @@ const Player = ({
       allAnimeWatched.find((anime) => anime.episodeId === episodeId)
         ?.currentTime ?? 0
     );
-  }, [allAnimeWatched]);
+  }, []);
 
   const skipTimeHighlight = () => {
     if (intro && outro) {
@@ -93,13 +93,10 @@ const Player = ({
     }
   };
 
-  const handleTimeUpdate = useCallback(
-    (art: ArtPlayer) => {
-      const currentTime = art.currentTime;
-      setCurrentTime(episodeId, currentTime, art.duration);
-    },
-    [setCurrentTime, episodeId],
-  );
+  const handleTimeUpdate = useCallback((art: ArtPlayer) => {
+    const currentTime = art.currentTime;
+    setCurrentTime(episodeId, currentTime, art.duration);
+  }, []);
 
   const handleVideoUpdate = useCallback(
     (art: ArtPlayer) => {
@@ -276,27 +273,27 @@ const Player = ({
       art.template.$subtitle.innerHTML = cue[0].text;
     });
 
-    art.setting.add({
-      html: "Auto Skip (OP&ED)",
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#ffffff" d="M6 9.83L8.17 12L6 14.17V9.83M4 5v14l7-7m9-7h-2v14h2m-7-9.17L15.17 12L13 14.17V9.83M11 5v14l7-7"/></svg>',
-      switch: autoSkip === false ? false : true,
-      onSwitch: function (item) {
-        const nextState = !item.switch;
-        setAutoSkip(nextState);
-        return nextState;
-      },
-    });
+    // art.setting.add({
+    //   html: "Auto Skip (OP&ED)",
+    //   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#ffffff" d="M6 9.83L8.17 12L6 14.17V9.83M4 5v14l7-7m9-7h-2v14h2m-7-9.17L15.17 12L13 14.17V9.83M11 5v14l7-7"/></svg>',
+    //   switch: autoSkip === false ? false : true,
+    //   onSwitch: function (item) {
+    //     const nextState = !item.switch;
+    //     setAutoSkip(nextState);
+    //     return nextState;
+    //   },
+    // });
 
-    art.setting.add({
-      html: "Auto Play",
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#ffffff" d="M16 18h2V6h-2M6 18l8.5-6L6 6v12Z"/></svg>',
-      switch: autoNext === false ? false : true,
-      onSwitch: function (item) {
-        const nextState = !item.switch;
-        setAutoNext(nextState);
-        return nextState;
-      },
-    });
+    // art.setting.add({
+    //   html: "Auto Play",
+    //   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#ffffff" d="M16 18h2V6h-2M6 18l8.5-6L6 6v12Z"/></svg>',
+    //   switch: autoNext === false ? false : true,
+    //   onSwitch: function (item) {
+    //     const nextState = !item.switch;
+    //     setAutoNext(nextState);
+    //     return nextState;
+    //   },
+    // });
 
     art.on("ready", () => {
       // seet to the previous time...
@@ -306,7 +303,7 @@ const Player = ({
     art.on("video:timeupdate", () => handleVideoUpdate(art));
     art.on("video:ended", () => handleOnVideoEnd(art));
 
-    art.on("video:progress", () => {
+    art.on("video:timeupdate", () => {
       handleTimeUpdate(art);
     });
 
@@ -324,4 +321,4 @@ const Player = ({
   return <div ref={artRef} className={cn("", className)} />;
 };
 
-export default memo(Player);
+export default Player;
