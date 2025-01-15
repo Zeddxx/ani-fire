@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 // important libraries imports
 import { useQuery } from "@tanstack/react-query";
-import { FastForward } from "lucide-react";
 
 // APIs functions imports
 import {
@@ -19,11 +17,9 @@ import {
 
 // constants import
 import { QUERY_KEY } from "@/lib/query-key";
-import { getEpisodeNavigation } from "@/lib/utils";
 
 // store imports
 import { useHistory } from "@/store/history";
-import { usePlayerStore } from "@/store/player-store";
 
 // components imports
 import Episodes from "@/app/(main)/watch/_components/episodes";
@@ -32,23 +28,29 @@ import BeatLoader from "@/components/shared/loader";
 import OtherInfos from "@/components/shared/other-infos";
 import Description from "@/components/ui/info/description";
 import Separator from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { usePlayerStore } from "@/store/player-store";
+import { useQueryState } from "nuqs";
+import PlayerControls from "../_components/player/player-controls";
 
 const WatchAnimePage = ({
   params: { episodeId },
-  searchParams: { ep },
 }: {
   params: { episodeId: string };
-  searchParams: { [key: string]: string };
 }) => {
-  // to create an full url /animeId?ep=episode_id
-  const encodedEpisodesId = episodeId + `?ep=${ep}`;
-  const router = useRouter();
+  const [ep] = useQueryState("ep");
 
+  // to create an full url /animeId?ep=episode_id
+  const encodedEpisodesId = useMemo(
+    () => episodeId + `?ep=${ep}`,
+    [ep, episodeId],
+  );
+
+  const { light } = usePlayerStore();
   const { setHistory, allAnimeWatched } = useHistory();
-  const { autoNext, autoSkip } = usePlayerStore();
 
   const { data: servers } = useQuery({
-    queryKey: ["ANIME_EPISODE_SERVERS", episodeId],
+    queryKey: ["ANIME_EPISODE_SERVERS", encodedEpisodesId],
     queryFn: () => getAnimeEpisodeServers(encodedEpisodesId),
   });
 
@@ -64,11 +66,7 @@ const WatchAnimePage = ({
   });
 
   const { data, isLoading } = useQuery({
-    queryKey: [
-      QUERY_KEY.WATCH_ANIME_BY_EPISODE_ID,
-      encodedEpisodesId,
-      episodeId,
-    ],
+    queryKey: [QUERY_KEY.WATCH_ANIME_BY_EPISODE_ID, encodedEpisodesId],
     queryFn: () =>
       getAnimeStreamingLinksByEpisodeId(
         encodedEpisodesId +
@@ -110,15 +108,17 @@ const WatchAnimePage = ({
       (anime: any) => anime.id === episodeId,
     );
 
+    const episodeExists = animeWatchedArray.find(
+      (anime) => anime.episodeId === encodedEpisodesId,
+    );
+
     // If the anime is already in the array, update it
     if (existingAnimeIndex !== -1) {
       animeWatchedArray[existingAnimeIndex] = {
         ...allAnimeWatched[existingAnimeIndex],
         currentEp: latestAnimeWatched.currentEp,
         episodeId: latestAnimeWatched.episodeId,
-        currentTime: latestAnimeWatched.currentTime,
-        duration: latestAnimeWatched.duration,
-        date: Date.now(),
+        currentTime: !!episodeExists ? episodeExists.currentTime : 0,
       };
 
       const [updatedAnime] = animeWatchedArray.splice(existingAnimeIndex, 1);
@@ -130,12 +130,7 @@ const WatchAnimePage = ({
     setHistory({
       allAnimeWatched: animeWatchedArray,
     });
-  }, [episodeId, animeInfo, episodes, encodedEpisodesId]);
-
-  const { next, prev } = getEpisodeNavigation(
-    episodes ?? { episodes: [], totalEpisodes: 0 },
-    encodedEpisodesId,
-  );
+  }, [episodeId, animeInfo, episodes, ep]);
 
   return (
     <div className="relative xl:mt-16 xl:py-2">
@@ -152,7 +147,7 @@ const WatchAnimePage = ({
       <div className="wrapper-container hidden w-full items-center gap-x-2 px-4 text-sm sm:gap-x-4 xl:px-0 2xl:my-4 2xl:flex">
         <Link href="/home">Home</Link>
         <Separator type="dot" />
-        <Link href={`/type/${animeInfo?.anime.info.stats.type}`}>
+        <Link href={`/category/${animeInfo?.anime.info.stats.type}`}>
           {animeInfo?.anime.info.stats.type}
         </Link>
         <Separator type="dot" />
@@ -163,7 +158,7 @@ const WatchAnimePage = ({
           {animeInfo?.anime.info.name}
         </Link>
       </div>
-      <div className="wrapper-container flex w-full flex-col gap-1.5 bg-primary-500 sm:px-4 xl:px-0 3xl:flex-row">
+      <div className="wrapper-container flex w-full flex-col gap-1.5 bg-primary-500 xl:px-0 3xl:flex-row">
         <div className="mx-auto h-full w-full max-w-7xl overflow-y-scroll 3xl:basis-[17%]">
           {isEpisodesLoading || !episodes ? (
             <div className="grid h-full min-h-[376px] w-full shrink-0 flex-col place-items-center lg:min-h-[590px] 3xl:min-h-[716px]">
@@ -174,7 +169,12 @@ const WatchAnimePage = ({
           )}
         </div>
 
-        <div className="order-first mx-auto w-full max-w-7xl shrink-0 3xl:order-none 3xl:basis-[63%]">
+        <div
+          className={cn(
+            "order-first mx-auto w-full max-w-7xl shrink-0 3xl:order-none 3xl:basis-[63%]",
+            light && "z-[9999]",
+          )}
+        >
           {isLoading || !episodes || !data ? (
             <div className="grid aspect-video h-max w-full place-items-center bg-black">
               <BeatLoader childClassName="h-3.5 w-3.5" />
@@ -187,48 +187,9 @@ const WatchAnimePage = ({
             />
           )}
 
-          <div className="flex w-full items-center justify-between p-4">
-            <div className="flex items-center gap-3 text-sm">
-              <p
-                // onClick={() => setAutoNext(!autoNext)}
-                className="flex items-center gap-1.5 font-normal"
-              >
-                Auto Next{" "}
-                <span className="text-yellow-500">
-                  {autoNext ? "On" : "Off"}
-                </span>
-              </p>
-
-              <p
-                // onClick={() => setAutoSkip(!autoSkip)}
-                className="flex items-center gap-1.5 font-normal"
-              >
-                Auto Skip Intro{" "}
-                <span className="text-yellow-500">
-                  {autoSkip ? "On" : "Off"}
-                </span>
-              </p>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <button
-                disabled={!prev}
-                onClick={() => router.push(`/watch/${prev}`)}
-                className="flex items-center gap-1.5 font-normal hover:text-secondary"
-              >
-                <FastForward className="h-3 w-3 rotate-180" /> Prev
-              </button>
-
-              <button
-                disabled={!next}
-                onClick={() => router.push(`/watch/${next}`)}
-                className="flex items-center gap-1.5 font-normal hover:text-secondary"
-              >
-                Next <FastForward className="h-3 w-3" />
-              </button>
-            </div>
-          </div>
+          <PlayerControls episodeId={encodedEpisodesId} episodes={episodes!} />
         </div>
-        <div className="max-h-[590px] w-full shrink-0 px-4 sm:px-0 3xl:basis-[20%]">
+        <div className="max-h-[590px] w-full shrink-0 px-4 xl:px-0 3xl:basis-[20%]">
           {isInfoLoading ? (
             <div className="grid h-full w-full place-items-center">
               <BeatLoader childClassName="h-3 w-3" />

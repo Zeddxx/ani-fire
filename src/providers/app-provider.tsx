@@ -13,6 +13,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
         defaultOptions: {
           queries: {
             refetchOnMount: false,
+            refetchOnWindowFocus: false,
           },
         },
       }),

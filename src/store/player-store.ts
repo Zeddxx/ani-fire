@@ -6,6 +6,8 @@ type PlayerStoreState = {
   setAutoSkip: (value: boolean) => void;
   autoNext: boolean;
   setAutoNext: (value: boolean) => void;
+  light: boolean;
+  setLight: (value: boolean) => void;
 };
 
 export const usePlayerStore = create<PlayerStoreState>()(
@@ -15,6 +17,8 @@ export const usePlayerStore = create<PlayerStoreState>()(
       setAutoNext: (value) => set({ autoNext: value }),
       autoSkip: false,
       setAutoSkip: (value) => set({ autoSkip: value }),
+      light: false,
+      setLight: (value) => set({ light: value }),
     }),
     {
       name: "player_store",

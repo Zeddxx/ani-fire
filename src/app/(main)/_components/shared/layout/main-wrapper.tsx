@@ -1,13 +1,19 @@
 "use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { useEffect, useRef, useState } from "react";
 import { MdArrowBackIos } from "react-icons/md";
 
+import { usePlayerStore } from "@/store/player-store";
 import { useSiteStore } from "@/store/site";
 
 import useScroll from "@/hooks/use-scroll";
+
 import { GENRES, SidebarItems } from "@/lib/constants";
 import { cn, generateRandomColor } from "@/lib/utils";
+
 import { IoIosArrowUp } from "react-icons/io";
 
 export default function MainWrapper({
@@ -15,7 +21,11 @@ export default function MainWrapper({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
   const { isSidebarOpen, setIsSidebarOpen } = useSiteStore();
+  const { light, setLight } = usePlayerStore();
+
   const sidebarRef = useRef<React.ElementRef<"aside">>(null);
   const [isShowAllGenre, setIsShowAllGenre] = useState(false);
 
@@ -44,8 +54,19 @@ export default function MainWrapper({
     };
   }, [isSidebarOpen, setIsSidebarOpen]);
 
+  // to reset the setLight function back to false on pathname changes
+  useEffect(() => {
+    setLight(false);
+  }, [pathname]);
+
   return (
     <main>
+      {light && (
+        <div
+          onClick={() => setLight(false)}
+          className="fixed inset-0 z-[9999] h-[100dvh] w-screen bg-black/90"
+        />
+      )}
       <aside
         ref={sidebarRef}
         className={cn(
