@@ -22,14 +22,6 @@ export async function generateMetadata(
       title: `${capitalize(category)} Category | AniFire`,
       images: [...previousImages],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: `${capitalize(category)} Category | AniFire`,
-      description: `Explore ${category} in this vast anime library.`,
-      siteId: `https://ani-fire.vercel.app/category/${category}`,
-      creator: "@zeddxxdev",
-      images: [...previousImages],
-    },
   };
 }
 

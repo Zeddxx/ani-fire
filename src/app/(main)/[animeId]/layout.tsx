@@ -17,24 +17,17 @@ export async function generateMetadata(
   } = await getAnimeInfoByAnimeId(id);
 
   const previousImages = (await parent).openGraph?.images || [];
-  const desc: string = description.slice(0, 46) + "...";
+  const desc: string = description.slice(0, 146) + "...";
 
   return {
     title: `${name} | AniFire`,
     description: desc,
+    metadataBase: new URL("https://ani-fire.vercel.app"),
     keywords: name.split(" "),
     openGraph: {
       description: desc,
       title: name + " | AniFire",
-      images: [poster, ...previousImages],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: name,
-      description: desc,
-      siteId: `https://ani-fire.vercel.app/${id}`,
-      creator: "@Zeddxx",
-      images: [poster, ...previousImages],
+      images: poster ? poster : previousImages,
     },
   };
 }
