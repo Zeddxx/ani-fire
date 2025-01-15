@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   openGraph: {
     images: "/og-image.png",
   },
-  applicationName: "AniFire",
   robots: {
     index: true,
     follow: true,
