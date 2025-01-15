@@ -27,7 +27,7 @@ export async function generateMetadata(
     openGraph: {
       description: desc,
       title: `Watching ${name}` + " | AniFire",
-      images: [poster, ...previousImages],
+      images: poster ? poster : previousImages,
     },
   };
 }

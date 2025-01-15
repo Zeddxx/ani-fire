@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   title: "AniFire | Watch your favorite shows without any interrupts.",
   description:
     "Explore the trending anime, spotlight anime, latest anime & many more.",
-  metadataBase: new URL("https://ani-fire.vercel.app"),
   keywords: [
     "anifire",
     "anime streaming website",
@@ -16,6 +15,9 @@ export const metadata: Metadata = {
     "popular anime",
   ],
   openGraph: {
+    title: "AniFire | Watch your favorite shows without any interrupts.",
+    description:
+      "Explore the trending anime, spotlight anime, latest anime & many more.",
     images: "/og-image.png",
     type: "website",
   },
