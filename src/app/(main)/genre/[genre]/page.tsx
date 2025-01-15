@@ -15,11 +15,17 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const genre = (await params)?.genre as string;
   const page = ((await searchParams)?.page as string) || "1";
+  const previousImages = (await parent).openGraph?.images || [];
 
   return {
     title: `${capitalize(genre.replaceAll("-", " "))} Anime - Page ${page} | AniFire`,
     keywords: genre.split("-"),
     description: `Explore vast library for ${genre} Genre only on AniFire.`,
+    openGraph: {
+      title: `${capitalize(genre.replaceAll("-", " "))} Anime - Page ${page} | AniFire`,
+      description: `Explore vast library for ${genre} Genre only on AniFire.`,
+      images: [...previousImages],
+    },
   };
 }
 

@@ -18,7 +18,7 @@ export async function generateMetadata(
   } = await getAnimeInfoByAnimeId(animeId);
 
   const previousImages = (await parent).openGraph?.images || [];
-  const desc: string = description.slice(0, 46) + "...";
+  const desc: string = description.slice(0, 146) + "...";
 
   return {
     title: `Watching ${name}` + " | AniFire",
@@ -27,14 +27,6 @@ export async function generateMetadata(
     openGraph: {
       description: desc,
       title: `Watching ${name}` + " | AniFire",
-      images: [poster, ...previousImages],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Watching ${name} Episode` + " | AniFire",
-      description: desc,
-      siteId: `https://ani-fire.vercel.app/${animeId}`,
-      creator: "@Zeddxx",
       images: [poster, ...previousImages],
     },
   };
