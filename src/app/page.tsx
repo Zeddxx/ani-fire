@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { z } from "zod";
+import Navbar from "./_components/shared/navbar";
 
 export default function Marketing() {
   const router = useRouter();
@@ -33,6 +34,7 @@ export default function Marketing() {
 
   return (
     <>
+      <Navbar />
       <div className="min-h-[calc(100svh-120px)] w-full md:px-4">
         <div className="relative mx-auto h-auto w-full max-w-[1360px] overflow-hidden bg-white/5 px-8 py-14 backdrop-blur-md md:rounded-card">
           <div className="mx-auto w-full max-w-[37.5rem] space-y-7 text-center md:mx-0 md:p-14 md:text-start xl:p-20">
