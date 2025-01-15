@@ -22,11 +22,10 @@ export async function generateMetadata(
   return {
     title: `${name} | AniFire`,
     description: desc,
-    metadataBase: new URL("https://ani-fire.vercel.app"),
     keywords: name.split(" "),
     openGraph: {
-      description: desc,
       title: name + " | AniFire",
+      description: desc,
       images: poster ? poster : previousImages,
     },
   };
