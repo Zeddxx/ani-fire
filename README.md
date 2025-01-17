@@ -40,9 +40,6 @@
 
 ## For local development
 
-> [!CAUTION]
-> If you want to self-host this app, please note that it is only allowed for personal use. Commercial use is not permitted, and including ads on your self-hosted site may result in actions such as site takedown.
-
 - Clone the repository.
 
   ```bash
