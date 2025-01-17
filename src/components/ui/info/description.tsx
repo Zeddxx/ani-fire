@@ -19,7 +19,12 @@ export default function Description({
 
   return (
     <div className="">
-      <span className={cn("text-sm font-light leading-relaxed", className)}>
+      <span
+        className={cn(
+          "overflow-y-auto text-sm font-light leading-relaxed",
+          className,
+        )}
+      >
         {isExpanded ? description : truncatedDescription}
       </span>
       {description.length > maxLength && (

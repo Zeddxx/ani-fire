@@ -30,10 +30,11 @@ export async function generateMetadata(
 }
 
 export default async function Page({
-  params: { genre },
+  params,
 }: {
-  params: { genre: string };
+  params: Promise<{ genre: string }>;
 }) {
+  const { genre } = await params;
   const isInvalidGenre = !GENRES.includes(genre);
 
   if (isInvalidGenre) notFound();

@@ -18,12 +18,17 @@ import { generateRandomColor } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { use } from "react";
+import PromotionVideos from "./_components/promotion-videos";
+import VCActors from "./_components/vc-actors";
 
-const AnimeInfo = ({
-  params: { animeId },
+export default function Page({
+  params,
 }: {
-  params: { animeId: string };
-}) => {
+  params: Promise<{ animeId: string }>;
+}) {
+  const { animeId } = use(params);
+
   const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEY.ANIME_INFO, animeId],
     queryFn: () => getAnimeInfoByAnimeId(animeId),
@@ -38,7 +43,14 @@ const AnimeInfo = ({
 
   const {
     anime: {
-      info: { name, poster, stats, description, id },
+      info: {
+        name,
+        poster,
+        stats,
+        description,
+        charactersVoiceActors,
+        promotionalVideos,
+      },
       moreInfo,
     },
     recommendedAnimes,
@@ -140,6 +152,17 @@ const AnimeInfo = ({
           </div>
         </div>
       </section>
+
+      {/* VOICE ACTORS */}
+      <>
+        <VCActors characters={charactersVoiceActors} />
+      </>
+
+      {/* PROMOTION VIDEOS */}
+      <>
+        <PromotionVideos videos={promotionalVideos} />
+      </>
+
       {(!!seasons.length as boolean) && (
         <div className="wrapper-container mt-12 w-full space-y-4 px-4">
           <HomeLayout heading="More Seasons">
@@ -218,6 +241,4 @@ const AnimeInfo = ({
       </div>
     </>
   );
-};
-
-export default AnimeInfo;
+}
