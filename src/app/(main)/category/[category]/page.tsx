@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useState } from "react";
+import { use, useState } from "react";
 import {
   MdKeyboardArrowLeft,
   MdKeyboardArrowRight,
@@ -21,10 +21,11 @@ import {
 import HomeLayout from "../../_components/shared/layout/home-layout";
 
 export default function Page({
-  params: { category },
+  params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }) {
+  const { category } = use(params);
   const [showAllGenre, setShowAllGenre] = useState<boolean>(false);
 
   const [currentPage] = useQueryState("page", {

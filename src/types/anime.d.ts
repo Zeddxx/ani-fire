@@ -150,7 +150,7 @@ export type Info = {
     duration: string;
   };
   promotionalVideos: PromotionalVideo[];
-  charactersVoiceActors: VoiceActor[];
+  charactersVoiceActors: CharacterVoiceActor[];
 };
 
 export type MoreInfo = {

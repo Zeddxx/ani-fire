@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo } from "react";
+import { use, useEffect, useMemo } from "react";
 
 // important libraries imports
 import { useQuery } from "@tanstack/react-query";
@@ -30,14 +30,17 @@ import Description from "@/components/ui/info/description";
 import Separator from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/store/player-store";
+import { useServer } from "@/store/server";
 import { useQueryState } from "nuqs";
 import PlayerControls from "../_components/player/player-controls";
+import SelectServers from "../_components/select-servers";
 
-const WatchAnimePage = ({
-  params: { episodeId },
+export default function Page({
+  params,
 }: {
-  params: { episodeId: string };
-}) => {
+  params: Promise<{ episodeId: string }>;
+}) {
+  const { episodeId } = use(params);
   const [ep] = useQueryState("ep");
 
   // to create an full url /animeId?ep=episode_id
@@ -47,6 +50,8 @@ const WatchAnimePage = ({
   );
 
   const { light } = usePlayerStore();
+  const { currentServer, setCurrentServer, category, setCategory } =
+    useServer();
   const { setHistory, allAnimeWatched } = useHistory();
 
   const { data: servers } = useQuery({
@@ -65,20 +70,37 @@ const WatchAnimePage = ({
     enabled: !!episodeId,
   });
 
+  const defaultServer = useMemo(() => {
+    if (!servers) return "hd-1";
+    const server =
+      servers.sub.length > 0
+        ? servers.sub[0].serverName
+        : servers.raw[0].serverName;
+    setCurrentServer(server);
+    return server;
+  }, [servers, setCurrentServer]);
+
+  const defaultCategory = useMemo(() => {
+    const currentCategory = !servers?.sub.length ? "raw" : "sub";
+    setCategory(currentCategory);
+    return currentCategory;
+  }, [servers]);
+
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEY.WATCH_ANIME_BY_EPISODE_ID, encodedEpisodesId],
+    queryKey: [
+      QUERY_KEY.WATCH_ANIME_BY_EPISODE_ID,
+      encodedEpisodesId,
+      currentServer,
+      category,
+    ],
     queryFn: () =>
       getAnimeStreamingLinksByEpisodeId(
         encodedEpisodesId +
           `&server=${
-            servers
-              ? servers?.sub.length > 0
-                ? servers?.sub[0].serverName
-                : servers?.raw[0].serverName
-              : "hd-1"
-          }&category=${!servers?.sub.length ? "raw" : "sub"}`,
+            currentServer ? currentServer : defaultServer
+          }&category=${category ? category : defaultCategory}`,
       ),
-    enabled: !!servers && !!encodedEpisodesId,
+    enabled: !!servers && !!encodedEpisodesId && !!category && !!currentServer,
   });
 
   useEffect(() => {
@@ -188,6 +210,8 @@ const WatchAnimePage = ({
           )}
 
           <PlayerControls episodeId={encodedEpisodesId} episodes={episodes!} />
+
+          {servers && <SelectServers {...servers} />}
         </div>
         <div className="max-h-[590px] w-full shrink-0 px-4 xl:px-0 3xl:basis-[20%]">
           {isInfoLoading ? (
@@ -213,7 +237,7 @@ const WatchAnimePage = ({
                 <OtherInfos {...animeInfo?.anime.info.stats!} />
               </div>
 
-              <div className="max-h-60 w-full overflow-y-auto">
+              <div className="max-h-60 w-full overflow-y-scroll">
                 <Description
                   description={animeInfo?.anime.info.description ?? ""}
                   className="text-[13px] !leading-tight text-white/80"
@@ -225,6 +249,4 @@ const WatchAnimePage = ({
       </div>
     </div>
   );
-};
-
-export default WatchAnimePage;
+}
