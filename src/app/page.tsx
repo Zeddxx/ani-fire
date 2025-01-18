@@ -1,5 +1,6 @@
 "use client";
 
+import Navbar from "@/components/marketing/ui/navbar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TOP_SEARCHES } from "@/lib/constants";
@@ -12,7 +13,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { z } from "zod";
-import Navbar from "./_components/shared/navbar";
 
 export default function Marketing() {
   const router = useRouter();

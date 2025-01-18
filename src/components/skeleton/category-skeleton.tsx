@@ -1,4 +1,4 @@
-import HomeLayout from "@/app/(main)/_components/shared/layout/home-layout";
+import HomeLayout from "../shared/layouts/home-layout";
 import BeatLoader from "../shared/loader";
 import AnimeListSkeleton from "./anime-list-skeleton";
 

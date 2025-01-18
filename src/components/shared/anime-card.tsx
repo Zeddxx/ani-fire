@@ -22,7 +22,7 @@ export default function AnimeCard({
       <HoveredContent animeId={id}>
         <Link
           href={`/${id}`}
-          className="group relative aspect-[10/12] w-full overflow-hidden sm:aspect-[12/16]"
+          className="group relative aspect-[10/14] w-full overflow-hidden sm:aspect-[12/16]"
         >
           <Image
             src={poster}

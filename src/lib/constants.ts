@@ -124,7 +124,7 @@ export const SidebarItems: Array<{ title: string; href: string }> = [
     href: "/category/dubbed-anime",
   },
   {
-    title: "most-popular",
+    title: "Most Popular",
     href: "/category/most-popular",
   },
   {

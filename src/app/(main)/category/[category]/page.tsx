@@ -3,6 +3,7 @@
 import { getAnimeByCategories } from "@/api/anime";
 import AnimeCard from "@/components/shared/anime-card";
 import AnimeLists from "@/components/shared/anime-list";
+import HomeLayout from "@/components/shared/layouts/home-layout";
 import CategorySkeleton from "@/components/skeleton/category-skeleton";
 import usePagination from "@/hooks/use-pagination";
 import { catagories, GENRES } from "@/lib/constants";
@@ -18,7 +19,6 @@ import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
-import HomeLayout from "../../_components/shared/layout/home-layout";
 
 export default function Page({
   params,

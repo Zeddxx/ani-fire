@@ -1,9 +1,9 @@
 "use client";
 
 import { getAnimeByGenre } from "@/api/anime";
-import HomeLayout from "@/app/(main)/_components/shared/layout/home-layout";
 import AnimeCard from "@/components/shared/anime-card";
 import AnimeLists from "@/components/shared/anime-list";
+import HomeLayout from "@/components/shared/layouts/home-layout";
 import CategorySkeleton from "@/components/skeleton/category-skeleton";
 import usePagination from "@/hooks/use-pagination";
 import { GENRES } from "@/lib/constants";

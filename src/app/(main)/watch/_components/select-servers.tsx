@@ -48,7 +48,7 @@ export default function SelectServers(props: AnimeEpisodeServers) {
           beside.
         </div>
 
-        <div className="w-full space-y-2 px-4 py-3">
+        <div className="w-full px-4">
           {Object.entries(props).map(([key, values], idx) => {
             // remove the extra details with this keys..
             if (key === "episodeId" || key === "episodeNo") return null;
@@ -58,19 +58,22 @@ export default function SelectServers(props: AnimeEpisodeServers) {
 
             // else return all remaining servers...
             return (
-              <div key={key} className="flex items-center gap-3">
-                <div className="flex items-center gap-4 text-[13px] uppercase md:text-sm">
+              <div
+                key={key}
+                className="flex items-center border-dashed border-white/60 py-3 first:border-b last:border-none"
+              >
+                <div className="flex items-center gap-6 text-xs uppercase md:text-sm">
                   <p className="flex items-center gap-2 font-semibold">
                     {renderIcons(key)}
                     {key}:{" "}
                   </p>
-                  <div className="flex gap-1">
+                  <div className="flex gap-2">
                     {values.map((type) => (
                       <button
                         onClick={() => handleChangeDub(key, type.serverName)}
                         key={type.serverId}
                         className={cn(
-                          "rounded-md bg-white/10 px-7 py-1.5 uppercase",
+                          "rounded-md bg-white/10 px-7 py-1.5 text-[13px] font-medium uppercase",
                           currentServer === type.serverName &&
                             category === key &&
                             "bg-secondary text-black",

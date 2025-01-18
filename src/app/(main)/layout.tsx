@@ -1,7 +1,7 @@
+import MainWrapper from "@/components/main/layout/main-wrapper";
+import Navbar from "@/components/main/ui/navbar";
 import type { Metadata } from "next";
 import Link from "next/link";
-import MainWrapper from "./_components/shared/layout/main-wrapper";
-import Navbar from "./_components/shared/navbar";
 
 export const metadata: Metadata = {
   title: "AniFire | Watch your favorite shows without any interrupts.",

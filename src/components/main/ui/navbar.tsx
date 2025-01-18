@@ -18,6 +18,7 @@ import { SearchValidateSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -38,6 +39,7 @@ export default function Navbar() {
     handleSubmit,
     register,
     formState: { errors },
+    setFocus,
   } = useForm<z.infer<typeof SearchValidateSchema>>({
     resolver: zodResolver(SearchValidateSchema),
     defaultValues: {
@@ -49,6 +51,12 @@ export default function Navbar() {
     router.push(`/search?keyword=${query}`);
     setIsSearchBarOpen(false);
   });
+
+  useEffect(() => {
+    if (isSearchBarOpen) {
+      setFocus("query");
+    }
+  }, [isSearchBarOpen]);
 
   return (
     <nav

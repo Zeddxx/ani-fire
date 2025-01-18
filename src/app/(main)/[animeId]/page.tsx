@@ -4,9 +4,9 @@ import { getAnimeInfoByAnimeId } from "@/api/anime";
 
 import { AddionalInfo } from "@/app/(main)/[animeId]/_components/additional-info";
 import InfoActionRow from "@/app/(main)/[animeId]/_components/info-action-row";
-import HomeLayout from "@/app/(main)/_components/shared/layout/home-layout";
 import AnimeCard from "@/components/shared/anime-card";
 import HoveredContent from "@/components/shared/hovered-content";
+import HomeLayout from "@/components/shared/layouts/home-layout";
 import OtherInfos from "@/components/shared/other-infos";
 import AnimeInfoSkeleton from "@/components/skeleton/anime-info-skeleton";
 import { Badge } from "@/components/ui/badge";

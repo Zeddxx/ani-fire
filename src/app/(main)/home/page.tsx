@@ -11,11 +11,11 @@ import LatestEpisodes from "@/components/shared/latest-episodes";
 import { useQuery } from "@tanstack/react-query";
 
 // Component Imports
-import HomeLayout from "@/app/(main)/_components/shared/layout/home-layout";
 import AnimeSpotlightCarousel from "@/app/(main)/home/_components/carousel/spotlight";
 import TrendingCarousel from "@/app/(main)/home/_components/carousel/trending";
 import ContinueWatching from "@/app/(main)/home/_components/continue-watching";
 import Schedule from "@/app/(main)/home/_components/schedule";
+import HomeLayout from "@/components/shared/layouts/home-layout";
 import HomeSkeleton from "@/components/skeleton/home-skeleton";
 
 export default function Home() {
