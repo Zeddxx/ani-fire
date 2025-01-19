@@ -83,20 +83,18 @@ export default function Page({
     enabled: !!episodeId,
   });
 
-  const defaultServer = useMemo(() => {
-    if (!servers) return "hd-1";
+  useEffect(() => {
+    if (!servers) return;
     const server =
       servers.sub.length > 0
         ? servers.sub[0].serverName
         : servers.raw[0].serverName;
     setCurrentServer(server);
-    return server;
-  }, [servers, setCurrentServer]);
+  }, [servers]);
 
-  const defaultCategory = useMemo(() => {
+  useEffect(() => {
     const currentCategory = !servers?.sub.length ? "raw" : "sub";
     setCategory(currentCategory);
-    return currentCategory;
   }, [servers]);
 
   const { data, isLoading } = useQuery({
@@ -108,10 +106,7 @@ export default function Page({
     ],
     queryFn: () =>
       getAnimeStreamingLinksByEpisodeId(
-        encodedEpisodesId +
-          `&server=${
-            currentServer ? currentServer : defaultServer
-          }&category=${category ? category : defaultCategory}`,
+        encodedEpisodesId + `&server=${currentServer}&category=${category}`,
       ),
     enabled: !!servers && !!encodedEpisodesId && !!category && !!currentServer,
   });
