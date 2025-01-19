@@ -2,7 +2,7 @@ import { AnimeEpisodes, AnimeStreamingLinks } from "@/types/anime";
 import Artplayer from "artplayer";
 import Option from "artplayer/types/option";
 import Hls from "hls.js";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import Player from "./player";
 
 interface AniFirePlayerProps extends AnimeStreamingLinks {
@@ -30,9 +30,13 @@ const AniFirePlayer = ({
     }
   }, []);
 
+  const episodeSourceUrl = useMemo(() => {
+    return props.sources[0].url;
+  }, [props.sources]);
+
   const options: Option = {
     container: ".artplayer-app",
-    url: props.sources[0].url,
+    url: episodeSourceUrl,
     customType: {
       m3u8: playM3u8,
     },
@@ -76,6 +80,7 @@ const AniFirePlayer = ({
 
   return (
     <Player
+      url={episodeSourceUrl}
       option={options}
       subtitles={props.tracks}
       intro={props.intro}

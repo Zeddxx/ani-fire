@@ -10,6 +10,7 @@ export default function SelectServers(props: AnimeEpisodeServers) {
   const { setLight, light } = usePlayerStore();
   const { currentServer, setCurrentServer, category, setCategory } =
     useServer();
+
   if (!props) return null;
 
   const { episodeNo } = props;
