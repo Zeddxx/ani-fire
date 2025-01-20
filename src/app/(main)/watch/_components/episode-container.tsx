@@ -19,7 +19,7 @@ const EpisodeContainer = ({
 }: EpisodeContainerProps) => {
   if (totalEpisodes > 24) {
     return (
-      <div className="grid max-h-[716px] w-full shrink-0 grid-cols-8 gap-1 py-3 md:grid-cols-10 lg:grid-cols-12 3xl:grid-cols-5">
+      <div className="scrollbar grid max-h-[736px] w-full shrink-0 grid-cols-8 gap-1 overflow-y-visible px-3 py-3 md:grid-cols-10 lg:grid-cols-12 3xl:grid-cols-5">
         {episodes.slice(0, 100).map(({ isFiller, episodeId, number }) => {
           const isCurrentEp = episodeId === currentEpisodeId;
           return (
@@ -28,8 +28,8 @@ const EpisodeContainer = ({
               href={`/watch/${episodeId}`}
               className={cn(
                 "grid h-8 w-full place-items-center rounded-md bg-white/10",
-                isFiller && "bg-yellow-700/40",
-                isCurrentEp && "bg-primary",
+                isFiller && "bg-gradient-to-r from-[#5a4944] to-[#63594b]",
+                isCurrentEp && "bg-secondary text-black",
                 searchedEpisodeNumber === number && "bg-muted-foreground/50",
               )}
             >

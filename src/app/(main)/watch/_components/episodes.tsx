@@ -69,8 +69,8 @@ export default function Episodes({ episodes, episodeId }: EpisodesProps) {
 
   return (
     <>
-      <div className="sticky inset-0 z-20 flex min-h-12 w-full items-center justify-between gap-3 border-b border-primary/40 bg-primary-600 px-4 text-sm">
-        <div className="">
+      <div className="sticky z-20 flex min-h-12 w-full items-center justify-between gap-3 border-b border-primary/40 bg-primary-600 px-3 text-sm">
+        <div className="pt-3">
           <h3 className="flex items-center text-nowrap text-xs font-medium">
             List of episodes:
           </h3>
@@ -86,7 +86,7 @@ export default function Episodes({ episodes, episodeId }: EpisodesProps) {
               >
                 <SelectTrigger>
                   <SelectValue
-                    placeholder={`${ranges.start} - ${ranges.end}`}
+                    placeholder={`EPS: ${ranges.start === 0 && `${ranges.start + "01"}`} - ${ranges.end}`}
                   />
                 </SelectTrigger>
 
@@ -96,8 +96,11 @@ export default function Episodes({ episodes, episodeId }: EpisodesProps) {
                       <SelectItem
                         key={idx}
                         value={`${range.start},${range.end}`}
+                        className="font-medium"
                       >
-                        {range.start} - {range.end}
+                        EPS:{" "}
+                        {range.start === 0 ? range.start + "01" : range.start} -{" "}
+                        {range.end}
                       </SelectItem>
                     );
                   })}
@@ -107,7 +110,7 @@ export default function Episodes({ episodes, episodeId }: EpisodesProps) {
           )}
         </div>
 
-        <div className="relative w-full">
+        <div className="relative w-max">
           <Input
             onChange={(e) => setSearchEpisode(parseInt(e.target.value))}
             placeholder="Number of Ep"

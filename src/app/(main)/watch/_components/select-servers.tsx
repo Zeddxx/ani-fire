@@ -61,7 +61,7 @@ export default function SelectServers(props: AnimeEpisodeServers) {
             return (
               <div
                 key={key}
-                className="flex items-center border-dashed border-white/60 py-3 first:border-b last:border-none"
+                className="flex items-center border-dashed border-white/40 py-3 first:border-b last:border-none"
               >
                 <div className="flex items-center gap-6 text-xs uppercase md:text-sm">
                   <p className="flex items-center gap-2 font-semibold">
