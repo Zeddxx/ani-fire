@@ -42,7 +42,7 @@ const EpisodeContainer = ({
   }
 
   return (
-    <div className="flex max-h-[376px] w-full shrink-0 flex-col lg:max-h-[590px] 3xl:max-h-[716px]">
+    <div className="scrollbar flex max-h-[376px] w-full shrink-0 flex-col overflow-auto lg:max-h-[590px] 3xl:max-h-[716px]">
       {episodes.map(({ episodeId, title, number }, idx) => {
         const isCurrentEp = episodeId === currentEpisodeId;
         return (
