@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> As of now, this project is marked as completed and will only receive minor changes, as I am busy with other work. If there are any fellow maintainers who can help improve this project further, please reach out to me. Peace out 🕊️
+
 <h1 align="center">
   <img align="center" src="/public/anifire-icon.png" alt="anifire logo" width="66" /> </br>
   Anifire: Anime streaming website
