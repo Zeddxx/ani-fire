@@ -1,13 +1,14 @@
 "use client";
 
-import { getAnimeByCategories } from "@/api/anime";
 import AnimeCard from "@/components/shared/anime-card";
 import AnimeLists from "@/components/shared/anime-list";
 import HomeLayout from "@/components/shared/layouts/home-layout";
 import CategorySkeleton from "@/components/skeleton/category-skeleton";
 import usePagination from "@/hooks/use-pagination";
 import { catagories, GENRES } from "@/lib/constants";
+import { QUERY_KEY } from "@/lib/query-key";
 import { generateRandomColor } from "@/lib/utils";
+import { getAnimeByCategories } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -35,7 +36,7 @@ export default function Page({
   });
 
   const { data, isLoading } = useQuery({
-    queryKey: ["CATEGORY", category, currentPage],
+    queryKey: [QUERY_KEY.CATEGORY, category, currentPage],
     queryFn: () => {
       if (!catagories.includes(category)) {
         throw new Error("Category not found");

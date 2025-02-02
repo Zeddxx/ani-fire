@@ -8,4 +8,5 @@ export enum QUERY_KEY {
   LATEST_ANIME_EPISODES = "latest_anime_episodes",
   UPCOMING_SCHEDULE = "uncoming_schedule",
   SEARCHED_ANIMES = "searched_animes",
+  CATEGORY = "CATEGORY",
 }

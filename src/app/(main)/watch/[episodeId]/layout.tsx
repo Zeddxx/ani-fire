@@ -1,4 +1,4 @@
-import { getAnimeInfoByAnimeId } from "@/api/anime";
+import { fetchAnimeInfoByAnimeId } from "@/app/api/v1/controller/anime";
 import type { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
@@ -15,7 +15,7 @@ export async function generateMetadata(
     anime: {
       info: { name, poster, description },
     },
-  } = await getAnimeInfoByAnimeId(animeId);
+  } = await fetchAnimeInfoByAnimeId(animeId);
 
   const previousImages = (await parent).openGraph?.images || [];
   const desc: string = description.slice(0, 146) + "...";

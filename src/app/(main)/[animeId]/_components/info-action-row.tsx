@@ -1,7 +1,7 @@
-import { getAnimeEpisodesById } from "@/api/anime";
 import { InfoActionRowSkeleton } from "@/components/skeleton/info-action-row.skeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { QUERY_KEY } from "@/lib/query-key";
+import { getAnimeEpisodesById } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { FaPlay } from "react-icons/fa6";

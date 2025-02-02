@@ -177,3 +177,11 @@ export function capitalize(value: string): string {
 
   return datas.join(" ");
 }
+
+export function generateUniqueKey(key: string, id: string): string {
+  return `${key}:${id.toUpperCase()}`;
+}
+
+export function createRoutePath(routeSegments: string[]): string {
+  return `/${routeSegments.join("/")}`;
+}

@@ -1,7 +1,7 @@
 "use client";
 
-import { getAnimeEpisodesById } from "@/api/anime";
 import { QUERY_KEY } from "@/lib/query-key";
+import { getAnimeEpisodesById } from "@/services/api";
 import { LatestEpisodeAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";

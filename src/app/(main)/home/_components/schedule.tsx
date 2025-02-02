@@ -1,6 +1,5 @@
 "use client";
 
-import { getAnimeScheduleByDate } from "@/api/anime";
 import BeatLoader from "@/components/shared/loader";
 import { Button } from "@/components/ui/button";
 import { QUERY_KEY } from "@/lib/query-key";
@@ -12,6 +11,7 @@ import {
   getMonth,
   getNextAndPrevSevenDates,
 } from "@/lib/utils";
+import { getAnimeScheduleByDate } from "@/services/api";
 import { ScheduledAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";

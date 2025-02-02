@@ -1,4 +1,4 @@
-import { getAnimeInfoByAnimeId } from "@/api/anime";
+import { fetchAnimeInfoByAnimeId } from "@/app/api/v1/controller/anime";
 import type { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
@@ -10,11 +10,16 @@ export async function generateMetadata(
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const id = (await params).animeId;
+
+  if (id === "sw.js") {
+    return {};
+  }
+
   const {
     anime: {
       info: { name, poster, description },
     },
-  } = await getAnimeInfoByAnimeId(id);
+  } = await fetchAnimeInfoByAnimeId(id);
 
   const previousImages = (await parent).openGraph?.images || [];
   const desc: string = description.slice(0, 146) + "...";
