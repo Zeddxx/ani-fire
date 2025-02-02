@@ -25,7 +25,7 @@ export const getAnimeHomePage = async (): Promise<HomePage> => {
   return res.data;
 };
 
-export const getAnimeInfoByAnimeId = async (animeId: string) => {
+export const fetchAnimeInfoByAnimeId = async (animeId: string) => {
   const res = (await fetch(BASE_URL() + "/anime/" + animeId).then((res) =>
     res.json(),
   )) as ApiResponse<AnimeInfo>;
@@ -37,7 +37,7 @@ export const getAnimeInfoByAnimeId = async (animeId: string) => {
   return res.data;
 };
 
-export const getAnimeEpisodesById = async (
+export const fetchAnimeEpisodesById = async (
   animeId: string,
 ): Promise<AnimeEpisodes> => {
   const res = (await fetch(BASE_URL() + "/anime/" + animeId + "/episodes").then(
@@ -51,7 +51,7 @@ export const getAnimeEpisodesById = async (
   return res.data;
 };
 
-export const getAnimeStreamingLinksByEpisodeId = async (
+export const fetchAnimeStreamingLinksByEpisodeId = async (
   episodeId: string,
 ): Promise<AnimeStreamingLinks> => {
   const res = (await fetch(
@@ -70,7 +70,7 @@ export const getAnimeStreamingLinksByEpisodeId = async (
   return res.data;
 };
 
-export const getAnimeEpisodeServers = async (
+export const fetchAnimeEpisodeServers = async (
   episodeId: string,
 ): Promise<AnimeEpisodeServers> => {
   const res = (await fetch(
@@ -88,7 +88,7 @@ export const getAnimeEpisodeServers = async (
  * API function to fetch the estimated schedule of anime by dates in format: 'YYYY-MM-DD'
  * @return Array<ScheduleAnimes>
  */
-export const getAnimeScheduleByDate = async (date: string) => {
+export const fetchAnimeScheduleByDate = async (date: string) => {
   const res = (await fetch(BASE_URL() + `/schedule?date=${date}`, {
     headers: {
       "Content-Type": "application/json",
@@ -119,7 +119,7 @@ interface SearchAnimeByName {
   status?: string;
   score?: string;
 }
-export const getSearchedAnimeByName = async ({
+export const fetchSearchedAnimeByName = async ({
   keyword,
   page = 1,
   ...props
@@ -145,7 +145,10 @@ export const getSearchedAnimeByName = async ({
   };
 };
 
-export const getAnimeByCategories = async (category: string, page: number) => {
+export const fetchAnimeByCategories = async (
+  category: string,
+  page: number,
+) => {
   const res = (await fetch(
     BASE_URL() + `/category/${category}?page=${page ?? 1}`,
     {

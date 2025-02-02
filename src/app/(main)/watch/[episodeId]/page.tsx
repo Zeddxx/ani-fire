@@ -7,14 +7,6 @@ import { use, useEffect, useMemo } from "react";
 // important libraries imports
 import { useQuery } from "@tanstack/react-query";
 
-// APIs functions imports
-import {
-  getAnimeEpisodesById,
-  getAnimeEpisodeServers,
-  getAnimeInfoByAnimeId,
-  getAnimeStreamingLinksByEpisodeId,
-} from "@/api/anime";
-
 // constants import
 import { QUERY_KEY } from "@/lib/query-key";
 
@@ -45,6 +37,12 @@ import { cn } from "@/lib/utils";
 import { useQueryState } from "nuqs";
 
 import HomeLayout from "@/components/shared/layouts/home-layout";
+import {
+  getAnimeEpisodesById,
+  getAnimeEpisodeServers,
+  getAnimeInfoById,
+  getAnimeStreamingLinksByEpisodeId,
+} from "@/services/api";
 import PlayerControls from "../_components/player/player-controls";
 import SelectServers from "../_components/select-servers";
 
@@ -74,7 +72,7 @@ export default function Page({
 
   const { data: animeInfo, isLoading: isInfoLoading } = useQuery({
     queryKey: [QUERY_KEY.ANIME_INFO, episodeId],
-    queryFn: () => getAnimeInfoByAnimeId(episodeId),
+    queryFn: () => getAnimeInfoById(episodeId),
   });
 
   const { data: episodes, isLoading: isEpisodesLoading } = useQuery({
@@ -104,8 +102,8 @@ export default function Page({
       currentServer,
       category,
     ],
-    queryFn: () =>
-      getAnimeStreamingLinksByEpisodeId(
+    queryFn: async () =>
+      await getAnimeStreamingLinksByEpisodeId(
         encodedEpisodesId + `&server=${currentServer}&category=${category}`,
       ),
     enabled: !!servers && !!encodedEpisodesId && !!category && !!currentServer,

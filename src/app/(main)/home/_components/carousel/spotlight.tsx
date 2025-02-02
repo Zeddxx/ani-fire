@@ -1,6 +1,5 @@
 "use client";
 
-import { getAnimeEpisodesById } from "@/api/anime";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -10,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { getAnimeEpisodesById } from "@/services/api";
 import { SpotlightAnimes } from "@/types/anime";
 import { useQueries } from "@tanstack/react-query";
 import AutoPlay from "embla-carousel-autoplay";

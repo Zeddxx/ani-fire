@@ -1,8 +1,8 @@
 "use client";
 
-import { getAnimeInfoByAnimeId } from "@/api/anime";
 import useMediaQueries from "@/hooks/use-media-queries";
 import { QUERY_KEY } from "@/lib/query-key";
+import { getAnimeInfoById } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ export default function HoveredContent({
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY.ANIME_INFO, animeId],
-    queryFn: () => getAnimeInfoByAnimeId(animeId),
+    queryFn: () => getAnimeInfoById(animeId),
     enabled: isHovered && showPopupInfo,
   });
 

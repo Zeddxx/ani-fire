@@ -1,7 +1,5 @@
 "use client";
 
-import { getSearchedAnimeByName } from "@/api/anime";
-
 import AnimeCard from "@/components/shared/anime-card";
 import AnimeLists from "@/components/shared/anime-list";
 import HomeLayout from "@/components/shared/layouts/home-layout";
@@ -10,6 +8,7 @@ import usePagination from "@/hooks/use-pagination";
 import { GENRES } from "@/lib/constants";
 import { QUERY_KEY } from "@/lib/query-key";
 import { generateRandomColor } from "@/lib/utils";
+import { getSearchedAnimeByName } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useQueryState } from "nuqs";
@@ -39,7 +38,7 @@ export default function Page() {
     queryKey: [QUERY_KEY.SEARCHED_ANIMES, keyword, currentPage],
     queryFn: () => {
       if (!keyword) return;
-      return getSearchedAnimeByName({ keyword, page: currentPage });
+      return getSearchedAnimeByName(keyword, currentPage);
     },
   });
 

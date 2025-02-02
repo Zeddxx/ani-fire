@@ -1,7 +1,5 @@
 "use client";
 
-import { getAnimeInfoByAnimeId } from "@/api/anime";
-
 import { AddionalInfo } from "@/app/(main)/[animeId]/_components/additional-info";
 import InfoActionRow from "@/app/(main)/[animeId]/_components/info-action-row";
 import AnimeCard from "@/components/shared/anime-card";
@@ -15,6 +13,7 @@ import Description from "@/components/ui/info/description";
 import Separator from "@/components/ui/separator";
 import { QUERY_KEY } from "@/lib/query-key";
 import { generateRandomColor } from "@/lib/utils";
+import { getAnimeInfoById } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,7 +30,7 @@ export default function Page({
 
   const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEY.ANIME_INFO, animeId],
-    queryFn: () => getAnimeInfoByAnimeId(animeId),
+    queryFn: async () => await getAnimeInfoById(animeId),
     enabled: !!animeId,
   });
 

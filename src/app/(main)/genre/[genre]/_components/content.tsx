@@ -1,6 +1,6 @@
 "use client";
 
-import { getAnimeByGenre } from "@/api/anime";
+import { getAnimeByGenre } from "@/app/api/v1/controller/anime";
 import AnimeCard from "@/components/shared/anime-card";
 import AnimeLists from "@/components/shared/anime-list";
 import HomeLayout from "@/components/shared/layouts/home-layout";

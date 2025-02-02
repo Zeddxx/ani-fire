@@ -1,8 +1,5 @@
 "use client";
 
-// Api functions
-import { getAnimeHomePage } from "@/api/anime";
-
 // Shared Components imports
 import GenreAnime from "@/components/shared/genre-anime";
 import LatestEpisodes from "@/components/shared/latest-episodes";
@@ -17,11 +14,12 @@ import ContinueWatching from "@/app/(main)/home/_components/continue-watching";
 import Schedule from "@/app/(main)/home/_components/schedule";
 import HomeLayout from "@/components/shared/layouts/home-layout";
 import HomeSkeleton from "@/components/skeleton/home-skeleton";
+import { getAnimeHome } from "@/services/api";
 
 export default function Home() {
   const { data: animes, isLoading } = useQuery({
     queryKey: ["ANIME_HOME_PAGE"],
-    queryFn: () => getAnimeHomePage(),
+    queryFn: getAnimeHome,
     refetchOnMount: false,
   });
 
