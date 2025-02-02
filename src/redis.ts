@@ -2,7 +2,7 @@ import Redis from "ioredis";
 import { ApiResponse } from "./types/anime";
 
 const getRedisConnectionURL = (): string => {
-  if (process.env.NODE_ENV === "production") return "";
+  if (process.env.NODE_ENV === "development") return "";
   if (process.env.REDIS_URL) {
     return process.env.REDIS_URL;
   }
