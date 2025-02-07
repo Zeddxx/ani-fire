@@ -47,9 +47,9 @@ export async function GET(
       }
 
       const animeInfo = await storeOrGetFromRedis<AnimeInfo>(
-        `${QUERY_KEY.ANIME_INFO}:${animeId.toUpperCase()}`,
+        generateUniqueKey(QUERY_KEY.ANIME_INFO, animeId),
         async () => await fetchAnimeInfoByAnimeId(animeId),
-        5600,
+        2.628e6, // 1month
       );
       return NextResponse.json(animeInfo, { status: 200 });
     }
@@ -62,8 +62,9 @@ export async function GET(
       }
 
       const animeEpisodes = await storeOrGetFromRedis<AnimeEpisodes>(
-        `${QUERY_KEY.ANIME_EPISODES_BY_ID}:${animeId.toUpperCase()}`,
+        generateUniqueKey(QUERY_KEY.ANIME_EPISODES_BY_ID, animeId),
         async () => fetchAnimeEpisodesById(animeId),
+        7200, // 2hours
       );
 
       return NextResponse.json(animeEpisodes, { status: 200 });
@@ -90,7 +91,7 @@ export async function GET(
           `${episodeId}:${category}:${server}`,
         ),
         async () => fetchAnimeStreamingLinksByEpisodeId(constructedId),
-        86400, // 1d
+        1.296e6, // 15d
       );
 
       return NextResponse.json(response, { status: 200 });
@@ -105,6 +106,7 @@ export async function GET(
       const servers = await storeOrGetFromRedis(
         generateUniqueKey(QUERY_KEY.ANIME_EPISODE_SERVERS, id),
         async () => await fetchAnimeEpisodeServers(id),
+        1.296e6, // 15d
       );
 
       return NextResponse.json(servers, { status: 200 });
@@ -122,6 +124,7 @@ export async function GET(
       const scheduledAnime = await storeOrGetFromRedis(
         generateUniqueKey(QUERY_KEY.UPCOMING_SCHEDULE, date),
         async () => await fetchAnimeScheduleByDate(date),
+        86400, // 1d
       );
 
       return NextResponse.json(scheduledAnime, { status: 200 });
@@ -144,7 +147,7 @@ export async function GET(
             keyword,
             page: Number(page),
           }),
-        6600,
+        604800, //1week
       );
 
       return NextResponse.json(searchedAnimes, { status: 200 });
@@ -163,7 +166,7 @@ export async function GET(
       const animes = await storeOrGetFromRedis(
         generateUniqueKey(QUERY_KEY.CATEGORY, slug) + `:PAGE-${page}`,
         async () => fetchAnimeByCategories(slug, Number(page)),
-        8000,
+        2.628e6, // 1month
       );
 
       return NextResponse.json(animes, { status: 200 });
