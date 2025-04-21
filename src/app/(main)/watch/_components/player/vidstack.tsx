@@ -139,6 +139,7 @@ const VidstackPlayer = ({
         if (subtitle.kind !== "captions") return null;
         return (
           <Track
+            key={subtitle.label}
             default={subtitle.label === "English" || false}
             src={subtitle.file}
             label={subtitle.label}
