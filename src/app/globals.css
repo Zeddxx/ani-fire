@@ -136,3 +136,24 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background-color: #75757d;
 }
+
+.media-player[data-view-type="video"] {
+  aspect-ratio: 16 / 9;
+}
+
+.vds-video-layout {
+  --video-brand: hsl(0, 0%, 96%);
+  /* Layout: https://vidstack.io/docs/player/components/layouts/default-layout#video-layout  */
+  /* Components: https://www.vidstack.io/docs/player/components/layouts/default-layout#components */
+}
+
+.vds-audio-layout {
+  --audio-brand: hsl(0, 0%, 96%);
+  /* Layout: https://vidstack.io/docs/player/components/layouts/default-layout#audio-layout */
+  /* Components: https://www.vidstack.io/docs/player/components/layouts/default-layout#components */
+}
+
+.plyr {
+  --plyr-color-main: hsl(198, 100%, 50%);
+  /* CSS Vars: https://vidstack.io/docs/player/components/layouts/plyr-layout#css-variables */
+}
