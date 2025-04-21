@@ -40,6 +40,7 @@ const AniFirePlayer = ({
 
   const options: Option = {
     container: ".artplayer-app",
+    useSSR: false,
     url: episodeSourceUrl,
     customType: {
       m3u8: playM3u8,

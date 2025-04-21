@@ -231,12 +231,10 @@ export type AnimeStreamingLinks = {
     Referer: string;
     "User-Agent": string;
   };
-  sources: [
-    {
-      url: string;
-      type: string;
-    },
-  ];
+  sources: {
+    url: string;
+    type: string;
+  }[];
   tracks: [
     {
       file: string;

@@ -67,7 +67,13 @@ export const fetchAnimeStreamingLinksByEpisodeId = async (
     throw new Error(res.message);
   }
 
-  return res.data;
+  return {
+    ...res.data,
+    sources: res.data.sources.map((s) => ({
+      url: `https://m3u8-proxy-36w8.onrender.com/m3u8-proxy?url=${encodeURIComponent(s.url)}&headers=${encodeURIComponent('{"Referer":"https://megacloud.club/"}')}`,
+      type: s.type,
+    })),
+  };
 };
 
 export const fetchAnimeEpisodeServers = async (
