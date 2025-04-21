@@ -1,18 +1,24 @@
 import { AnimeEpisodes, AnimeStreamingLinks } from "@/types/anime";
+import "@vidstack/react/player/styles/base.css";
+import "@vidstack/react/player/styles/default/layouts/video.css";
+import "@vidstack/react/player/styles/default/theme.css";
 import Artplayer from "artplayer";
 import Option from "artplayer/types/option";
 import Hls from "hls.js";
 import { memo, useCallback, useMemo } from "react";
 import Player from "./player";
+import Vidstack from "./vidstack";
 
 interface AniFirePlayerProps extends AnimeStreamingLinks {
   episodes: AnimeEpisodes;
   episodeId: string;
+  poster: string;
 }
 
 const AniFirePlayer = ({
   episodes,
   episodeId,
+  poster,
   ...props
 }: AniFirePlayerProps) => {
   const playM3u8 = useCallback((video: any, url: string, art: Artplayer) => {
@@ -82,6 +88,19 @@ const AniFirePlayer = ({
       encoding: "utf-8",
     },
   };
+
+  return (
+    <Vidstack
+      poster={poster}
+      url={episodeSourceUrl}
+      subtitles={props.tracks}
+      intro={props.intro}
+      outro={props.outro}
+      episodes={episodes}
+      episodeId={episodeId}
+      className="art-container aspect-video w-full shrink-0"
+    />
+  );
 
   return (
     <Player

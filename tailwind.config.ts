@@ -137,6 +137,10 @@ const config: Config = {
       });
     }),
     require("tailwindcss-animate"),
+    require("@vidstack/react/tailwind.cjs")({
+      selector: ".media-player",
+      prefix: "media",
+    }),
   ],
 };
 export default config;

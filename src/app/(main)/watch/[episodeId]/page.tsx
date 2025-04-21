@@ -87,7 +87,7 @@ export default function Page({
       servers.sub.length > 0
         ? servers.sub[0].serverName
         : servers.raw[0].serverName;
-    setCurrentServer(server);
+    setCurrentServer(servers.sub.length > 0 ? "hd-2" : server);
   }, [servers]);
 
   useEffect(() => {
@@ -213,6 +213,7 @@ export default function Page({
             ) : (
               <AniFirePlayer
                 episodeId={encodedEpisodesId}
+                poster={animeInfo?.anime.info.poster as string}
                 episodes={episodes}
                 {...data}
               />

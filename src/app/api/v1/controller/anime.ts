@@ -70,7 +70,7 @@ export const fetchAnimeStreamingLinksByEpisodeId = async (
   return {
     ...res.data,
     sources: res.data.sources.map((s) => ({
-      url: `https://m3u8-proxy-36w8.onrender.com/m3u8-proxy?url=${encodeURIComponent(s.url)}&headers=${encodeURIComponent('{"Referer":"https://megacloud.club/"}')}`,
+      url: `https://m3u8-proxy-gamma.vercel.app/m3u8-proxy?url=${encodeURIComponent(s.url)}&headers=${encodeURIComponent('{"Referer":"https://megacloud.club/"}')}`,
       type: s.type,
     })),
   };
