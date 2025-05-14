@@ -104,7 +104,7 @@ export default function Marketing() {
           <div className="flex items-center gap-1">
             <p>All rights reserved to its developer!</p>
             <Link
-              href="https://github.com/zeddxx"
+              href="https://discord.gg/5fUee5sS"
               target="_blank"
               className="text-secondary underline underline-offset-2"
             >
